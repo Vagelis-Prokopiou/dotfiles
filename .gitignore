@@ -74,7 +74,7 @@ workspace/
 .vboxclient-display.pid
 .vboxclient-draganddrop.pid
 .vboxclient-seamless.pid
-PhpStorm-145.970.40/
+PhpStorm*
 django_test/
 former-gists/
 ides/
