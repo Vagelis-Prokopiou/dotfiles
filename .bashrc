@@ -89,13 +89,16 @@ alias l='ls $LS_OPTIONS -lA'
 
 # My aliases:
 alias phpstorm='sudo sh /home/va/Downloads/jetbrains/PhpStorm-162.1121.38/bin/phpstorm.sh'
+alias localhost='cd /var/www/html'
+
+# Git stuff:
 alias gc='git commit -m '
 # alias gl='git log --pretty=format:"%h, %ar: %s"'
 alias gl='git log --oneline'
 alias gcf='git checkout -- '
 alias gs='git status'
-alias localhost='cd /var/www/html'
-
+alias grh='git reset --hard'
+alias ga='git add '
 # Add git completion.
 source ~/git-completion.bash
 
