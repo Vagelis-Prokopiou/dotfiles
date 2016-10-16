@@ -95,15 +95,16 @@ alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/the
 alias bnspro='cd /var/www/html/vhosts/ci_bootstrap_3/public_html/';
 
 # Git stuff:
-alias gc='git commit -m '
+alias gc='git commit -m ';
 # alias gl='git log --pretty=format:"%h, %ar: %s"'
-alias gl='git log --oneline'
-alias gcf='git checkout -- '
-alias gs='git status'
-alias grh='git reset --hard'
-alias ga='git add '
+alias gl='git log --oneline';
+alias gcf='git checkout -- ';
+alias gs='git status';
+alias grh='git reset --hard';
+alias ga='git add ';
+alias gp='git pull && . ~/.bashrc';
 # Add git completion.
-source ~/git-completion.bash
+source ~/git-completion.bash;
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
