@@ -75,37 +75,19 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
-
 # You may uncomment the following lines if you want `ls' to be colorized:
-# export LS_OPTIONS='--color=auto'
-# eval "`dircolors`"
-# alias ls='ls $LS_OPTIONS'
-# alias ll='ls $LS_OPTIONS -l'
-# alias l='ls $LS_OPTIONS -lA'
+export LS_OPTIONS='--color=auto'
+eval "`dircolors`"
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias l='ls $LS_OPTIONS -lA'
 #
 # Some more alias to avoid making mistakes:
 # alias rm='rm -i'
 # alias cp='cp -i'
 # alias mv='mv -i'
+
+# My aliases:
 alias phpstorm='sudo sh /home/va/Downloads/jetbrains/PhpStorm-162.1121.38/bin/phpstorm.sh'
 alias gc='git commit -m '
 # alias gl='git log --pretty=format:"%h, %ar: %s"'
@@ -113,6 +95,9 @@ alias gl='git log --oneline'
 alias gcf='git checkout -- '
 alias gs='git status'
 alias localhost='cd /var/www/html'
+
+# Add git completion.
+source ~/git-completion.bash
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
