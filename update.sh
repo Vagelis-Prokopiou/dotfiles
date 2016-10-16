@@ -231,7 +231,7 @@ sed "s/Database//g; s/information_schema//g; \
 s/performance_schema//g; \
 s/phpmyadmin//g"; \
 ); \
-mkdir /home/va/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null || echo "Directory /home/va/Dropbox/dbs/$(date +%Y-%m-%d) already exists"; \
+mkdir /home/va/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null || echo "----- Directory /home/va/Dropbox/dbs/$(date +%Y-%m-%d) already exists."; \
 IFS=' ' read -ra dbs_array <<< "$dbs"; \
 for db in "${dbs_array[@]}"; do \
     # echo "$db"_$(date +%Y-%m-%dT%H:%M).sql.gz; \
