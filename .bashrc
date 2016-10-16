@@ -108,19 +108,11 @@ alias l='ls -CF'
 # alias mv='mv -i'
 alias phpstorm='sudo sh /home/va/Downloads/jetbrains/PhpStorm-162.1121.38/bin/phpstorm.sh'
 alias gc='git commit -m '
+# alias gl='git log --pretty=format:"%h, %ar: %s"'
 alias gl='git log --oneline'
 alias gcf='git checkout -- '
 alias gs='git status'
 alias localhost='cd /var/www/html'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
