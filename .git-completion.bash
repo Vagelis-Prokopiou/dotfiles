@@ -338,7 +338,7 @@ __git_tags ()
 __git_refs ()
 {
 	local i hash dir="$(__gitdir "${1-}")" track="${2-}"
-	local format refs pfx
+	local format refs
 	if [ -d "$dir" ]; then
 		case "$cur" in
 		refs|refs/*)
@@ -347,15 +347,14 @@ __git_refs ()
 			track=""
 			;;
 		*)
-			[[ "$cur" == ^* ]] && pfx="^"
 			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD; do
-				if [ -e "$dir/$i" ]; then echo $pfx$i; fi
+				if [ -e "$dir/$i" ]; then echo $i; fi
 			done
 			format="refname:short"
 			refs="refs/tags refs/heads refs/remotes"
 			;;
 		esac
-		git --git-dir="$dir" for-each-ref --format="$pfx%($format)" \
+		git --git-dir="$dir" for-each-ref --format="%($format)" \
 			$refs
 		if [ -n "$track" ]; then
 			# employ the heuristic used by git checkout
@@ -1009,8 +1008,8 @@ _git_branch ()
 	while [ $c -lt $cword ]; do
 		i="${words[c]}"
 		case "$i" in
-		-d|--delete|-m|--move)	only_local_ref="y" ;;
-		-r|--remotes)		has_r="y" ;;
+		-d|-m)	only_local_ref="y" ;;
+		-r)	has_r="y" ;;
 		esac
 		((c++))
 	done
@@ -1024,7 +1023,7 @@ _git_branch ()
 			--color --no-color --verbose --abbrev= --no-abbrev
 			--track --no-track --contains --merged --no-merged
 			--set-upstream-to= --edit-description --list
-			--unset-upstream --delete --move --remotes
+			--unset-upstream
 			"
 		;;
 	*)
@@ -1137,7 +1136,6 @@ _git_clone ()
 			--depth
 			--single-branch
 			--branch
-			--recurse-submodules
 			"
 		return
 		;;
@@ -1206,8 +1204,6 @@ _git_describe ()
 
 __git_diff_algorithms="myers minimal patience histogram"
 
-__git_diff_submodule_formats="log short"
-
 __git_diff_common_options="--stat --numstat --shortstat --summary
 			--patch-with-stat --name-only --name-status --color
 			--no-color --color-words --no-renames --check
@@ -1223,7 +1219,6 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
 			--dirstat --dirstat= --dirstat-by-file
 			--dirstat-by-file= --cumulative
 			--diff-algorithm=
-			--submodule --submodule=
 "
 
 _git_diff ()
@@ -1233,10 +1228,6 @@ _git_diff ()
 	case "$cur" in
 	--diff-algorithm=*)
 		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
-		return
-		;;
-	--submodule=*)
-		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
 		return
 		;;
 	--*)
@@ -1500,14 +1491,6 @@ _git_log ()
 		;;
 	--decorate=*)
 		__gitcomp "full short no" "" "${cur##--decorate=}"
-		return
-		;;
-	--diff-algorithm=*)
-		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
-		return
-		;;
-	--submodule=*)
-		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
 		return
 		;;
 	--*)
@@ -2198,7 +2181,6 @@ _git_config ()
 		format.attach
 		format.cc
 		format.coverLetter
-		format.from
 		format.headers
 		format.numbered
 		format.pretty
@@ -2473,10 +2455,6 @@ _git_show ()
 		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
 		return
 		;;
-	--submodule=*)
-		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
-		return
-		;;
 	--*)
 		__gitcomp "--pretty= --format= --abbrev-commit --oneline
 			--show-signature
@@ -2715,7 +2693,7 @@ _git_whatchanged ()
 
 _git_worktree ()
 {
-	local subcommands="add list lock prune unlock"
+	local subcommands="add list prune"
 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
 	if [ -z "$subcommand" ]; then
 		__gitcomp "$subcommands"
@@ -2726,9 +2704,6 @@ _git_worktree ()
 			;;
 		list,--*)
 			__gitcomp "--porcelain"
-			;;
-		lock,--*)
-			__gitcomp "--reason"
 			;;
 		prune,--*)
 			__gitcomp "--dry-run --expire --verbose"

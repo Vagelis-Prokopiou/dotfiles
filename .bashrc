@@ -75,52 +75,43 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-
 # You may uncomment the following lines if you want `ls' to be colorized:
-# export LS_OPTIONS='--color=auto'
-# eval "`dircolors`"
-# alias ls='ls $LS_OPTIONS'
-# alias ll='ls $LS_OPTIONS -l'
-# alias l='ls $LS_OPTIONS -lA'
-#
+eval "`dircolors`";
+# alias ls='ls --color=auto';
+# alias ll='ls --color=auto -l';
+alias l='ls --color=auto -lA';
+
+# Colored searching.
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 # Some more alias to avoid making mistakes:
 # alias rm='rm -i'
 # alias cp='cp -i'
 # alias mv='mv -i'
-alias phpstorm='sudo sh /home/va/Downloads/jetbrains/PhpStorm-162.1121.38/bin/phpstorm.sh'
-alias gc='git commit -m '
-alias gl='git log --pretty=oneline'
-alias gcf='git checkout -- '
-alias gs='git status'
-alias localhost='cd /var/www/html'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+# My aliases:
+alias phpstorm='sudo sh /home/va/Downloads/jetbrains/PhpStorm-162.1121.38/bin/phpstorm.sh';
+alias localhost='cd /var/www/html';
+alias tsini='cd /var/www/html/vhosts/tsinikopoulos/public_html/';
+alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && gulp';
+alias bnspro='cd /var/www/html/vhosts/ci_bootstrap_3/public_html/';
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+# Git stuff:
+alias gc='git commit -m ';
+# alias gl='git log --pretty=format:"%h, %ar: %s"'
+alias gl='git log --oneline';
+alias gcf='git checkout -- ';
+alias gs='git status';
+alias grh='git reset --hard';
+alias ga='git add ';
+alias gp='git pull && . ~/.bashrc';
+# Add git completion.
+source ~/git-completion.bash;
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
