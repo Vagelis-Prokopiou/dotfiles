@@ -109,7 +109,6 @@ alias gcf='git checkout -- ';
 alias gs='git status';
 alias grh='git reset --hard';
 alias ga='git add ';
-alias gp='git pull && . ~/.bashrc';
 # Add git completion.
 source ~/git-completion.bash;
 
