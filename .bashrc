@@ -1,3 +1,5 @@
+
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # Note: PS1 and umask are already set in /etc/profile. You should not
@@ -122,3 +124,18 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+# Include Drush bash customizations.
+if [ -f "/root/.drush/drush.bashrc" ] ; then
+  source /root/.drush/drush.bashrc
+fi
+
+# Include Drush completion.
+if [ -f "/root/.drush/drush.complete.sh" ] ; then
+  source /root/.drush/drush.complete.sh
+fi
+
+# Include Drush prompt customizations.
+if [ -f "/root/.drush/drush.prompt.sh" ] ; then
+  source /root/.drush/drush.prompt.sh
+fi
+
