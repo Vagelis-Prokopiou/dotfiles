@@ -47,7 +47,7 @@ sudo apt-get install qalculate -y;
 # sudo apt-get install ttf-mscorefonts-installer;
 
 # This fixes the error when using Sublime for git commits.
-sudo apt-get install libcanberra-gtk-module -y;
+# sudo apt-get install libcanberra-gtk-module -y;
 
 #sudo apt-get purge libreoffice* -y;
 #sudo apt-get purge chromium -y;
