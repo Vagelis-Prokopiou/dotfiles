@@ -106,7 +106,7 @@ sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; don
 # ----- LAMP on Debian.
 ##############################################
 # sudo apt-get -y install apache2;
-# sudo apt-get -y install mariadb-server mariadb-client;
+# sudo apt-get -y install mysql-server mysql-client;
 # sudo apt-get -y install php5 php5-mysql libapache2-mod-php5 php5-curl;
 # sudo apt-get -y install php-pear;
 # sudo apt-get -y install phpmyadmin;
