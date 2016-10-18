@@ -237,6 +237,7 @@ mkdir /home/va/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null || echo "----- Director
 IFS=' ' read -ra dbs_array <<< "$dbs"; \
 for db in "${dbs_array[@]}"; do \
     # echo "$db"_$(date +%Y-%m-%dT%H:%M).sql.gz; \
+    mysql -uroot -proot -e "TRUNCATE TABLE $db.watchdog"; \
     mysqldump -uroot -proot "$db" | gzip > /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
 done;
 echo '';
