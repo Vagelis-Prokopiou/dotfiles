@@ -43,6 +43,8 @@ sudo apt-get install p7zip-full -y;
 sudo apt-get install git -y;
 sudo apt-get install git-flow -y;
 sudo apt-get install qalculate -y;
+# Nautilus plugin for opening terminals in arbitrary paths.
+sudo apt-get install nautilus-open-terminal -y;
 # apt-get install bum -y; # bootup manager
 # sudo apt-get install ttf-mscorefonts-installer;
 
