@@ -100,7 +100,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 alias phpstorm='sudo sh /home/va/Downloads/jetbrains/PhpStorm-162.1121.38/bin/phpstorm.sh';
 alias localhost='cd /var/www/html';
 alias tsini='cd /var/www/html/vhosts/tsinikopoulos/public_html/';
-alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && gulp';
+alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo gulp';
 alias bnspro='cd /var/www/html/vhosts/ci_bootstrap_3/public_html/';
 alias update='sudo bash update.sh';
 
