@@ -223,23 +223,31 @@ sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; don
 # apt-get install openjdk-8-jdk
 # sudo update-alternatives --config java
 
-# ----- Backup all databases -----
-echo ''; \
-echo "----- Exporting the databases to /home/va/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
-echo ''; \
-# mysqldump -uroot -proot --all-databases | gzip > /home/va/Dropbox/all_databases.sql.gz;
-dbs=$(echo $( mysql -uroot -proot -e 'show databases;') | \
-sed "s/Database//g; s/information_schema//g; \
-s/performance_schema//g; \
-s/phpmyadmin//g"; \
-); \
-mkdir /home/va/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null || echo "----- Directory /home/va/Dropbox/dbs/$(date +%Y-%m-%d) already exists."; \
-IFS=' ' read -ra dbs_array <<< "$dbs"; \
-for db in "${dbs_array[@]}"; do \
-    # echo "$db"_$(date +%Y-%m-%dT%H:%M).sql.gz; \
-    mysql -uroot -proot -e "TRUNCATE TABLE $db.watchdog"; \
-    mysqldump -uroot -proot "$db" | gzip > /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
-done;
-echo '';
-echo '----- Databases exported successfully -----';
-echo '';
+# If Dropbox exits.
+if [[ -d /home/va/Dropbox/ ]]; then
+	# If folder for today does not exits, do the backup.
+	if [[ ! -d /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/ ]]; then
+		echo 'It worked!!!!!';
+
+		# ----- Backup all databases -----
+		echo ''; \
+		echo "----- Exporting the databases to /home/va/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
+		echo ''; \
+		# mysqldump -uroot -proot --all-databases | gzip > /home/va/Dropbox/all_databases.sql.gz;
+		dbs=$(echo $( mysql -uroot -proot -e 'show databases;') | \
+		sed "s/Database//g; s/information_schema//g; \
+		s/performance_schema//g; \
+		s/phpmyadmin//g"; \
+		); \
+		mkdir /home/va/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null; \
+		IFS=' ' read -ra dbs_array <<< "$dbs"; \
+		for db in "${dbs_array[@]}"; do \
+		    # echo "$db"_$(date +%Y-%m-%dT%H:%M).sql.gz; \
+		    mysql -uroot -proot -e "TRUNCATE TABLE $db.watchdog"; \
+		    mysqldump -uroot -proot "$db" | gzip > /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
+		done;
+		echo '';
+		echo '----- Databases exported successfully -----';
+		echo '';
+	fi
+fi
