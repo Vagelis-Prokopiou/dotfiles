@@ -48,7 +48,7 @@ sudo apt-get install qalculate -y;
 sudo apt-get install nautilus-open-terminal -y;
 
 # All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
-sudo apt-get install task-print-server -y;
+# sudo apt-get install task-print-server -y;
 
 # apt-get install bum -y; # bootup manager
 # sudo apt-get install ttf-mscorefonts-installer;
