@@ -103,6 +103,7 @@ alias tsini='cd /var/www/html/vhosts/tsinikopoulos/public_html/';
 alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo gulp';
 alias bnspro='cd /var/www/html/vhosts/ci_bootstrap_3/public_html/';
 alias update='sudo bash update.sh';
+alias code='sudo code --user-data-dir="~/.vscode"';
 
 # Git stuff:
 alias gc='git commit -m ';
