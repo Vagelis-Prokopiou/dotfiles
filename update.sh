@@ -44,6 +44,9 @@ sudo apt-get install git -y;
 sudo apt-get install git-flow -y;
 sudo apt-get install qalculate -y;
 
+# Import and edit pdfs in Libreoffice Draw.
+sudo apt-get install libreoffice-pdfimport -y;
+
 # Nautilus plugin for opening terminals in arbitrary paths.
 sudo apt-get install nautilus-open-terminal -y;
 
