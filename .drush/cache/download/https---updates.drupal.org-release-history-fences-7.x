@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns:dc="http://purl.org/dc/elements/1.1/">
+<title>Fences</title>
+<short_name>fences</short_name>
+<dc:creator>JohnAlbin</dc:creator>
+<type>project_module</type>
+<api_version>7.x</api_version>
+<recommended_major>1</recommended_major>
+<supported_majors>1,2</supported_majors>
+<default_major>1</default_major>
+<project_status>published</project_status>
+<link>https://www.drupal.org/project/fences</link>
+<terms><term><name>Projects</name><value>Modules</value></term><term><name>Maintenance status</name><value>Actively maintained</value></term><term><name>Development status</name><value>Under active development</value></term></terms>
+<releases>
+ <release>
+  <name>fences 7.x-2.0-beta1</name>
+  <version>7.x-2.0-beta1</version>
+  <tag>7.x-2.0-beta1</tag>
+  <version_major>2</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>beta1</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/fences/releases/7.x-2.0-beta1</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/fences-7.x-2.0-beta1.tar.gz</download_link>
+  <date>1443499439</date>
+  <mdhash>36324acb06e5ad266ee1baa85eae29b9</mdhash>
+  <filesize>19316</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-2.0-beta1.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>36324acb06e5ad266ee1baa85eae29b9</md5>
+    <size>19316</size>
+    <filedate>1443499439</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-2.0-beta1.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>bab8c578cc79366c51ded9ec3c33bd4e</md5>
+    <size>47109</size>
+    <filedate>1443499439</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+   <term><name>Release type</name><value>New features</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>fences 7.x-1.2</name>
+  <version>7.x-1.2</version>
+  <tag>7.x-1.2</tag>
+  <version_major>1</version_major>
+  <version_patch>2</version_patch>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/fences/releases/7.x-1.2</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/fences-7.x-1.2.tar.gz</download_link>
+  <date>1443071039</date>
+  <mdhash>2e05d27a5b0356fde821477775a21bee</mdhash>
+  <filesize>18637</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.2.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>2e05d27a5b0356fde821477775a21bee</md5>
+    <size>18637</size>
+    <filedate>1443071039</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.2.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>fc2a30d398b9eb1421f7c26b319bc9fa</md5>
+    <size>46613</size>
+    <filedate>1443071039</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>fences 7.x-1.1</name>
+  <version>7.x-1.1</version>
+  <tag>7.x-1.1</tag>
+  <version_major>1</version_major>
+  <version_patch>1</version_patch>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/fences/releases/7.x-1.1</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/fences-7.x-1.1.tar.gz</download_link>
+  <date>1442843939</date>
+  <mdhash>aa12dcdd776bc70a268dcdc0ff00566a</mdhash>
+  <filesize>18574</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.1.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>aa12dcdd776bc70a268dcdc0ff00566a</md5>
+    <size>18574</size>
+    <filedate>1442843939</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.1.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>ae8e103cc81a3c44a621866ae5b3af7d</md5>
+    <size>46528</size>
+    <filedate>1442843939</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+   <term><name>Release type</name><value>New features</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>fences 7.x-1.0</name>
+  <version>7.x-1.0</version>
+  <tag>7.x-1.0</tag>
+  <version_major>1</version_major>
+  <version_patch>0</version_patch>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/fences/releases/7.x-1.0</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/fences-7.x-1.0.tar.gz</download_link>
+  <date>1335373578</date>
+  <mdhash>a06b996882a4cf18691fb7df9cc5be40</mdhash>
+  <filesize>18375</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.0.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>a06b996882a4cf18691fb7df9cc5be40</md5>
+    <size>18375</size>
+    <filedate>1335373578</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.0.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>e8e174b98f29c8b2b1035f4648118ed5</md5>
+    <size>44466</size>
+    <filedate>1335373578</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>fences 7.x-1.0-beta2</name>
+  <version>7.x-1.0-beta2</version>
+  <tag>7.x-1.0-beta2</tag>
+  <version_major>1</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>beta2</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/fences/releases/7.x-1.0-beta2</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/fences-7.x-1.0-beta2.tar.gz</download_link>
+  <date>1334091646</date>
+  <mdhash>dea1e331b6f6624e825b6edb25c069d0</mdhash>
+  <filesize>17115</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.0-beta2.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>dea1e331b6f6624e825b6edb25c069d0</md5>
+    <size>17115</size>
+    <filedate>1334091646</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.0-beta2.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>9aff14fb82700f3f56db90f2c555c933</md5>
+    <size>44218</size>
+    <filedate>1334091646</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>fences 7.x-1.0-beta1</name>
+  <version>7.x-1.0-beta1</version>
+  <tag>7.x-1.0-beta1</tag>
+  <version_major>1</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>beta1</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/fences/releases/7.x-1.0-beta1</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/fences-7.x-1.0-beta1.tar.gz</download_link>
+  <date>1321365032</date>
+  <mdhash>f07ce34406bc2796a490b90ea25a3eb6</mdhash>
+  <filesize>16621</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.0-beta1.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>f07ce34406bc2796a490b90ea25a3eb6</md5>
+    <size>16621</size>
+    <filedate>1321365032</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.0-beta1.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>3b789eacb09590b195a0e474dd88263d</md5>
+    <size>43092</size>
+    <filedate>1321365032</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>fences 7.x-2.x-dev</name>
+  <version>7.x-2.x-dev</version>
+  <tag>7.x-2.x</tag>
+  <version_major>2</version_major>
+  <version_extra>dev</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/fences/releases/7.x-2.x-dev</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/fences-7.x-2.x-dev.tar.gz</download_link>
+  <date>1443500039</date>
+  <mdhash>c63bb6c22262f39879f9ff03f3746194</mdhash>
+  <filesize>19336</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-2.x-dev.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>c63bb6c22262f39879f9ff03f3746194</md5>
+    <size>19336</size>
+    <filedate>1443500039</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-2.x-dev.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>922448ca442c33f30da3e4c3e32765a9</md5>
+    <size>47129</size>
+    <filedate>1443500039</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>fences 7.x-1.x-dev</name>
+  <version>7.x-1.x-dev</version>
+  <tag>7.x-1.x</tag>
+  <version_major>1</version_major>
+  <version_extra>dev</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/fences/releases/7.x-1.x-dev</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/fences-7.x-1.x-dev.tar.gz</download_link>
+  <date>1443496139</date>
+  <mdhash>fcb805ebfe95f286acdb2388ce825e6c</mdhash>
+  <filesize>18688</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.x-dev.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>fcb805ebfe95f286acdb2388ce825e6c</md5>
+    <size>18688</size>
+    <filedate>1443496139</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/fences-7.x-1.x-dev.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>914aa40b90379003bb210bec6bbf9624</md5>
+    <size>46649</size>
+    <filedate>1443496139</filedate>
+   </file>
+  </files>
+ </release>
+</releases>
+</project>

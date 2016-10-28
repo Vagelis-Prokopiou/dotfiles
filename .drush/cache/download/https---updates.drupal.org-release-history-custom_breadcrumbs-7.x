@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns:dc="http://purl.org/dc/elements/1.1/">
+<title>Custom Breadcrumbs</title>
+<short_name>custom_breadcrumbs</short_name>
+<dc:creator>colan</dc:creator>
+<type>project_module</type>
+<api_version>7.x</api_version>
+<recommended_major>2</recommended_major>
+<supported_majors>1,2</supported_majors>
+<default_major>1</default_major>
+<project_status>published</project_status>
+<link>https://www.drupal.org/project/custom_breadcrumbs</link>
+<terms><term><name>Projects</name><value>Modules</value></term><term><name>Maintenance status</name><value>Minimally maintained</value></term><term><name>Development status</name><value>Under active development</value></term><term><name>Module categories</name><value>Content Display</value></term><term><name>Module categories</name><value>Path Management</value></term><term><name>Module categories</name><value>Site Navigation</value></term></terms>
+<releases>
+ <release>
+  <name>custom_breadcrumbs 7.x-2.0-beta1</name>
+  <version>7.x-2.0-beta1</version>
+  <tag>7.x-2.0-beta1</tag>
+  <version_major>2</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>beta1</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/custom_breadcrumbs/releases/7.x-2.0-beta1</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-beta1.tar.gz</download_link>
+  <date>1410287331</date>
+  <mdhash>422763aa0261af320ad75d30b9284ca1</mdhash>
+  <filesize>56939</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-beta1.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>422763aa0261af320ad75d30b9284ca1</md5>
+    <size>56939</size>
+    <filedate>1410287331</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-beta1.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>9e240ef4ae6d9549aa03f85610c64135</md5>
+    <size>75743</size>
+    <filedate>1410287331</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Security update</value></term>
+   <term><name>Release type</name><value>New features</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>custom_breadcrumbs 7.x-2.0-alpha3</name>
+  <version>7.x-2.0-alpha3</version>
+  <tag>7.x-2.0-alpha3</tag>
+  <version_major>2</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>alpha3</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/custom_breadcrumbs/releases/7.x-2.0-alpha3</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-alpha3.tar.gz</download_link>
+  <date>1353872502</date>
+  <mdhash>fa6f55a3827758727d6005eb9555095c</mdhash>
+  <filesize>57499</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-alpha3.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>fa6f55a3827758727d6005eb9555095c</md5>
+    <size>57499</size>
+    <filedate>1353872502</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-alpha3.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>2b0ec928459321bfc043bf7d6d0f933f</md5>
+    <size>75048</size>
+    <filedate>1353872502</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>custom_breadcrumbs 7.x-2.0-alpha2</name>
+  <version>7.x-2.0-alpha2</version>
+  <tag>7.x-2.0-alpha2</tag>
+  <version_major>2</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>alpha2</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/custom_breadcrumbs/releases/7.x-2.0-alpha2</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-alpha2.tar.gz</download_link>
+  <date>1353732105</date>
+  <mdhash>70a8d1b66365fc3605b88272af832ccc</mdhash>
+  <filesize>57358</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-alpha2.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>70a8d1b66365fc3605b88272af832ccc</md5>
+    <size>57358</size>
+    <filedate>1353732105</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-alpha2.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>6927b4031eb53de7f440ea3fec0d55fd</md5>
+    <size>74946</size>
+    <filedate>1353732105</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>custom_breadcrumbs 7.x-2.0-alpha1</name>
+  <version>7.x-2.0-alpha1</version>
+  <tag>7.x-2.0-alpha1</tag>
+  <version_major>2</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>alpha1</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/custom_breadcrumbs/releases/7.x-2.0-alpha1</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-alpha1.tar.gz</download_link>
+  <date>1353713204</date>
+  <mdhash>f5dd238e0c9e99ddd1488b506185c71e</mdhash>
+  <filesize>57178</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-alpha1.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>f5dd238e0c9e99ddd1488b506185c71e</md5>
+    <size>57178</size>
+    <filedate>1353713204</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.0-alpha1.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>0d5e7793782aa39449c91b693c0d5d65</md5>
+    <size>74752</size>
+    <filedate>1353713204</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>custom_breadcrumbs 7.x-1.0-alpha1</name>
+  <version>7.x-1.0-alpha1</version>
+  <tag>7.x-1.0-alpha1</tag>
+  <version_major>1</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>alpha1</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/custom_breadcrumbs/releases/7.x-1.0-alpha1</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-1.0-alpha1.tar.gz</download_link>
+  <date>1294601540</date>
+  <mdhash>1e8e3793a8903efe5e0905ad0c04ea3b</mdhash>
+  <filesize>10750</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-1.0-alpha1.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>1e8e3793a8903efe5e0905ad0c04ea3b</md5>
+    <size>10750</size>
+    <filedate>1294601540</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-1.0-alpha1.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>d7a25738bda4fd7ddd0e3fbfce77708b</md5>
+    <size>12716</size>
+    <filedate>1294601540</filedate>
+   </file>
+  </files>
+ </release>
+ <release>
+  <name>custom_breadcrumbs 7.x-2.x-dev</name>
+  <version>7.x-2.x-dev</version>
+  <tag>7.x-2.x</tag>
+  <version_major>2</version_major>
+  <version_extra>dev</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/custom_breadcrumbs/releases/7.x-2.x-dev</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.x-dev.tar.gz</download_link>
+  <date>1410287331</date>
+  <mdhash>22d73e77450cccbc2830a761598cc89f</mdhash>
+  <filesize>56950</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.x-dev.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>22d73e77450cccbc2830a761598cc89f</md5>
+    <size>56950</size>
+    <filedate>1410287331</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-2.x-dev.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>7a419f5c89d6a171d9244d0b77e81762</md5>
+    <size>75776</size>
+    <filedate>1410287331</filedate>
+   </file>
+  </files>
+ </release>
+ <release>
+  <name>custom_breadcrumbs 7.x-1.x-dev</name>
+  <version>7.x-1.x-dev</version>
+  <tag>7.x-1.x</tag>
+  <version_major>1</version_major>
+  <version_extra>dev</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/custom_breadcrumbs/releases/7.x-1.x-dev</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-1.x-dev.tar.gz</download_link>
+  <date>1380568433</date>
+  <mdhash>2d9bf4a2f248e53da3dac8f387292946</mdhash>
+  <filesize>12896</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-1.x-dev.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>2d9bf4a2f248e53da3dac8f387292946</md5>
+    <size>12896</size>
+    <filedate>1380568433</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/custom_breadcrumbs-7.x-1.x-dev.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>8d8fe86b686ab2fd28cbb82abf7afadc</md5>
+    <size>15786</size>
+    <filedate>1380568433</filedate>
+   </file>
+  </files>
+ </release>
+</releases>
+</project>

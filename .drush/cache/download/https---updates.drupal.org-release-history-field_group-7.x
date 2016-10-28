@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns:dc="http://purl.org/dc/elements/1.1/">
+<title>Field Group</title>
+<short_name>field_group</short_name>
+<dc:creator>Stalski</dc:creator>
+<type>project_module</type>
+<api_version>7.x</api_version>
+<recommended_major>1</recommended_major>
+<supported_majors>1</supported_majors>
+<default_major>1</default_major>
+<project_status>published</project_status>
+<link>https://www.drupal.org/project/field_group</link>
+<terms><term><name>Projects</name><value>Modules</value></term><term><name>Maintenance status</name><value>Actively maintained</value></term><term><name>Development status</name><value>Under active development</value></term><term><name>Module categories</name><value>Content</value></term><term><name>Module categories</name><value>Content Construction Kit (CCK)</value></term><term><name>Module categories</name><value>Fields</value></term><term><name>Module categories</name><value>Utility</value></term></terms>
+<releases>
+ <release>
+  <name>field_group 7.x-1.5</name>
+  <version>7.x-1.5</version>
+  <tag>7.x-1.5</tag>
+  <version_major>1</version_major>
+  <version_patch>5</version_patch>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-1.5</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-1.5.tar.gz</download_link>
+  <date>1452033539</date>
+  <mdhash>8d91e0f3cc8106deefe038d5fc07d3e6</mdhash>
+  <filesize>51465</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.5.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>8d91e0f3cc8106deefe038d5fc07d3e6</md5>
+    <size>51465</size>
+    <filedate>1452033539</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.5.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>d4dfe43ac89ecb002c61bc99da413758</md5>
+    <size>60825</size>
+    <filedate>1452033539</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Security update</value></term>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>field_group 7.x-1.4</name>
+  <version>7.x-1.4</version>
+  <tag>7.x-1.4</tag>
+  <version_major>1</version_major>
+  <version_patch>4</version_patch>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-1.4</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-1.4.tar.gz</download_link>
+  <date>1401918527</date>
+  <mdhash>fa268e0c23b2af31ed560aa03a986cf1</mdhash>
+  <filesize>51303</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.4.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>fa268e0c23b2af31ed560aa03a986cf1</md5>
+    <size>51303</size>
+    <filedate>1401918527</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.4.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>fc40e9cdc8ce45ceb61c73c260a140c0</md5>
+    <size>59247</size>
+    <filedate>1401918527</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>field_group 7.x-1.3</name>
+  <version>7.x-1.3</version>
+  <tag>7.x-1.3</tag>
+  <version_major>1</version_major>
+  <version_patch>3</version_patch>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-1.3</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-1.3.tar.gz</download_link>
+  <date>1380124361</date>
+  <mdhash>6ea6a2b8a15c9c68d981f5b0ae6f881c</mdhash>
+  <filesize>50593</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.3.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>6ea6a2b8a15c9c68d981f5b0ae6f881c</md5>
+    <size>50593</size>
+    <filedate>1380124361</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.3.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>c966ccad44f2f6245f703e772d7a5804</md5>
+    <size>58250</size>
+    <filedate>1380124361</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>field_group 7.x-1.2</name>
+  <version>7.x-1.2</version>
+  <tag>7.x-1.2</tag>
+  <version_major>1</version_major>
+  <version_patch>2</version_patch>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-1.2</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-1.2.tar.gz</download_link>
+  <date>1377806210</date>
+  <mdhash>ea1b1af0b09f7578cffc261c8c5203df</mdhash>
+  <filesize>49436</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.2.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>ea1b1af0b09f7578cffc261c8c5203df</md5>
+    <size>49436</size>
+    <filedate>1377806210</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.2.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>138e5486b5e35804b8acbc07ec88b4b0</md5>
+    <size>56137</size>
+    <filedate>1377806210</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>field_group 7.x-1.1</name>
+  <version>7.x-1.1</version>
+  <tag>7.x-1.1</tag>
+  <version_major>1</version_major>
+  <version_patch>1</version_patch>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-1.1</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-1.1.tar.gz</download_link>
+  <date>1319051133</date>
+  <mdhash>4f02e7b10aff66e3bcdae002d6b80ec6</mdhash>
+  <filesize>43065</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.1.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>4f02e7b10aff66e3bcdae002d6b80ec6</md5>
+    <size>43065</size>
+    <filedate>1319051133</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.1.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>8a521b90770fd5a89c1705dc55bb131b</md5>
+    <size>48960</size>
+    <filedate>1319051133</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+   <term><name>Release type</name><value>New features</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>field_group 7.x-1.0</name>
+  <version>7.x-1.0</version>
+  <tag>7.x-1.0</tag>
+  <version_major>1</version_major>
+  <version_patch>0</version_patch>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-1.0</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-1.0.tar.gz</download_link>
+  <date>1306266416</date>
+  <mdhash>5f549fbc7cbfa575a11a9d705a3df597</mdhash>
+  <filesize>33471</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.0.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>5f549fbc7cbfa575a11a9d705a3df597</md5>
+    <size>33471</size>
+    <filedate>1306266416</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.0.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>c33bde8a04aab775ed9d8b37e97b0cdd</md5>
+    <size>38307</size>
+    <filedate>1306266416</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>field_group 7.x-1.0-rc2</name>
+  <version>7.x-1.0-rc2</version>
+  <tag>7.x-1.0-rc2</tag>
+  <version_major>1</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>rc2</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-1.0-rc2</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-1.0-rc2.tar.gz</download_link>
+  <date>1300283167</date>
+  <mdhash>959768b52b8d4c04be0e8f8e93f4af1b</mdhash>
+  <filesize>32537</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.0-rc2.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>959768b52b8d4c04be0e8f8e93f4af1b</md5>
+    <size>32537</size>
+    <filedate>1300283167</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.0-rc2.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>f8dd5d6cb6af8e3e5f41d9ebd422025a</md5>
+    <size>37383</size>
+    <filedate>1300283167</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>field_group 7.x-1.0-rc1</name>
+  <version>7.x-1.0-rc1</version>
+  <tag>7.x-1.0-rc1</tag>
+  <version_major>1</version_major>
+  <version_patch>0</version_patch>
+  <version_extra>rc1</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-1.0-rc1</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-1.0-rc1.tar.gz</download_link>
+  <date>1295392936</date>
+  <mdhash>aaa22e6444d2377e9673e5cfd6f21095</mdhash>
+  <filesize>30414</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.0-rc1.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>aaa22e6444d2377e9673e5cfd6f21095</md5>
+    <size>30414</size>
+    <filedate>1295392936</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.0-rc1.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>ff538d2170d42c680ce3d2a2465aeebf</md5>
+    <size>36046</size>
+    <filedate>1295392936</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>field_group 7.x-2.x-dev</name>
+  <version>7.x-2.x-dev</version>
+  <tag>7.x-2.x</tag>
+  <version_major>2</version_major>
+  <version_extra>dev</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-2.x-dev</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-2.x-dev.tar.gz</download_link>
+  <date>1380578862</date>
+  <mdhash>3ff6c75931a1668be98876378b7c2ebf</mdhash>
+  <filesize>41104</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-2.x-dev.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>3ff6c75931a1668be98876378b7c2ebf</md5>
+    <size>41104</size>
+    <filedate>1380578862</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-2.x-dev.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>a7a6d3594078aa72d13e5a36a85abcbd</md5>
+    <size>46183</size>
+    <filedate>1380578862</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>New features</value></term>
+  </terms>
+ </release>
+ <release>
+  <name>field_group 7.x-1.x-dev</name>
+  <version>7.x-1.x-dev</version>
+  <tag>7.x-1.x</tag>
+  <version_major>1</version_major>
+  <version_extra>dev</version_extra>
+  <status>published</status>
+  <release_link>https://www.drupal.org/project/field_group/releases/7.x-1.x-dev</release_link>
+  <download_link>https://ftp.drupal.org/files/projects/field_group-7.x-1.x-dev.tar.gz</download_link>
+  <date>1456658040</date>
+  <mdhash>f5a89591511add8a229d3da04a45009a</mdhash>
+  <filesize>51527</filesize>
+  <files>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.x-dev.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>f5a89591511add8a229d3da04a45009a</md5>
+    <size>51527</size>
+    <filedate>1456658040</filedate>
+   </file>
+   <file>
+    <url>https://ftp.drupal.org/files/projects/field_group-7.x-1.x-dev.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>b44d761ae2bb88af9f104e43a524d02d</md5>
+    <size>60897</size>
+    <filedate>1456658040</filedate>
+   </file>
+  </files>
+ </release>
+</releases>
+</project>
