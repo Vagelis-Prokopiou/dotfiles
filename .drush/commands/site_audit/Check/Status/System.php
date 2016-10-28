@@ -69,7 +69,7 @@ class SiteAuditCheckStatusSystem extends SiteAuditCheckAbstract {
         $class = 'error';
       }
 
-      if (drush_get_option('html')) {
+      if (drush_get_option('html') || drush_get_option('json')) {
         $value = isset($requirement['value']) && $requirement['value'] ? $requirement['value'] : '&nbsp;';
         $uri = drush_get_context('DRUSH_URI');
         // Unknown URI - strip all links, but leave formatting.
@@ -87,6 +87,11 @@ class SiteAuditCheckStatusSystem extends SiteAuditCheckAbstract {
           'value' => $value,
           'class' => $class,
         );
+        if (drush_get_option('json')) {
+          foreach ($item as $key => $value) {
+            $item[$key] = strip_tags($value);
+          }
+        }
       }
       else {
         $item = strip_tags($requirement['title']) . ': ' . $severity;
@@ -112,11 +117,15 @@ class SiteAuditCheckStatusSystem extends SiteAuditCheckAbstract {
       $ret_val .= '</tbody>';
       $ret_val .= '</table>';
     }
+    elseif (drush_get_option('json')) {
+      foreach ($items as $item) {
+        unset($item['class']);
+        $ret_val[] = $item;
+      }
+    }
     else {
       $separator = PHP_EOL;
-      if (!drush_get_option('json')) {
-        $separator .= str_repeat(' ', 4);
-      }
+      $separator .= str_repeat(' ', 4);
       $ret_val = implode($separator, $items);
     }
     return $ret_val;
@@ -140,20 +149,12 @@ class SiteAuditCheckStatusSystem extends SiteAuditCheckAbstract {
   public function calculateScore() {
     // See system/system.admin.inc function system_status().
     // Load .install files.
-    include_once DRUPAL_ROOT . '/core/includes/install.inc';
+    include_once DRUPAL_ROOT . '/includes/install.inc';
     drupal_load_updates();
 
     // Check run-time requirements and status information.
-    $this->registry['requirements'] = \Drupal::moduleHandler()->invokeAll('requirements', array('runtime'));
-    usort($this->registry['requirements'], function($a, $b) {
-      if (!isset($a['weight'])) {
-        if (!isset($b['weight'])) {
-          return strcmp($a['title'], $b['title']);
-        }
-        return -$b['weight'];
-      }
-      return isset($b['weight']) ? $a['weight'] - $b['weight'] : $a['weight'];
-    });
+    $this->registry['requirements'] = module_invoke_all('requirements', 'runtime');
+    usort($this->registry['requirements'], '_system_sort_requirements');
 
     $this->percentOverride = 0;
     $requirements_with_severity = array();

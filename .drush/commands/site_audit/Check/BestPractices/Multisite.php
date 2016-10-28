@@ -49,29 +49,14 @@ class SiteAuditCheckBestPracticesMultisite extends SiteAuditCheckAbstract {
   /**
    * Implements \SiteAudit\Check\Abstract\getResultWarn().
    */
-  public function getResultWarn() {
-    if ($this->registry['multisite_enabled']) {
-      return dt('sites/sites.php is present but no multisite directories are present.');
-    }
-    else {
-      return dt('Multisite directories are present but sites/sites.php is not present.');
-    }
-  }
+  public function getResultWarn() {}
 
   /**
    * Implements \SiteAudit\Check\Abstract\getAction().
    */
   public function getAction() {
     if ($this->score == SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL) {
-      return dt('See https://pantheon.io/blog/drupal-multisite-much-ado-about-drupal-multisite for details.');
-    }
-    if ($this->score == SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN) {
-      if ($this->registry['multisite_enabled']) {
-        return dt('See https://www.drupal.org/node/2297419 for details on how to use multisite feature in Drupal 8.');
-      }
-      else {
-        return dt('Inside the sites/ directory, copy example.sites.php to sites.php to create the configuration. See https://www.drupal.org/node/2297419 for details.');
-      }
+      return dt('See https://www.getpantheon.com/blog/much-ado-about-drupal-multisite for details.');
     }
   }
 
@@ -92,25 +77,18 @@ class SiteAuditCheckBestPracticesMultisite extends SiteAuditCheckAbstract {
         'README.txt',
         '.svn',
         '.DS_Store',
-      ))
-      ) {
+      ))) {
         if (is_dir($drupal_root . '/sites/' . $entry)) {
           $this->registry['multisites'][] = $entry;
         }
       }
     }
     closedir($handle);
-    if ($this->registry['multisite_enabled']) {
+    if (!empty($this->registry['multisites'])) {
       if (drush_get_option('vendor') == 'pantheon') {
         return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;
       }
-      if (!empty($this->registry['multisites'])) {
-        return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
-      }
-      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN;
-    }
-    elseif (!empty($this->registry['multisites'])) {
-      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN;
+      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
     }
     return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
   }

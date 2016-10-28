@@ -43,7 +43,7 @@ class SiteAuditCheckCachePageExpire extends SiteAuditCheckAbstract {
   public function getResultPass() {
     global $conf;
     return dt('Expiration of cached pages is set to @minutes min.', array(
-      '@minutes' => round(\Drupal::config('system.performance')->get('cache.page.max_age') / 60),
+      '@minutes' => round($conf['page_cache_maximum_age'] / 60),
     ));
   }
 
@@ -53,7 +53,7 @@ class SiteAuditCheckCachePageExpire extends SiteAuditCheckAbstract {
   public function getResultWarn() {
     global $conf;
     return dt('Expiration of cached pages only set to @minutes min.', array(
-      '@minutes' => round(\Drupal::config('system.performance')->get('cache.page.max_age') / 60),
+      '@minutes' => round($conf['page_cache_maximum_age'] / 60),
     ));
   }
 
@@ -70,14 +70,14 @@ class SiteAuditCheckCachePageExpire extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    $config = \Drupal::config('system.performance')->get('cache.page.max_age');
-    if ($config == 0) {
+    global $conf;
+    if (!isset($conf['page_cache_maximum_age']) || !$conf['page_cache_maximum_age']) {
       if (site_audit_env_is_dev()) {
         return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
       }
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;
     }
-    elseif ($config >= 900) {
+    elseif ($conf['page_cache_maximum_age'] >= 900) {
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
     }
     return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN;

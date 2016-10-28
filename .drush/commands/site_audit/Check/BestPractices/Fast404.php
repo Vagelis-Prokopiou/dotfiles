@@ -44,7 +44,7 @@ class SiteAuditCheckBestPracticesFast404 extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\getResultWarn().
    */
   public function getResultWarn() {
-    return dt('Fast 404 pages are not enabled for any path.');
+    return dt('Fast 404 pages are not enabled.');
   }
 
   /**
@@ -52,7 +52,7 @@ class SiteAuditCheckBestPracticesFast404 extends SiteAuditCheckAbstract {
    */
   public function getAction() {
     if ($this->score == SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN) {
-      return dt('See https://github.com/drupal/drupal/blob/8.0.x/sites/default/default.settings.php#L572 for details on how to implement.');
+      return dt('See https://drupal.org/node/1313592 and default.settings.php for details on how to implement.');
     }
   }
 
@@ -60,8 +60,8 @@ class SiteAuditCheckBestPracticesFast404 extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    $config = \Drupal::config('system.performance');
-    if ($config->get('fast_404.enabled') && trim($config->get('fast_404.paths')) != '') {
+    global $conf;
+    if (isset($conf['404_fast_html']) && $conf['404_fast_html']) {
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
     }
     return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN;

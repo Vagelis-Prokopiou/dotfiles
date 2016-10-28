@@ -37,23 +37,19 @@ class SiteAuditCheckSecurityMenuRouter extends SiteAuditCheckAbstract {
         $ret_val .= '<table class="table table-condensed">';
         $ret_val .= '<thead><tr><th>' . dt('Path') . '</th><th>' . dt('Reason') . '</th></thead>';
         $ret_val .= '<tbody>';
-        foreach ($this->registry['menu_router'] as $path => $malicious_callbacks) {
-          foreach ($malicious_callbacks as $malicious_callback) {
-            $ret_val .= '<tr><td>' . $path . '</td><td>' . $malicious_callback . '</td></tr>';
-          }
+        foreach ($this->registry['menu_router'] as $path => $reason) {
+          $ret_val .= '<tr><td>' . $path . '</td><td>' . $reason . '</td></tr>';
         }
         $ret_val .= '</tbody>';
         $ret_val .= '</table>';
       }
       else {
-        foreach ($this->registry['menu_router'] as $path => $malicious_callbacks) {
-          foreach ($malicious_callbacks as $malicious_callback) {
-            $ret_val .= PHP_EOL;
-            if (!drush_get_option('json')) {
-              $ret_val .= str_repeat(' ', 6);
-            }
-            $ret_val .= '- ' . $path . ': ' . $malicious_callback;
+        foreach ($this->registry['menu_router'] as $path => $reason) {
+          $ret_val .= PHP_EOL;
+          if (!drush_get_option('json')) {
+            $ret_val .= str_repeat(' ', 6);
           }
+          $ret_val .= '- ' . $path . ': ' . $reason;
         }
       }
     }
@@ -82,7 +78,7 @@ class SiteAuditCheckSecurityMenuRouter extends SiteAuditCheckAbstract {
    */
   public function getAction() {
     if ($this->score == SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL) {
-      return dt('Delete the file containing the offending menu_router entries, clear the site caches, update your Drupal site code, and check your entire codebase for questionable code using a tool like the Hacked! module.');
+      return dt('Delete the offending entries from your menu_router, delete the target file, update your Drupal site code, and check your entire codebase for questionable code using a tool like the Hacked! module.');
     }
   }
 
@@ -141,6 +137,7 @@ class SiteAuditCheckSecurityMenuRouter extends SiteAuditCheckAbstract {
       'sqlite_create_aggregate' => 'can specify callback function',
       'sqlite_create_function' => 'can specify callback function',
       'phpinfo' => 'information disclosure',
+      'posix_mkfifo' => 'information disclosure',
       'posix_getlogin' => 'information disclosure',
       'posix_ttyname' => 'information disclosure',
       'getenv' => 'information disclosure',
@@ -261,31 +258,38 @@ class SiteAuditCheckSecurityMenuRouter extends SiteAuditCheckAbstract {
       'php_strip_whitespace' => 'reads files',
       'get_meta_tags' => 'reads files',
     );
-    $all_routes = \Drupal::service('router.route_provider')->getAllRoutes();
-    $callback_keys = array(
-      '_controller',
-      '_title_callback',
+    $columns = array(
+      'access',
+      'page',
+      'title',
+      'theme',
     );
-    foreach ($all_routes as $route) {
-      $defaults = $route->getDefaults();
-      foreach ($callback_keys as $key) {
-        if (isset($defaults[$key]) && in_array($defaults[$key], array_keys($dangerous_callbacks))) {
-          $callback = $defaults[$key];
-          $parameters = (new \ReflectionFunction($callback))->getParameters();
-          $parameters = array_map(function($parameter) {
-            return $parameter->name;
-          }, $parameters);
-          $passed_arguments = array_intersect($parameters, array_keys($defaults));
-          $arguments = array();
-          foreach ($passed_arguments as $argument) {
-            $arguments[] = $argument . '=' . $defaults[$argument];
-          }
-          $this->registry['menu_router'][$route->getPath()][] = $key . ' "' . $callback . '" (' . $dangerous_callbacks[$callback] . ') with the following arguments: "' . implode(',', $arguments) . '"';
+    $sql_query = 'SELECT path';
+    foreach ($columns as $column) {
+      $sql_query .= ', ' . $column . '_callback, ';
+      $sql_query .= $column . '_arguments';
+    }
+    $sql_query .= ' FROM {menu_router} WHERE ';
+    $callback_sql = array();
+    foreach ($columns as $column) {
+      $callback_sql[] = $column . '_callback IN (:callbacks) ';
+    }
+    $sql_query .= implode('OR ', $callback_sql);
+
+    $result = db_query($sql_query, array(
+      ':callbacks' => array_keys($dangerous_callbacks),
+    ));
+    if (!$result->rowCount()) {
+      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
+    }
+    foreach ($result as $row) {
+      foreach ($columns as $column) {
+        $callback = $column . '_callback';
+        $arguments = $column . '_arguments';
+        if ($row->$callback) {
+          $this->registry['menu_router'][$row->path] = $callback . ' "' . $row->$callback . '" (' . $dangerous_callbacks[$row->$callback] . ') with the following value: "' . check_plain($row->$arguments) . '"';
         }
       }
-    }
-    if (empty($this->registry['menu_router'])) {
-      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
     }
     return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;
   }

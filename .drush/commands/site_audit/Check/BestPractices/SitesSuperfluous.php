@@ -72,8 +72,6 @@ class SiteAuditCheckBestPracticesSitesSuperfluous extends SiteAuditCheckAbstract
         'default',
         'all',
         'example.sites.php',
-        'development.services.yml',
-        'example.settings.local.php',
         'README.txt',
         '.DS_Store',
       ))) {

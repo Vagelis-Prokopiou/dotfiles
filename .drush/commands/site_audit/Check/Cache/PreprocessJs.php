@@ -62,8 +62,8 @@ class SiteAuditCheckCachePreprocessJs extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    $config = \Drupal::config('system.performance')->get('js.preprocess');
-    if ($config) {
+    global $conf;
+    if ($conf['preprocess_js']) {
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
     }
     if (site_audit_env_is_dev()) {

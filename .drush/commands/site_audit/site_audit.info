@@ -1,8 +1,8 @@
-site_audit_version=2.1
+site_audit_version=1.16
 
 ; Information added by Drupal.org packaging script on 2016-04-24
-version = "8.x-2.1"
-core = "8.x"
+version = "7.x-1.16"
+core = "7.x"
 project = "site_audit"
-datestamp = "1461470942"
+datestamp = "1461470946"
 

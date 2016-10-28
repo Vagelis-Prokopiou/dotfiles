@@ -8,6 +8,7 @@
  * Class SiteAuditReportAbstract.
  */
 abstract class SiteAuditReportAbstract {
+
   /**
    * Individual check objects.
    *
@@ -44,7 +45,7 @@ abstract class SiteAuditReportAbstract {
   protected $hasFail = FALSE;
 
   /**
-   * Container that's passed between each Check.
+   * Container that's passed between each SiteAuditCheckAbstract.
    *
    * @var array
    */
@@ -64,6 +65,8 @@ abstract class SiteAuditReportAbstract {
    * Constructor; loads and executes checks based on the name of this report.
    */
   public function __construct() {
+    global $conf;
+
     $base_class_name = 'SiteAuditCheck' . $this->getReportName();
     $percent_override = NULL;
 
@@ -88,11 +91,10 @@ abstract class SiteAuditReportAbstract {
       }
       return drush_set_error('SITE_AUDIT_NO_CHECKS', dt('No checks are available!'));
     }
-    $config = \Drupal::config('site_audit');
+
     foreach ($checks_to_perform as $check_name) {
       $class_name = $base_class_name . $check_name;
-      $opt_out = $config->get('opt_out.' . $this->getReportName() . $check_name) != NULL;
-      $check = new $class_name($this->registry, $opt_out);
+      $check = new $class_name($this->registry, isset($conf['site_audit']['opt_out'][$this->getReportName() . $check_name]));
 
       // Calculate score.
       if ($check->getScore() != SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO) {
@@ -338,7 +340,7 @@ abstract class SiteAuditReportAbstract {
     // Guess the name of the Drush command.
     $command_name_pieces = preg_split('/(?=[A-Z])/', get_called_class());
     unset($command_name_pieces[0], $command_name_pieces[1], $command_name_pieces[3]);
-    $command_name = strtolower(implode('-', $command_name_pieces));
+    $command_name = strtolower(implode('_', $command_name_pieces));
     $command = $commands[$command_name];
 
     drush_command_invoke_all_ref('drush_command_alter', $command);

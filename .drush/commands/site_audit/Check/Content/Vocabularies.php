@@ -88,11 +88,14 @@ class SiteAuditCheckContentVocabularies extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    $vocabularies = \Drupal::entityManager()->getBundleInfo("taxonomy_term");
-
-    $sql_query  = 'SELECT COUNT(tid) AS count, vid ';
-    $sql_query .= 'FROM {taxonomy_term_field_data} ';
-    $sql_query .= 'GROUP BY vid ';
+    if (!module_exists('taxonomy')) {
+      $this->abort = TRUE;
+      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
+    }
+    $sql_query  = 'SELECT COUNT(tid) AS count, {taxonomy_vocabulary}.name AS name ';
+    $sql_query .= 'FROM {taxonomy_vocabulary} ';
+    $sql_query .= 'LEFT JOIN {taxonomy_term_data} ON {taxonomy_vocabulary}.vid = {taxonomy_term_data}.vid ';
+    $sql_query .= 'GROUP BY {taxonomy_vocabulary}.name ';
     $sql_query .= 'ORDER BY count DESC ';
 
     $result = db_query($sql_query);
@@ -100,17 +103,15 @@ class SiteAuditCheckContentVocabularies extends SiteAuditCheckAbstract {
     $this->registry['vocabulary_counts'] = $this->registry['vocabulary_unused'] = array();
 
     foreach ($result as $row) {
-      $label = $vocabularies[$row->vid]['label'];
-      $this->registry['vocabulary_counts'][$label] = $row->count;
+      if ($row->count == 0) {
+        $this->registry['vocabulary_unused'][] = $row->name;
+      }
+      elseif (!drush_get_option('detail')) {
+        continue;
+      }
+      $this->registry['vocabulary_counts'][$row->name] = $row->count;
     }
 
-    // Check for unused vocabularies.
-    foreach ($vocabularies as $vocabulary) {
-      if (array_search($vocabulary['label'], array_keys($this->registry['vocabulary_counts'])) === FALSE) {
-        $this->registry['vocabulary_unused'][] = $vocabulary['label'];
-        $this->registry['vocabulary_counts'][$vocabulary['label']] = 0;
-      }
-    }
     // No need to check for unused vocabularies if there aren't any.
     if (empty($this->registry['vocabulary_counts'])) {
       $this->abort = TRUE;

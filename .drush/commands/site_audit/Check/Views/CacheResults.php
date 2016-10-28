@@ -20,7 +20,7 @@ class SiteAuditCheckViewsCacheResults extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\getDescription().
    */
   public function getDescription() {
-    return dt('Check to see if raw query results are being cached.');
+    return dt('Check the length of time raw query results should be cached.');
   }
 
   /**
@@ -41,7 +41,10 @@ class SiteAuditCheckViewsCacheResults extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\getResultPass().
    */
   public function getResultPass() {
-    return dt('Every View is caching query results.');
+    if ($this->registry['views_cache_bully_results']) {
+      return dt('Views Cache Bully is enforcing query result caching.');
+    }
+    return dt('Caching query results for all applicable Views.');
   }
 
   /**
@@ -58,7 +61,7 @@ class SiteAuditCheckViewsCacheResults extends SiteAuditCheckAbstract {
    */
   public function getAction() {
     if (!in_array($this->score, array(SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO, SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS))) {
-      $ret_val = dt('Query results should be cached for at least 1 minute or use tag caching.');
+      $ret_val = dt('Query results should be cached for at least 1 minute.');
       if (drush_get_option('detail')) {
         $steps = array(
           dt('Go to /admin/structure/views/'),
@@ -66,17 +69,21 @@ class SiteAuditCheckViewsCacheResults extends SiteAuditCheckAbstract {
           dt('Select the Display'),
           dt('Click Advanced'),
           dt('Next to Caching, click to edit.'),
-          dt('Caching: (something other than None)'),
+          dt('Query results: (something other than Never cache)'),
         );
         if (drush_get_option('html')) {
           $ret_val .= '<ol><li>' . implode('</li><li>', $steps) . '</li></ol>';
         }
+        elseif (drush_get_option('json')) {
+          $ret_val = array(
+            'Summary' => $ret_val,
+            'Steps' => $steps,
+          );
+        }
         else {
           foreach ($steps as $step) {
             $ret_val .= PHP_EOL;
-            if (!drush_get_option('json')) {
-              $ret_val .= str_repeat(' ', 8);
-            }
+            $ret_val .= str_repeat(' ', 8);
             $ret_val .= '- ' . $step;
           }
         }
@@ -89,57 +96,66 @@ class SiteAuditCheckViewsCacheResults extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
+    // Views Cache Bully.
+    $this->registry['views_cache_bully_results'] = FALSE;
+    if (module_exists('views_cache_bully') && variable_get('views_cache_bully_results_lifespan', 3600) > 0) {
+      $this->registry['views_cache_bully_results'] = TRUE;
+    }
+    if ($this->registry['views_cache_bully_results']) {
+      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
+    }
+
     $this->registry['results_lifespan'] = array();
     foreach ($this->registry['views'] as $view) {
       // Skip views used for administration purposes.
-      if (in_array($view->get('tag'), array('admin', 'commerce'))) {
+      if (isset($view->tag) && (in_array($view->tag, array('admin', 'commerce')))) {
         continue;
       }
-      foreach ($view->get('display') as $display_name => $display) {
-        if (!isset($display['display_options']['enabled']) || $display['display_options']['enabled']) {
+      foreach ($view->display as $display_name => $display) {
+        // Special case - Views Bulk Operations cannot be cached.
+        // See https://www.drupal.org/node/1307360#comment-10882272 for details.
+        $has_vbo = isset($display->display_options['fields']['views_bulk_operations']);
+        if ((!isset($display->disabled) || !$display->disabled) && !$has_vbo) {
           // Default display OR overriding display.
-          if (isset($display['display_options']['cache'])) {
-            if ($display['display_options']['cache']['type'] == 'none' || ($display['display_options']['cache'] == '')) {
+          if (isset($display->display_options['cache'])) {
+            if ($display->display_options['cache']['type'] == 'none' || ($display->display_options['cache'] == '')) {
               if ($display_name == 'default') {
-                $this->registry['results_lifespan'][$view->get('id')]['default'] = 'none';
+                $this->registry['results_lifespan'][$view->name]['default'] = 'none';
               }
               else {
-                $this->registry['results_lifespan'][$view->get('id')]['displays'][$display_name] = 'none';
+                $this->registry['results_lifespan'][$view->name]['displays'][$display_name] = 'none';
               }
             }
-            elseif ($display['display_options']['cache']['type'] == 'time') {
-              if ($display['display_options']['cache']['options']['results_lifespan'] == 0) {
-                $lifespan = $display['display_options']['cache']['options']['results_lifespan_custom'];
+            else {
+              if ($display->display_options['cache']['type'] == 'views_content_cache') {
+                $lifespan = $display->display_options['cache']['results_min_lifespan'];
+              }
+              elseif ($display->display_options['cache']['results_lifespan'] == 'custom') {
+                $lifespan = $display->display_options['cache']['results_lifespan_custom'];
               }
               else {
-                $lifespan = $display['display_options']['cache']['options']['results_lifespan'];
+                $lifespan = $display->display_options['cache']['results_lifespan'];
               }
+              // Normalize.
               if ($lifespan < 1) {
                 $lifespan = 'none';
               }
               if ($display_name == 'default') {
-                $this->registry['results_lifespan'][$view->get('id')]['default'] = $lifespan;
+                $this->registry['results_lifespan'][$view->name]['default'] = $lifespan;
               }
               else {
-                $this->registry['results_lifespan'][$view->get('id')]['displays'][$display_name] = $lifespan;
-              }
-            }
-            elseif ($display['display_options']['cache']['type'] == 'tag') {
-              if ($display_name == 'default') {
-                $this->registry['results_lifespan'][$view->get('id')]['default'] = 'tag';
-              }
-              else {
-                $this->registry['results_lifespan'][$view->get('id')]['displays'][$display_name] = 'tag';
+                $this->registry['results_lifespan'][$view->name]['displays'][$display_name] = $lifespan;
               }
             }
           }
           // Display is using default display's caching.
           else {
-            $this->registry['results_lifespan'][$view->get('id')]['displays'][$display_name] = 'default';
+            $this->registry['results_lifespan'][$view->name]['displays'][$display_name] = 'default';
           }
         }
       }
     }
+
     $this->registry['views_without_results_caching'] = array();
 
     foreach ($this->registry['results_lifespan'] as $view_name => $view_data) {

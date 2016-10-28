@@ -104,6 +104,7 @@ class SiteAuditCheckExtensionsDev extends SiteAuditCheckAbstract {
     $extension_info = $this->registry['extensions'];
     uasort($extension_info, '_drush_pm_sort_extensions');
     $dev_extensions = $this->getExtensions();
+
     foreach ($extension_info as $key => $extension) {
       $row = array();
       $status = drush_get_extension_status($extension);
@@ -114,14 +115,14 @@ class SiteAuditCheckExtensionsDev extends SiteAuditCheckAbstract {
       }
 
       // Not in the list of known development modules.
-      if (!array_key_exists($extension->getName(), $dev_extensions)) {
+      if (!array_key_exists($extension->name, $dev_extensions)) {
         unset($extension_info[$key]);
         continue;
       }
 
       // Do not report modules that are dependencies of other modules, such
       // as field_ui in Drupal Commerce.
-      if (isset($extension->required_by) && !empty($extension->required_by)) {
+      if (isset($extension->required_by) && !empty($extension->required_by) && $key == 'field_ui') {
         unset($extension_info[$key]);
         continue;
       }
@@ -129,9 +130,9 @@ class SiteAuditCheckExtensionsDev extends SiteAuditCheckAbstract {
       // Name.
       $row[] = $extension->label;
       // Reason.
-      $row[] = $dev_extensions[$extension->getName()];
+      $row[] = $dev_extensions[$extension->name];
 
-      $this->registry['extensions_dev'][$extension->getName()] = $row;
+      $this->registry['extensions_dev'][$extension->name] = $row;
     }
 
     if (!empty($this->registry['extensions_dev'])) {
@@ -151,26 +152,55 @@ class SiteAuditCheckExtensionsDev extends SiteAuditCheckAbstract {
    */
   public function getExtensions() {
     $developer_modules = array(
-      'ipsum' => dt('Development utility to generate fake content.'),
-      'testmodule' => dt('Internal test module.'),
+      'coder_review' => dt('Debugging utility; potential security risk and unnecessary performance hit.'),
+      'coder_upgrade' => dt('Debugging utility; potential security risk and unnecessary performance hit.'),
+      'drupal_ipsum' => dt('Development utility to generate fake content.'),
+      'drupalforfirebug' => dt('Development utility for browser debugging.'),
+      'dummy_content' => dt('Development utility to generate random content.'),
+      'form' => dt('Development utility.'),
+      'generate_errors' => dt('Development utility that intentionally creates errors.'),
+      'hacked' => dt('Development utility for detecting altered code.'),
+      'module_builder' => dt('Development utility.'),
+      'path_redirect_generate' => dt('Development utility for generating redirects.'),
+      'performance' => dt('Development utility for monitoring and performance logging.'),
+      'simpletest' => dt('Automated testing framework for development.'),
+      'taxonomy_csv' => dt('Taxonomy CSV is designed as a run-once setup or migration module; disable it once your imports and exports are processed.'),
       // Examples module.
+      'action_example' => dt('Development examples.'),
+      'ajax_example' => dt('Development examples.'),
+      'batch_example' => dt('Development examples.'),
       'block_example' => dt('Development examples.'),
       'cache_example' => dt('Development examples.'),
-      'config_entity_example' => dt('Development examples.'),
-      'content_entity_example' => dt('Development examples.'),
+      'contextual_links_example' => dt('Development examples.'),
+      'cron_example' => dt('Development examples.'),
       'dbtng_example' => dt('Development examples.'),
       'email_example' => dt('Development examples.'),
+      'entity_example' => dt('Development examples.'),
       'examples' => dt('Development examples.'),
       'field_example' => dt('Development examples.'),
       'field_permission_example' => dt('Development examples.'),
       'file_example' => dt('Development examples.'),
+      'filter_example' => dt('Development examples.'),
+      'form_example' => dt('Development examples.'),
+      'image_example' => dt('Development examples.'),
       'js_example' => dt('Development examples.'),
-      'node_type_example' => dt('Development examples.'),
+      'menu_example' => dt('Development examples.'),
+      'node_access_example' => dt('Development examples.'),
+      'node_example' => dt('Development examples.'),
+      'nodeapi_example' => dt('Development examples.'),
       'page_example' => dt('Development examples.'),
-      'phpunit_example' => dt('Development examples.'),
+      'pager_example' => dt('Development examples.'),
+      'queue_example' => dt('Development examples.'),
+      'rdf_example' => dt('Development examples.'),
+      'render_example' => dt('Development examples.'),
       'simpletest_example' => dt('Development examples.'),
+      'tabledrag_example' => dt('Development examples.'),
       'tablesort_example' => dt('Development examples.'),
-      'tour_example' => dt('Development examples.'),
+      'theming_example' => dt('Development examples.'),
+      'token_example' => dt('Development examples.'),
+      'trigger_example' => dt('Development examples.'),
+      'vertical_tabs_example' => dt('Development examples.'),
+      'xmlrpc_example' => dt('Development examples.'),
     );
 
     // From http://drupal.org/project/admin_menu admin_menu.inc in function

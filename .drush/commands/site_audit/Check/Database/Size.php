@@ -4,8 +4,6 @@
  * Contains \SiteAudit\Check\Database\Size.
  */
 
-use Drupal\Core\Database\DatabaseExceptionWrapper;
-
 /**
  * Class SiteAuditCheckDatabaseSize.
  */
@@ -82,11 +80,15 @@ class SiteAuditCheckDatabaseSize extends SiteAuditCheckAbstract {
       }
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
     }
-    catch (DatabaseExceptionWrapper $e) {
+    catch (PDOException $e) {
       // Error executing the query.
       $this->abort = TRUE;
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;
     }
+
+    // Empty database.
+    $this->abort = TRUE;
+    return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;
   }
 
 }

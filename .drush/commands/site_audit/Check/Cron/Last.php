@@ -35,7 +35,7 @@ class SiteAuditCheckCronLast extends SiteAuditCheckAbstract {
     if ($this->registry['cron_last']) {
       return dt('Cron last ran at @date (@ago ago)', array(
         '@date' => date('r', $this->registry['cron_last']),
-        '@ago' => \Drupal::service('date.formatter')->formatInterval(time() - $this->registry['cron_last']),
+        '@ago' => format_interval(time() - $this->registry['cron_last']),
       ));
     }
     return dt('Cron has never run.');

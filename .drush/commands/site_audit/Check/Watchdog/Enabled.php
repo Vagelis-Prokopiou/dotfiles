@@ -56,7 +56,7 @@ class SiteAuditCheckWatchdogEnabled extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    if (!\Drupal::moduleHandler()->moduleExists('dblog')) {
+    if (!module_exists('dblog')) {
       $this->abort = TRUE;
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
     }

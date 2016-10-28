@@ -45,7 +45,9 @@ class SiteAuditCheckViewsEnabled extends SiteAuditCheckAbstract {
   /**
    * Implements \SiteAudit\Check\Abstract\getResultWarn().
    */
-  public function getResultWarn() {}
+  public function getResultWarn() {
+    return dt('Only Views 7.x-3.x is supported by this tool.');
+  }
 
   /**
    * Implements \SiteAudit\Check\Abstract\getAction().
@@ -56,11 +58,15 @@ class SiteAuditCheckViewsEnabled extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    if (!\Drupal::moduleHandler()->moduleExists('views')) {
+    if (!module_exists('views')) {
       $this->abort = TRUE;
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
     }
-    return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
+    $info = drupal_parse_info_file(drupal_get_path('module', 'views') . '/views.info');
+    if (version_compare($info['version'], '7.x-3.0') >= 0) {
+      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
+    }
+    return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN;
   }
 
 }

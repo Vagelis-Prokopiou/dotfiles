@@ -68,8 +68,10 @@ class SiteAuditCheckViewsCount extends SiteAuditCheckAbstract {
   public function calculateScore() {
     $this->registry['views'] = array();
 
-    $all_views = \Drupal::entityManager()->getListBuilder('view')->load();
-    foreach ($all_views['enabled'] as $view) {
+    foreach (views_get_all_views() as $view) {
+      if ($view->disabled) {
+        continue;
+      }
       $this->registry['views'][] = $view;
     }
 

@@ -65,7 +65,7 @@ class SiteAuditCheckWatchdogSyslog extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    $this->registry['syslog_enabled'] = \Drupal::moduleHandler()->moduleExists('syslog');
+    $this->registry['syslog_enabled'] = module_exists('syslog');
     if ($this->registry['syslog_enabled']) {
       if (drush_get_option('vendor') == 'pantheon') {
         return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;

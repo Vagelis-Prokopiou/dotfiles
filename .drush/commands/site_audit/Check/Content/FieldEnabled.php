@@ -56,7 +56,7 @@ class SiteAuditCheckContentFieldEnabled extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    if (!\Drupal::moduleHandler()->moduleExists('field')) {
+    if (!module_exists('field')) {
       $this->abort = TRUE;
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
     }

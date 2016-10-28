@@ -29,7 +29,7 @@ class SiteAuditCheckDatabaseEngine extends SiteAuditCheckAbstract {
   public function getResultFail() {
     if (drush_get_option('html')) {
       $ret_val = '<table class="table table-condensed">';
-      $ret_val .= '<thead><tr><th>Table Name</th><th>Engine</th></tr></thead>';
+      $ret_val .= '<thead><tr><th>' . dt('Table Name') . '</th><th>' . dt('Engine') . '</th></tr></thead>';
       $ret_val .= '<tbody>';
       foreach ($this->registry['engine_tables'] as $name => $engine) {
         $ret_val .= '<tr>';
@@ -41,7 +41,7 @@ class SiteAuditCheckDatabaseEngine extends SiteAuditCheckAbstract {
       $ret_val .= '</table>';
     }
     else {
-      $ret_val  = 'Table Name: Engine' . PHP_EOL;
+      $ret_val  = dt('Table Name: Engine') . PHP_EOL;
       if (!drush_get_option('json')) {
         $ret_val .= str_repeat(' ', 4);
       }
@@ -80,7 +80,7 @@ class SiteAuditCheckDatabaseEngine extends SiteAuditCheckAbstract {
   public function getAction() {
     if ($this->score != SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS) {
       return dt('Change the Storage Engine to InnoDB. See @url for details.', array(
-        '@url' => 'http://dev.mysql.com/doc/refman/5.6/en/converting-tables-to-innodb.html',
+        '@url' => 'http://dev.mysql.com/doc/refman/5.5/en/converting-tables-to-innodb.html',
       ));
     }
   }
@@ -106,13 +106,11 @@ class SiteAuditCheckDatabaseEngine extends SiteAuditCheckAbstract {
       ':dbname' => $db_spec['database'],
       ':engine' => 'InnoDB',
     ));
-    $count = 0;
-    foreach ($result as $row) {
-      $count++;
-      $this->registry['engine_tables'][$row->name] = $row->ENGINE;
-    }
-    if ($count === 0) {
+    if (!$result->rowCount()) {
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
+    }
+    foreach ($result as $row) {
+      $this->registry['engine_tables'][$row->name] = $row->ENGINE;
     }
     return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;
   }

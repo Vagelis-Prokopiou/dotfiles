@@ -13,21 +13,21 @@ class SiteAuditCheckCodebaseSizeFiles extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\getLabel().
    */
   public function getLabel() {
-    return dt('Size of public:// folder');
+    return dt('Size of @files_folder', array('@files_folder' => variable_get('file_public_path', conf_path() . '/files')));
   }
 
   /**
    * Implements \SiteAudit\Check\Abstract\getDescription().
    */
   public function getDescription() {
-    return dt('Determine the size of public:// folder.');
+    return dt('Determine the size of @files_folder.', array('@files_folder' => variable_get('file_public_path', conf_path() . '/files')));
   }
 
   /**
    * Implements \SiteAudit\Check\Abstract\getResultFail().
    */
   public function getResultFail() {
-    return dt('Unable to determine size of public://!');
+    return dt('Unable to determine size of @files_folder!', array('@files_folder' => variable_get('file_public_path', conf_path() . '/files')));
   }
 
   /**
@@ -64,9 +64,7 @@ class SiteAuditCheckCodebaseSizeFiles extends SiteAuditCheckAbstract {
    */
   public function calculateScore() {
     $drupal_root = drush_get_context('DRUSH_SELECTED_DRUPAL_ROOT');
-    $settings = \Drupal::service('settings');
-    $kernel = \Drupal::service('kernel');
-    exec('du -s -k -x ' . $drupal_root . '/' . $settings->get('file_public_path', $kernel->getSitePath() . '/files') . '/', $result);
+    exec('du -s -k -x ' . $drupal_root . '/' . variable_get('file_public_path', conf_path() . '/files') . '/', $result);
     $size_files_kb_exploded = explode("\t", trim($result[0]));
     $this->registry['size_files_kb'] = $size_files_kb_exploded[0];
     if (!$this->registry['size_files_kb']) {

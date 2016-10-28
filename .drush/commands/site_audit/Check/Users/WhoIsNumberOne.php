@@ -4,8 +4,6 @@
  * Contains \SiteAudit\Check\Users\WhoIsNumberOne.
  */
 
-use Drupal\user\Entity\User;
-
 /**
  * Class SiteAuditCheckUsersWhoIsNumberOne.
  */
@@ -37,8 +35,8 @@ class SiteAuditCheckUsersWhoIsNumberOne extends SiteAuditCheckAbstract {
    */
   public function getResultInfo() {
     return dt('UID #1: @name, email: @mail', array(
-      '@name' => $this->registry['uid_1']->get('name')->value,
-      '@mail' => $this->registry['uid_1']->get('mail')->value,
+      '@name' => $this->registry['uid_1']->name,
+      '@mail' => $this->registry['uid_1']->mail,
     ));
   }
 
@@ -61,7 +59,7 @@ class SiteAuditCheckUsersWhoIsNumberOne extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    $uid_1 = User::load(1);
+    $uid_1 = user_load(1);
     if (!$uid_1) {
       $this->abort = TRUE;
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;

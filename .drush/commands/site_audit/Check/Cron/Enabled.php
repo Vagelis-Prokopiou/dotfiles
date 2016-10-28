@@ -34,6 +34,12 @@ class SiteAuditCheckCronEnabled extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\getResultInfo().
    */
   public function getResultInfo() {
+    if (module_exists('elysia_cron')) {
+      return dt('Drupal Cron is disabled, but Elysia Cron is being used instead.');
+    }
+    if (module_exists('ultimate_cron')) {
+      return dt('Drupal Cron is disabled, but Ultimate Cron is being used instead.');
+    }
   }
 
   /**
@@ -41,7 +47,7 @@ class SiteAuditCheckCronEnabled extends SiteAuditCheckAbstract {
    */
   public function getResultPass() {
     // Manual execution.
-    if ($this->registry['cron_safe_threshold'] === 0) {
+    if (!$this->registry['cron_safe_threshold']) {
       return dt('Drupal Cron frequency is set to never, but has been executed within the past 24 hours (either manually or using drush cron).');
     }
     // Default.
@@ -53,26 +59,14 @@ class SiteAuditCheckCronEnabled extends SiteAuditCheckAbstract {
   /**
    * Implements \SiteAudit\Check\Abstract\getResultWarn().
    */
-  public function getResultWarn() {
-    if ($this->registry['cron_safe_threshold'] > (24 * 60 * 60)) {
-      return dt('Drupal Cron frequency is set to mare than 24 hours.');
-    }
-    else {
-      return dt("Drupal Cron has not run in the past day even though it's frequency has been set to less than 24 hours.");
-    }
-  }
+  public function getResultWarn() {}
 
   /**
    * Implements \SiteAudit\Check\Abstract\getAction().
    */
   public function getAction() {
     if ($this->score == SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL) {
-      return dt('Please visit /admin/config/system/cron and set the cron frequency to something other than Never but less than 24 hours.');
-    }
-    elseif ($this->score == SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN) {
-      if ($this->registry['cron_safe_threshold'] > (24 * 60 * 60)) {
-        return dt('Please visit /admin/config/system/cron and set the cron frequency to something less than 24 hours.');
-      }
+      return dt('Please visit /admin/config/system/cron and set the cron frequency to something other than Never.');
     }
   }
 
@@ -81,20 +75,39 @@ class SiteAuditCheckCronEnabled extends SiteAuditCheckAbstract {
    */
   public function calculateScore() {
     // Determine when cron last ran.
-    $this->registry['cron_last'] = \Drupal::state()->get('system.cron_last');
-    $this->registry['cron_safe_threshold'] = \Drupal::config('system.cron')->get('threshold.autorun');
-
-    // Cron hasn't run in the past day.
-    if ((time() - $this->registry['cron_last']) > (24 * 60 * 60)) {
-      if ($this->registry['cron_safe_threshold'] === 0) {
-        return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;
-      }
-      else {
-        return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN;
-      }
+    $this->registry['cron_last'] = variable_get('cron_last');
+    // Manually getting from database due to cron_safe_threshold known issue
+    // https://drupal.org/node/1811224 in drush core.
+    $sql_query  = 'SELECT value ';
+    $sql_query .= 'FROM {variable} ';
+    $sql_query .= 'WHERE name=:name';
+    $cron_safe_threshold = db_query($sql_query, array(
+      ':name' => 'cron_safe_threshold',
+    ))->fetchField();
+    // Unset; use default.
+    if ($cron_safe_threshold === FALSE) {
+      $cron_safe_threshold = DRUPAL_CRON_DEFAULT_THRESHOLD;
     }
-    elseif ($this->registry['cron_safe_threshold'] > (24 * 60 * 60)) {
-      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN;
+    else {
+      $cron_safe_threshold = unserialize($cron_safe_threshold);
+    }
+    $this->registry['cron_safe_threshold'] = $cron_safe_threshold;
+    if (!$this->registry['cron_safe_threshold']) {
+      // Check for Elysia Cron.
+      if (module_exists('elysia_cron')) {
+        $this->abort = TRUE;
+        return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
+      }
+      // Check for Ultimate Cron.
+      if (module_exists('ultimate_cron')) {
+        $this->abort = TRUE;
+        return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
+      }
+      // Check to see if Cron has been run within the last day.
+      if ((time() - $this->registry['cron_last']) < (24 * 60 * 60)) {
+        return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
+      }
+      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;
     }
     return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
   }

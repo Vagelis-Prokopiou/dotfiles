@@ -68,9 +68,9 @@ class SiteAuditCheckContentFieldsUnused extends SiteAuditCheckAbstract {
   public function calculateScore() {
     $this->registry['fields_unused'] = array();
 
-    foreach ($this->registry['field_instance_counts'] as $bundle_name => $entity_types) {
-      foreach ($entity_types as $entity_type => $fields) {
-        foreach ($fields as $field_name => $count) {
+    foreach ($this->registry['field_instance_counts'] as $entity_type => $fields) {
+      foreach ($fields as $field_name => $bundles) {
+        foreach ($bundles as $bundle_name => $count) {
           if (!$count) {
             $this->registry['fields_unused'][$entity_type . '-' . $bundle_name][] = $field_name;
           }

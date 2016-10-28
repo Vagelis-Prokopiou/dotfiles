@@ -80,8 +80,7 @@ class SiteAuditCheckExtensionsCount extends SiteAuditCheckAbstract {
           $ret_val .= str_repeat(' ', 6);
         }
       }
-      $ret_val .= dt('A lightweight site is a fast and happy site!');
-      return $ret_val;
+      return rtrim($ret_val);
     }
   }
 
@@ -99,6 +98,7 @@ class SiteAuditCheckExtensionsCount extends SiteAuditCheckAbstract {
       }
       $this->registry['extension_count']++;
     }
+
     if ($this->registry['extension_count'] >= drush_get_option('extension_count', 150)) {
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN;
     }

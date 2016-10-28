@@ -32,6 +32,10 @@ class SiteAuditCheckContentFieldInstances extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\getResultInfo().
    */
   public function getResultInfo() {
+    if (empty($this->registry['field_api_map'])) {
+      return dt('Function field_info_field_map does not exist, cannot analyze.');
+    }
+
     $ret_val = '';
     if (drush_get_option('html') == TRUE) {
       $ret_val .= '<table class="table table-condensed">';
@@ -54,13 +58,17 @@ class SiteAuditCheckContentFieldInstances extends SiteAuditCheckAbstract {
             $ret_val .= str_repeat(' ', 4);
           }
         }
-        $ret_val .= dt('Bundle:') . $bundle_name;
+        $ret_val .= dt('Bundle: !bundle_name', array(
+          '!bundle_name' => $bundle_name,
+        ));
         foreach ($entity_types as $entity_type => $fields) {
           $ret_val .= PHP_EOL;
           if (!drush_get_option('json')) {
             $ret_val .= str_repeat(' ', 6);
           }
-          $ret_val .= dt('Entity Type:') . $entity_type;
+          $ret_val .= dt('Entity Type: !entity_type', array(
+            '!entity_type' => $entity_type,
+          ));
           foreach ($fields as $field_name => $count) {
             $ret_val .= PHP_EOL;
             if (!drush_get_option('json')) {
@@ -93,22 +101,26 @@ class SiteAuditCheckContentFieldInstances extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    $entity_manager = \Drupal::entityManager();
-    $map = $entity_manager->getFieldMap();
+    // Only available in Drupal 7.22 and above.
+    if (!function_exists('field_info_field_map')) {
+      $this->abort;
+      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
+    }
+
+    $this->registry['field_api_map'] = field_info_field_map();
     $this->registry['field_instance_counts'] = array();
-    foreach ($map as $entity => $fields) {
-      $bundle_column_name = $entity_manager->getDefinition($entity)->getKey('bundle');
-      foreach ($fields as $field => $description) {
-        if (!in_array($field, array_keys($this->registry['fields']))) {
-          continue;
-        }
-        foreach ($description['bundles'] as $bundle) {
-          $query = \Drupal::entityQuery($entity)
-            ->condition($bundle_column_name, $bundle)
-            ->exists($field)
+
+    foreach ($this->registry['field_api_map'] as $field_name => $field) {
+      foreach ($field['bundles'] as $entity_type => $bundle_names) {
+        foreach ($bundle_names as $bundle_name) {
+          $query = new EntityFieldQuery();
+          $query
+            ->entityCondition('entity_type', $entity_type)
+            ->entityCondition('bundle', $bundle_name)
+            ->fieldCondition($field_name)
             ->count();
           $field_count = $query->execute();
-          $this->registry['field_instance_counts'][$bundle][$entity][$field] = $field_count;
+          $this->registry['field_instance_counts'][$bundle_name][$entity_type][$field_name] = $field_count;
         }
       }
     }

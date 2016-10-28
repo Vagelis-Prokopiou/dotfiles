@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \SiteAudit\Report\Insights.
+ * Contains \SiteAudit\Report\FrontEnd.
  */
 
 /**

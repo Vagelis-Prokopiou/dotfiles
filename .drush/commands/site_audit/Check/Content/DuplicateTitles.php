@@ -4,8 +4,6 @@
  * Contains \SiteAudit\Check\Content\DuplicateTitles.
  */
 
-use Drupal\Component\Utility\SafeMarkup;
-
 /**
  * Class SiteAuditCheckContentDuplicateTitles.
  */
@@ -58,7 +56,7 @@ class SiteAuditCheckContentDuplicateTitles extends SiteAuditCheckAbstract {
     $ret_val = '';
     if (drush_get_option('html') == TRUE) {
       $ret_val .= '<table class="table table-condensed">';
-      $ret_val .= '<thead><tr><th>' . dt('Content Type') . '</th><th>' . dt('Title') . '</th><th>' . dt('Count') . '</th></tr></thead>';
+      $ret_val .= '<thead><tr><th>' . dt('Content Type') . '</th><th>Title</th><th>' . dt('Count') . '</th></tr></thead>';
       foreach ($this->registry['nodes_duplicate_titles'] as $content_type => $title_counts) {
         foreach ($title_counts as $title => $count) {
           $ret_val .= "<tr><td>$content_type</td><td>$title</td><td>$count</td></tr>";
@@ -99,12 +97,12 @@ class SiteAuditCheckContentDuplicateTitles extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    if (empty($this->registry['content_entity_type_counts'])) {
+    if (empty($this->registry['content_type_counts'])) {
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_INFO;
     }
 
     $sql_query  = 'SELECT title, type, COUNT(0) AS duplicate_count ';
-    $sql_query .= 'FROM {node_field_data} ';
+    $sql_query .= 'FROM {node} ';
     $sql_query .= 'GROUP BY title, type ';
     $sql_query .= 'HAVING (COUNT(0) > 1) ';
     $sql_query .= 'ORDER BY duplicate_count DESC, title ASC ';
@@ -114,11 +112,8 @@ class SiteAuditCheckContentDuplicateTitles extends SiteAuditCheckAbstract {
     $this->registry['nodes_duplicate_titles'] = array();
     $this->registry['nodes_duplicate_title_count'] = 0;
 
-    $content_types = $content_types = \Drupal::entityManager()->getBundleInfo("node");
     foreach ($result as $row) {
-      $label = $content_types[$row->type]['label'];
-      $title = SafeMarkup::checkPlain($row->title);
-      $this->registry['nodes_duplicate_titles'][$label][$title] = $row->duplicate_count;
+      $this->registry['nodes_duplicate_titles'][$row->type][check_plain($row->title)] = $row->duplicate_count;
       $this->registry['nodes_duplicate_title_count'] += $row->duplicate_count;
     }
 

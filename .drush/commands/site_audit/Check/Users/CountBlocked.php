@@ -63,7 +63,7 @@ class SiteAuditCheckUsersCountBlocked extends SiteAuditCheckAbstract {
    */
   public function calculateScore() {
     $sql_query  = 'SELECT COUNT(uid) ';
-    $sql_query .= 'FROM {users_field_data} ';
+    $sql_query .= 'FROM {users} ';
     $sql_query .= 'WHERE uid != 0 ';
     $sql_query .= 'AND status = 0 ';
     $this->registry['count_users_blocked'] = db_query($sql_query)->fetchField();

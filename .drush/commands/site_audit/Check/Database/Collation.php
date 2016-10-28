@@ -98,27 +98,26 @@ class SiteAuditCheckDatabaseCollation extends SiteAuditCheckAbstract {
     else {
       $db_spec = _drush_sql_get_db_spec();
     }
+
     $sql_query  = 'SELECT TABLE_NAME AS name ';
     $sql_query .= ', TABLE_COLLATION AS collation ';
     $sql_query .= 'FROM information_schema.TABLES ';
     $sql_query .= 'WHERE TABLES.table_schema = :dbname ';
-    $sql_query .= 'AND TABLE_COLLATION NOT IN (:collation[]) ';
+    $sql_query .= 'AND TABLE_COLLATION NOT IN (:collation) ';
     $result = db_query($sql_query, array(
       ':dbname' => $db_spec['database'],
-      ':collation[]' => array('utf8_general_ci', 'utf8_unicode_ci', 'utf8_bin'),
+      ':collation' => array('utf8_general_ci', 'utf8_unicode_ci', 'utf8_bin'),
     ));
-    $count = 0;
+    if (!$result->rowCount()) {
+      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
+    }
     $warn = FALSE;
     foreach ($result as $row) {
-      $count++;
       $this->registry['collation_tables'][$row->name] = $row->collation;
       // Special case for old imports.
       if ($row->collation == 'latin1_swedish_ci') {
         $warn = TRUE;
       }
-    }
-    if ($count === 0) {
-      return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
     }
     if ($warn) {
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_WARN;

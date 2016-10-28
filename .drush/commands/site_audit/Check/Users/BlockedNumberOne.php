@@ -60,7 +60,7 @@ class SiteAuditCheckUsersBlockedNumberOne extends SiteAuditCheckAbstract {
    * Implements \SiteAudit\Check\Abstract\calculateScore().
    */
   public function calculateScore() {
-    if (!$this->registry['uid_1']->get('status')->value) {
+    if (!$this->registry['uid_1']->status) {
       return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_FAIL;
     }
     return SiteAuditCheckAbstract::AUDIT_CHECK_SCORE_PASS;
