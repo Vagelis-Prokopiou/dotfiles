@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Prepare a freshly installed Debian 8 for Drupal development.
-
 ############################################
 # ----- Edit the Debian sources list.
 ############################################
@@ -53,26 +51,8 @@ sudo apt-get install libreoffice-pdfimport -y;
 # Nautilus plugin for opening terminals in arbitrary paths.
 sudo apt-get install nautilus-open-terminal -y;
 
-# Includes mysqldbcompare
-# sudo aptitude install mysql-utilities -y;
-
-# Required when installing Python from source.
-# sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev;
-
-# Needed for digitally signing android apps.
-# sudo aptitude install zipalign -y;
-
 # This is needed for Dropbox.
 sudo apt-get install python-gpgme -y;
-
-# All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
-# sudo apt-get install task-print-server -y;
-
-# apt-get install bum -y; # bootup manager
-# sudo apt-get install ttf-mscorefonts-installer;
-
-# This fixes the error when using Sublime for git commits.
-# sudo apt-get install libcanberra-gtk-module -y;
 
 # Purges.
 sudo apt-get purge postgresql* -y;
@@ -87,16 +67,6 @@ ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/tmp
 sudo find /home/ -path "*/drush-backups/*"  -iname "*" | xargs sudo rm -r;
 sudo find /var -iname "*.gz" | grep -v dbexport | xargs sudo rm -r;
 sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
-
-#### ----- To mount Smba shares #####.
-# sudo apt-get install cifs-utils -y;
-
-#### ----- Install nodejs 4 #####.
-curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -;
-sudo apt-get install -y nodejs;
-
-#### ----- Install jshint for sublime #####.
-#sudo npm install -g jshint;
 
 # Drivers for AMD GPU.
 sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
@@ -125,16 +95,80 @@ sudo mv drush /usr/local/bin;
 #### ----- Enrich the bash startup file with completion and aliases #####.
 drush init;
 
-#### ----- Install all node modules globally. #####.
+#### ----- Install nodejs 4 #####.
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -;
+sudo apt-get install -y nodejs;
+
+# ----- Install all node modules globally. -----
 # The latest node-sass that is inside gulp-sass cretates a problem with the compass-mixins.
 # Install globally the node-sass@3.4.2, and copy it in gulp-sass/node_modules.
-# sudo npm install -g gulp-sass gulp gulp gulp-group-css-media-queries compass-mixins gulp-sourcemaps gulp-autoprefixer node-sass-globbing gulp-plumber browser-sync gulp-uncss gulp-uglify gulp-image-optimization gulp.spritesmith gulp-sass-glob gulp-postcss lost singularitygs breakpoint-sass;
+# sudo npm install -g \ 
+# webpack \
+# gulp \
+# gulp-sass \
+# gulp-group-css-media-queries \
+# compass-mixins \
+# gulp-sourcemaps \
+# gulp-autoprefixer \
+# node-sass-globbing \
+# gulp-plumber \
+# browser-sync \
+# gulp-uncss \
+# gulp-uglify \
+# gulp-image-optimization \
+# gulp.spritesmith \
+# gulp-sass-glob \
+# gulp-postcss \
+# lost \
+# jshint \
+# breakpoint-sass;
+
 # sudo npm install -g node-sass@3.4.2;
 # sudo cp -r /usr/lib/node_modules/node-sass/ /usr/lib/node_modules/gulp-sass/node_modules/;
 # Remove all the info files of the node modules.
 # sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
 
+# ----- Install Java 8 for PhpStorm -----
+# Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
+# Backport Testing on stable
+# JDK 8
+# sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak;
+# echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list;
+# apt-get update
+# apt-get install openjdk-8-jdk
+# sudo update-alternatives --config java
 
+# If Dropbox exits.
+if [[ -d /home/va/Dropbox/ ]]; then
+	# If folder for today does not exits, do the backup.
+	if [[ ! -d /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/ ]]; then
+		echo 'It worked!!!!!';
+
+		# ----- Backup all databases -----
+		echo ''; \
+		echo "----- Exporting the databases to /home/va/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
+		echo ''; \
+		# mysqldump -uroot -proot --all-databases | gzip > /home/va/Dropbox/all_databases.sql.gz;
+		dbs=$(echo $( mysql -uroot -proot -e 'show databases;') | \
+		sed "s/Database//g; s/information_schema//g; \
+		s/performance_schema//g; \
+		s/phpmyadmin//g"; \
+		); \
+		mkdir /home/va/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null; \
+		IFS=' ' read -ra dbs_array <<< "$dbs"; \
+		for db in "${dbs_array[@]}"; do \
+		    # echo "$db"_$(date +%Y-%m-%dT%H:%M).sql.gz; \
+		    mysql -uroot -proot -e "TRUNCATE TABLE $db.watchdog"; \
+		    mysqldump -uroot -proot "$db" | gzip > /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
+		done;
+		echo '';
+		echo '----- Databases exported successfully -----';
+		echo '';
+	fi
+fi
+
+
+# ----- Various -----
 ############################################
 # ----- Wifi on laptop Debian!!! Source: #https://wiki.debian.org/iwlwifi#Intel_Wireless_WiFi_Link.2C_Wireless-N.2C_Advanced-N.2C_Ultimate-N_devices
 ############################################
@@ -212,41 +246,23 @@ drush init;
 # Copy ssh key to clipboard
 # cat ~/.ssh/id_rsa.pub | xclip -sel clip
 
-# ----- Install Java 8 for PhpStorm -----
-# Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
-# Backport Testing on stable
-# JDK 8
-# sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak;
-# echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list;
-# apt-get update
-# apt-get install openjdk-8-jdk
-# sudo update-alternatives --config java
+#### ----- To mount Smba shares #####.
+# sudo apt-get install cifs-utils -y;
 
-# If Dropbox exits.
-if [[ -d /home/va/Dropbox/ ]]; then
-	# If folder for today does not exits, do the backup.
-	if [[ ! -d /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/ ]]; then
-		echo 'It worked!!!!!';
+# All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
+# sudo apt-get install task-print-server -y;
 
-		# ----- Backup all databases -----
-		echo ''; \
-		echo "----- Exporting the databases to /home/va/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
-		echo ''; \
-		# mysqldump -uroot -proot --all-databases | gzip > /home/va/Dropbox/all_databases.sql.gz;
-		dbs=$(echo $( mysql -uroot -proot -e 'show databases;') | \
-		sed "s/Database//g; s/information_schema//g; \
-		s/performance_schema//g; \
-		s/phpmyadmin//g"; \
-		); \
-		mkdir /home/va/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null; \
-		IFS=' ' read -ra dbs_array <<< "$dbs"; \
-		for db in "${dbs_array[@]}"; do \
-		    # echo "$db"_$(date +%Y-%m-%dT%H:%M).sql.gz; \
-		    mysql -uroot -proot -e "TRUNCATE TABLE $db.watchdog"; \
-		    mysqldump -uroot -proot "$db" | gzip > /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
-		done;
-		echo '';
-		echo '----- Databases exported successfully -----';
-		echo '';
-	fi
-fi
+# apt-get install bum -y; # bootup manager
+# sudo apt-get install ttf-mscorefonts-installer;
+
+# This fixes the error when using Sublime for git commits.
+# sudo apt-get install libcanberra-gtk-module -y;
+
+# Includes mysqldbcompare
+# sudo aptitude install mysql-utilities -y;
+
+# Required when installing Python from source.
+# sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev;
+
+# Needed for digitally signing android apps.
+# sudo aptitude install zipalign -y;
