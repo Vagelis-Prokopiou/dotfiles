@@ -40,37 +40,18 @@ sudo apt-get clean -y;
 sudo apt-get install curl -y;
 sudo apt-get install -y build-essential;
 sudo apt-get install p7zip-full -y;
+sudo apt-get install keepass2 -y;
 sudo apt-get install git -y;
 sudo apt-get install git-flow -y;
 sudo apt-get install qalculate -y;
+sudo apt-get install linux-headers-$(uname -r) -y;
+# sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
 
 # Import and edit pdfs in Libreoffice Draw.
 sudo apt-get install libreoffice-pdfimport -y;
 
 # Nautilus plugin for opening terminals in arbitrary paths.
 sudo apt-get install nautilus-open-terminal -y;
-
-# All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
-# sudo apt-get install task-print-server -y;
-
-# apt-get install bum -y; # bootup manager
-# sudo apt-get install ttf-mscorefonts-installer;
-
-# This fixes the error when using Sublime for git commits.
-# sudo apt-get install libcanberra-gtk-module -y;
-
-#sudo apt-get purge libreoffice* -y;
-#sudo apt-get purge chromium -y;
-#sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
-#sudo apt-get install iceweasel filezilla libreoffice-writer libreoffice-calc keepass2 mono-complete flashplugin-nonfree -y;
-#sudo apt-get install  keepass2 mono-complete flashplugin-nonfree -y;
-#sudo apt-get install  keepass2 mono-complete -y;
-#sudo update-flashplugin-nonfree --install;
-sudo apt-get purge postgresql* -y;
-sudo apt-get install linux-headers-$(uname -r) -y;
-
-#### Remove all unused kernels with 1 command in debian based systems #####.
-# sudo apt-get remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
 
 # Includes mysqldbcompare
 # sudo aptitude install mysql-utilities -y;
@@ -82,18 +63,28 @@ sudo apt-get install linux-headers-$(uname -r) -y;
 # sudo aptitude install zipalign -y;
 
 # This is needed for Dropbox.
-# sudo apt-get install python-gpgme -y;
+sudo apt-get install python-gpgme -y;
+
+# All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
+# sudo apt-get install task-print-server -y;
+
+# apt-get install bum -y; # bootup manager
+# sudo apt-get install ttf-mscorefonts-installer;
+
+# This fixes the error when using Sublime for git commits.
+# sudo apt-get install libcanberra-gtk-module -y;
+
+# Purges.
+sudo apt-get purge postgresql* -y;
+
+#### Remove all unused kernels with 1 command in debian based systems #####.
+# sudo apt-get remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
 
 # Remove all the caches.
 ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/Trash/*" -iname "*" | xargs sudo rm -r; done;
-
 ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/.cache/*" -iname "*" | xargs sudo rm -r; done;
-
-sudo find /home/ -path "*/drush-backups/*"  -iname "*" | xargs sudo rm -r;
-
 ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/tmp/*" -type f -amin +10 | xargs sudo rm -r; done;
-
-# sudo find /var/www/html/ -name '*.gz' | grep -v dbexport;
+sudo find /home/ -path "*/drush-backups/*"  -iname "*" | xargs sudo rm -r;
 sudo find /var -iname "*.gz" | grep -v dbexport | xargs sudo rm -r;
 sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
 
@@ -101,38 +92,38 @@ sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; don
 # sudo apt-get install cifs-utils -y;
 
 #### ----- Install nodejs 4 #####.
-#curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -;
-#sudo apt-get install -y nodejs;
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -;
+sudo apt-get install -y nodejs;
 
 #### ----- Install jshint for sublime #####.
 #sudo npm install -g jshint;
 
 # Drivers for AMD GPU.
-# sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati
+sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
 
 ##############################################
 # ----- LAMP on Debian.
 ##############################################
-# sudo apt-get -y install apache2;
-# sudo apt-get -y install mysql-server mysql-client;
-# sudo apt-get -y install php5 php5-mysql libapache2-mod-php5 php5-curl;
-# sudo apt-get -y install php-pear;
-# sudo apt-get -y install phpmyadmin;
-# sudo a2enmod rewrite;
+sudo apt-get -y install apache2;
+sudo apt-get -y install mysql-server mysql-client;
+sudo apt-get -y install php5 php5-mysql libapache2-mod-php5 php5-curl;
+sudo apt-get -y install php-pear;
+sudo apt-get -y install phpmyadmin;
+sudo a2enmod rewrite;
 
 #### ----- Install Drush 8 #####.
 # Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
-# php -r "readfile('http://files.drush.org/drush.phar');" > drush
+php -r "readfile('http://files.drush.org/drush.phar');" > drush
 
 # Test your install.
-# php drush core-status;
+php drush core-status;
 
 # Make `drush` executable as a command from anywhere. Destination can be anywhere on $PATH.
-# chmod +x drush;
-# sudo mv drush /usr/local/bin;
+chmod +x drush;
+sudo mv drush /usr/local/bin;
 
 #### ----- Enrich the bash startup file with completion and aliases #####.
-#drush init;
+drush init;
 
 #### ----- Install all node modules globally. #####.
 # The latest node-sass that is inside gulp-sass cretates a problem with the compass-mixins.
