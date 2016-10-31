@@ -128,6 +128,12 @@ sudo apt-get install -y nodejs;
 # Remove all the info files of the node modules.
 # sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
 
+# ----- Check all services -----
+# service --status-all;
+# service --status-all | grep '+'; 
+service bluetooth stop;
+
+
 # ----- Install Java 8 for PhpStorm -----
 # Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
 # Backport Testing on stable
