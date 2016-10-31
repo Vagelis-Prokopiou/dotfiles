@@ -54,6 +54,9 @@ sudo apt-get install nautilus-open-terminal -y;
 # This is needed for Dropbox.
 sudo apt-get install python-gpgme -y;
 
+# This fixes the error when using Sublime for git commits && needed for PhpStorm.
+sudo apt-get install libcanberra-gtk-module -y;
+
 # Purges.
 sudo apt-get purge postgresql* -y;
 
@@ -260,9 +263,6 @@ fi
 
 # apt-get install bum -y; # bootup manager
 # sudo apt-get install ttf-mscorefonts-installer;
-
-# This fixes the error when using Sublime for git commits.
-# sudo apt-get install libcanberra-gtk-module -y;
 
 # Includes mysqldbcompare
 # sudo aptitude install mysql-utilities -y;
