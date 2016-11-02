@@ -100,33 +100,36 @@ curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -;
 sudo apt-get install -y nodejs;
 
 # ----- Install all node modules globally. -----
+sudo npm install -g \ 
+webpack \
+gulp \
+gulp-sass \
+gulp-sourcemaps \
+gulp-autoprefixer \
+node-sass-globbing \
+gulp-plumber \
+browser-sync \
+gulp-sass-glob \
+jshint \
+breakpoint-sass;
+
+
 # The latest node-sass that is inside gulp-sass cretates a problem with the compass-mixins.
 # Install globally the node-sass@3.4.2, and copy it in gulp-sass/node_modules.
-# sudo npm install -g \ 
-# webpack \
-# gulp \
-# gulp-sass \
-# gulp-group-css-media-queries \
-# compass-mixins \
-# gulp-sourcemaps \
-# gulp-autoprefixer \
-# node-sass-globbing \
-# gulp-plumber \
-# browser-sync \
-# gulp-uncss \
-# gulp-uglify \
-# gulp-image-optimization \
-# gulp.spritesmith \
-# gulp-sass-glob \
-# gulp-postcss \
-# lost \
-# jshint \
-# breakpoint-sass;
-
 # sudo npm install -g node-sass@3.4.2;
 # sudo cp -r /usr/lib/node_modules/node-sass/ /usr/lib/node_modules/gulp-sass/node_modules/;
 # Remove all the info files of the node modules.
 # sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
+
+# ----- Extra node modules -----
+# gulp-postcss \
+# lost \
+# gulp-uncss \
+# gulp.spritesmith \
+# gulp-uglify \
+# gulp-image-optimization \
+# compass-mixins \
+# gulp-group-css-media-queries \
 
 # ----- Install Java 8 for PhpStorm -----
 # Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
