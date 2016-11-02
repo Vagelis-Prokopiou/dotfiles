@@ -81,3 +81,5 @@ python_environments/
 
 adrianna.jpg
 drupal/
+.kodi
+.drush/cache/

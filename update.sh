@@ -45,6 +45,10 @@ sudo apt-get install qalculate -y;
 sudo apt-get install linux-headers-$(uname -r) -y;
 # sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
 
+# Install latest youtube-dl.
+sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
+sudo chmod a+rx /usr/local/bin/youtube-dl;
+
 # Import and edit pdfs in Libreoffice Draw.
 sudo apt-get install libreoffice-pdfimport -y;
 
@@ -53,6 +57,9 @@ sudo apt-get install nautilus-open-terminal -y;
 
 # This is needed for Dropbox.
 sudo apt-get install python-gpgme -y;
+
+# This fixes the error when using Sublime for git commits && needed for PhpStorm.
+sudo apt-get install libcanberra-gtk-module -y;
 
 # Purges.
 sudo apt-get purge postgresql* -y;
@@ -121,6 +128,7 @@ breakpoint-sass;
 # Remove all the info files of the node modules.
 # sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
 
+<<<<<<< HEAD
 # ----- Extra node modules -----
 # gulp-postcss \
 # lost \
@@ -130,6 +138,13 @@ breakpoint-sass;
 # gulp-image-optimization \
 # compass-mixins \
 # gulp-group-css-media-queries \
+=======
+# ----- Check all services -----
+# service --status-all;
+# service --status-all | grep '+'; 
+service bluetooth stop;
+
+>>>>>>> 87207100afd26b4017d41ad45b71a05238ebfbab
 
 # ----- Install Java 8 for PhpStorm -----
 # Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
@@ -257,9 +272,6 @@ fi
 
 # apt-get install bum -y; # bootup manager
 # sudo apt-get install ttf-mscorefonts-installer;
-
-# This fixes the error when using Sublime for git commits.
-# sudo apt-get install libcanberra-gtk-module -y;
 
 # Includes mysqldbcompare
 # sudo aptitude install mysql-utilities -y;
