@@ -107,19 +107,18 @@ curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -;
 sudo apt-get install -y nodejs;
 
 # ----- Install all node modules globally. -----
-sudo npm install -g \ 
-webpack \
-gulp \
-gulp-sass \
-gulp-sourcemaps \
-gulp-autoprefixer \
-node-sass-globbing \
-gulp-plumber \
-browser-sync \
-gulp-sass-glob \
-jshint \
-breakpoint-sass;
-
+# sudo npm install -g \
+# webpack \
+# gulp \
+# gulp-sass \
+# gulp-sourcemaps \
+# gulp-autoprefixer \
+# node-sass-globbing \
+# gulp-plumber \
+# browser-sync \
+# gulp-sass-glob \
+# jshint \
+# breakpoint-sass;
 
 # The latest node-sass that is inside gulp-sass cretates a problem with the compass-mixins.
 # Install globally the node-sass@3.4.2, and copy it in gulp-sass/node_modules.
@@ -128,7 +127,6 @@ breakpoint-sass;
 # Remove all the info files of the node modules.
 # sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
 
-<<<<<<< HEAD
 # ----- Extra node modules -----
 # gulp-postcss \
 # lost \
@@ -138,13 +136,11 @@ breakpoint-sass;
 # gulp-image-optimization \
 # compass-mixins \
 # gulp-group-css-media-queries \
-=======
+
 # ----- Check all services -----
 # service --status-all;
 # service --status-all | grep '+'; 
 service bluetooth stop;
-
->>>>>>> 87207100afd26b4017d41ad45b71a05238ebfbab
 
 # ----- Install Java 8 for PhpStorm -----
 # Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
