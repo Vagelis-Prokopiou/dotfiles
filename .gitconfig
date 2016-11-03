@@ -3,3 +3,5 @@
 	email = drz4007@gmail.com
 [push]
 	default = simple
+[core]
+    editor = 'subl' --wait
