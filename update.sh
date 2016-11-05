@@ -78,6 +78,9 @@ sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; don
 # Drivers for AMD GPU.
 sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
 
+# Create a template txt, for use in right click context.
+touch /home/va/Templates/new_file.txt;
+
 ##############################################
 # ----- LAMP on Debian.
 ##############################################
