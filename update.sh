@@ -45,6 +45,9 @@ sudo apt-get install qalculate -y;
 sudo apt-get install linux-headers-$(uname -r) -y;
 # sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
 
+# Needed for google chrome.
+sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
+
 # Install latest youtube-dl.
 sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
 sudo chmod a+rx /usr/local/bin/youtube-dl;
