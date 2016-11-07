@@ -107,7 +107,7 @@ alias drupalandgulp='cd /var/www/html/vhosts/drupaland/public_html/themes/drupal
 alias rs='cd /var/www/html/vhosts/rigging/public_html/';
 alias rsgulp='cd /var/www/html/vhosts/rigging/public_html/sites/all/themes/skeletontheme_testing && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 alias bnspro='cd /var/www/html/vhosts/ci_bootstrap_3/public_html/';
-alias update='sudo bash ~/update.sh';
+alias update='sudo bash ~/bin/update.sh';
 alias code='sudo code --user-data-dir="~/.vscode"';
 
 # Git stuff:
