@@ -1,5 +1,3 @@
-
-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # Note: PS1 and umask are already set in /etc/profile. You should not
@@ -120,6 +118,10 @@ alias grh='git reset --hard';
 alias ga='git add ';
 # Add git completion.
 source ~/git-completion.bash;
+
+# Site audit stuff:
+alias siteaudit7='rm -r ~/.drush/commands/site_audit && unzip ~/.drush/commands/site_audit-7*.zip -d ~/.drush/commands/';
+alias siteaudit8='rm -r ~/.drush/commands/site_audit && unzip ~/.drush/commands/site_audit-8*.zip -d ~/.drush/commands/';
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
