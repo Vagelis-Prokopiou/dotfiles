@@ -187,6 +187,8 @@ if [[ -d /home/va/Dropbox/ ]]; then
 	fi
 fi
 
+sudo chown -R va:va /home/va/;
+
 
 # ----- Various -----
 ############################################
