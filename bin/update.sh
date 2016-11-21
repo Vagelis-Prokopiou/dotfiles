@@ -145,7 +145,7 @@ sudo apt-get install -y nodejs;
 
 # ----- Check all services -----
 # service --status-all;
-# service --status-all | grep '+'; 
+# service --status-all | grep '+';
 service bluetooth stop;
 
 # ----- Install Java 8 for PhpStorm -----
@@ -162,8 +162,6 @@ service bluetooth stop;
 if [[ -d /home/va/Dropbox/ ]]; then
 	# If folder for today does not exits, do the backup.
 	if [[ ! -d /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/ ]]; then
-		echo 'It worked!!!!!';
-
 		# ----- Backup all databases -----
 		echo ''; \
 		echo "----- Exporting the databases to /home/va/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
@@ -172,6 +170,9 @@ if [[ -d /home/va/Dropbox/ ]]; then
 		dbs=$(echo $( mysql -uroot -proot -e 'show databases;') | \
 		sed "s/Database//g; s/information_schema//g; \
 		s/performance_schema//g; \
+		s/d7//g; \
+		s/d8//g; \
+		s/mysql//g; \
 		s/phpmyadmin//g"; \
 		); \
 		mkdir /home/va/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null; \
