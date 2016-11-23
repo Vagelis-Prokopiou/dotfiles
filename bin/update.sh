@@ -94,19 +94,59 @@ sudo apt-get -y install php-pear;
 sudo apt-get -y install phpmyadmin;
 sudo a2enmod rewrite;
 
-#### ----- Install Drush 8 #####.
-# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
-php -r "readfile('http://files.drush.org/drush.phar');" > drush
+# Install Drush.
+if [[ -a /usr/local/bin/drush ]]; then
+	echo "Drush is already installed."
+	if [[ $(date +%d) == 1 || $(date +%d) == 15 ]]; then
+		echo "Updating..."
+		# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
+		php -r "readfile('http://files.drush.org/drush.phar');" > drush
+		# Test your install.
+		php drush core-status;
+		# Make `drush` executable as a command from anywhere. Destination can be anywhere on $PATH.
+		chmod +x drush;
+		sudo mv drush /usr/local/bin;
+		#### ----- Enrich the bash startup file with completion and aliases #####.
+		drush init;
+	fi
+else
+	echo "Installing Drush..."
+	# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
+	php -r "readfile('http://files.drush.org/drush.phar');" > drush
+	# Test your install.
+	php drush core-status;
+	# Make `drush` executable as a command from anywhere. Destination can be anywhere on $PATH.
+	chmod +x drush;
+	sudo mv drush /usr/local/bin;
+	#### ----- Enrich the bash startup file with completion and aliases #####.
+	drush init;
+fi
 
-# Test your install.
-php drush core-status;
+# Install Composer.
+if [[ -a /usr/local/bin/composer ]]; then
+	echo "Composer is already installed."
+	echo "Updating..."
+	sudo -H composer self-update
+else
+	echo "Installing Composer..."
+	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');";
+	php -r "if (hash_file('SHA384', 'composer-setup.php') === 'aa96f26c2b67226a324c27919f1eb05f21c248b987e6195cad9690d5c1ff713d53020a02ac8c217dbf90a7eacc9d141d') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;";
+	php composer-setup.php;
+	php -r "unlink('composer-setup.php');";
+	mv composer.phar /usr/local/bin/composer;
+fi
 
-# Make `drush` executable as a command from anywhere. Destination can be anywhere on $PATH.
-chmod +x drush;
-sudo mv drush /usr/local/bin;
-
-#### ----- Enrich the bash startup file with completion and aliases #####.
-drush init;
+# Install Drupal Console.
+if [[ -a /usr/local/bin/drupal ]]; then
+	echo "Drupal Console is already installed."
+	echo "Updating..."
+	sudo drupal self-update;
+else
+	echo "Installing Drupal Console..."
+	curl https://drupalconsole.com/installer -L -o drupal.phar;
+	sudo mv drupal.phar /usr/local/bin/drupal;
+	sudo chmod +x /usr/local/bin/drupal;
+fi
 
 #### ----- Install nodejs 4 #####.
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -;
