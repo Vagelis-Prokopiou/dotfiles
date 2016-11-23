@@ -52,6 +52,22 @@ sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libi
 sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
 sudo chmod a+rx /usr/local/bin/youtube-dl;
 
+# ----- Install youtube-dl. -----
+if [[ -a /usr/local/bin/youtube-dl ]]; then
+	echo "youtube-dl is already installed."
+	if [[ $(date +%d) == 1 || $(date +%d) == 15 ]]; then
+		echo "Updating youtube-dl..."
+		# Install latest youtube-dl.
+		sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
+		sudo chmod a+rx /usr/local/bin/youtube-dl;
+	fi
+else
+	echo "Installing youtube-dl..."
+	# Install latest youtube-dl.
+	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
+	sudo chmod a+rx /usr/local/bin/youtube-dl;
+fi
+
 # Import and edit pdfs in Libreoffice Draw.
 sudo apt-get install libreoffice-pdfimport -y;
 
@@ -95,22 +111,7 @@ sudo apt-get -y install phpmyadmin;
 sudo a2enmod rewrite;
 
 # Install Drush.
-if [[ -a /usr/local/bin/drush ]]; then
-	echo "Drush is already installed."
-	if [[ $(date +%d) == 1 || $(date +%d) == 15 ]]; then
-		echo "Updating..."
-		# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
-		php -r "readfile('http://files.drush.org/drush.phar');" > drush
-		# Test your install.
-		php drush core-status;
-		# Make `drush` executable as a command from anywhere. Destination can be anywhere on $PATH.
-		chmod +x drush;
-		sudo mv drush /usr/local/bin;
-		#### ----- Enrich the bash startup file with completion and aliases #####.
-		drush init;
-	fi
-else
-	echo "Installing Drush..."
+function installDrush {
 	# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
 	php -r "readfile('http://files.drush.org/drush.phar');" > drush
 	# Test your install.
@@ -120,9 +121,20 @@ else
 	sudo mv drush /usr/local/bin;
 	#### ----- Enrich the bash startup file with completion and aliases #####.
 	drush init;
+}
+
+if [[ -a /usr/local/bin/drush ]]; then
+	echo "Drush is already installed."
+	if [[ $(date +%d) == 1 || $(date +%d) == 15 ]]; then
+		echo "Updating..."
+		installDrush;
+	fi
+else
+	echo "Installing Drush..."
+	installDrush;
 fi
 
-# Install Composer.
+# ----- Install Composer. -----
 if [[ -a /usr/local/bin/composer ]]; then
 	echo "Composer is already installed."
 	echo "Updating..."
@@ -136,7 +148,7 @@ else
 	mv composer.phar /usr/local/bin/composer;
 fi
 
-# Install Drupal Console.
+# ----- Install Drupal Console. -----
 if [[ -a /usr/local/bin/drupal ]]; then
 	echo "Drupal Console is already installed."
 	echo "Updating..."
@@ -148,40 +160,70 @@ else
 	sudo chmod +x /usr/local/bin/drupal;
 fi
 
-#### ----- Install nodejs 4 #####.
-curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -;
-sudo apt-get install -y nodejs;
+# ----- Install NodeJS. -----
+function installNodeJS {
+	curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -;
+	sudo apt-get install -y nodejs;
+}
+
+if [[ -a /usr/bin/node ]]; then
+	echo "NodeJS is already installed."
+	if [[ $(date +%d) == 1 || $(date +%d) == 16 ]]; then
+		echo "Updating NodeJS..."
+		installNodeJS;
+	fi
+else
+	echo "Installing NodeJS..."
+	installNodeJS;
+fi
 
 # ----- Install all node modules globally. -----
-# sudo npm install -g \
-# webpack \
-# gulp \
-# gulp-sass \
-# gulp-sourcemaps \
-# gulp-autoprefixer \
-# node-sass-globbing \
-# gulp-plumber \
-# browser-sync \
-# gulp-sass-glob \
-# jshint \
-# breakpoint-sass;
+function installNodeModules {
+	sudo npm install -g \
+	webpack \
+	gulp \
+	gulp-sass \
+	gulp-sourcemaps \
+	gulp-autoprefixer \
+	node-sass-globbing \
+	gulp-plumber \
+	browser-sync \
+	gulp-sass-glob \
+	jshint \
+	breakpoint-sass;
 
-# The latest node-sass that is inside gulp-sass cretates a problem with the compass-mixins.
-# Install globally the node-sass@3.4.2, and copy it in gulp-sass/node_modules.
-# sudo npm install -g node-sass@3.4.2;
-# sudo cp -r /usr/lib/node_modules/node-sass/ /usr/lib/node_modules/gulp-sass/node_modules/;
-# Remove all the info files of the node modules.
-# sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
+	# The latest node-sass that is inside gulp-sass cretates a problem with the compass-mixins.
+	# Install globally the node-sass@3.4.2, and copy it in gulp-sass/node_modules.
+	# sudo npm install -g node-sass@3.4.2;
+	# sudo cp -r /usr/lib/node_modules/node-sass/ /usr/lib/node_modules/gulp-sass/node_modules/;
+	# Remove all the info files of the node modules.
+	# sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
 
-# ----- Extra node modules -----
-# gulp-postcss \
-# lost \
-# gulp-uncss \
-# gulp.spritesmith \
-# gulp-uglify \
-# gulp-image-optimization \
-# compass-mixins \
-# gulp-group-css-media-queries \
+	# ----- Extra node modules -----
+	# gulp-postcss \
+	# lost \
+	# gulp-uncss \
+	# gulp.spritesmith \
+	# gulp-uglify \
+	# gulp-image-optimization \
+	# compass-mixins \
+	# gulp-group-css-media-queries \
+
+	# Delete the .info files.
+	sudo find /usr/lib/node_modules/ -iname "*.info" -exec sudo rm "{}" \+;
+	echo "All *.info files were successfully deleted.";
+}
+
+if [[ -d /usr/lib/node_modules/gulp/ ]]; then
+	echo "The NodeJS modules are already installed."
+	if [[ $(date +%m) == 1 || $(date +%m) == 6 ]]; then
+		echo "Updating the NodeJS modules..."
+		installNodeModules;
+	fi
+else
+	echo "Installing the NodeJS modules..."
+	installNodeModules;
+fi
 
 # ----- Check all services -----
 # service --status-all;
