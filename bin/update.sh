@@ -48,24 +48,22 @@ sudo apt-get install linux-headers-$(uname -r) -y;
 # Needed for google chrome.
 sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
 
-# Install latest youtube-dl.
-sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
-sudo chmod a+rx /usr/local/bin/youtube-dl;
-
 # ----- Install youtube-dl. -----
+function installYoutubeDL {
+	# Install latest youtube-dl.
+	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
+	sudo chmod a+rx /usr/local/bin/youtube-dl;
+}
+
 if [[ -a /usr/local/bin/youtube-dl ]]; then
 	echo "youtube-dl is already installed."
 	if [[ $(date +%d) == 1 || $(date +%d) == 15 ]]; then
 		echo "Updating youtube-dl..."
-		# Install latest youtube-dl.
-		sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
-		sudo chmod a+rx /usr/local/bin/youtube-dl;
+		installYoutubeDL;
 	fi
 else
 	echo "Installing youtube-dl..."
-	# Install latest youtube-dl.
-	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
-	sudo chmod a+rx /usr/local/bin/youtube-dl;
+	installYoutubeDL;
 fi
 
 # Import and edit pdfs in Libreoffice Draw.
