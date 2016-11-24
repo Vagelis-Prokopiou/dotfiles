@@ -270,6 +270,10 @@ fi
 
 sudo chown -R va:va /home/va/;
 
+# ----- Enable mssql in PHP. -----
+# See: https://coderwall.com/p/21uxeq/connecting-to-a-mssql-server-database-with-php-on-ubuntu-debian
+# sudo apt-get install freetds-common freetds-bin unixodbc php5-sybase;
+# sudo service apache2 restart;
 
 # ----- Various -----
 ############################################
