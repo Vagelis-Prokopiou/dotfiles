@@ -97,14 +97,22 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # My aliases:
 alias phpstorm='echo va | sudo -S bash /home/va/Downloads/jetbrains/PhpStorm-162.1121.38/bin/phpstorm.sh';
 alias localhost='cd /var/www/html';
+
 alias tsini='cd /var/www/html/vhosts/tsinikopoulos/public_html/';
 alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
+
 alias drupaland='cd /var/www/html/vhosts/drupaland/public_html/';
 alias drupalandgulp='cd /var/www/html/vhosts/drupaland/public_html/themes/drupaland && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
 alias rs='cd /var/www/html/vhosts/rigging/public_html/';
 alias rsgulp='cd /var/www/html/vhosts/rigging/public_html/sites/all/themes/skeletontheme_testing && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
-alias bnspro='cd /var/www/html/vhosts/ci_bootstrap_3/public_html/';
+
+alias bnspro='cd /var/www/html/vhosts/bnspro/public_html/';
+alias bnsprogulp='cd /var/www/html/vhosts/bnspro/public_html/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
+
+alias enalia='cd /var/www/html/vhosts/enalia/public_html/';
+alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
+
 alias update='echo va | sudo -S bash ~/bin/update.sh';
 alias code='sudo code --user-data-dir="~/.vscode"';
 
