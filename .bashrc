@@ -108,6 +108,10 @@ alias bnspro='cd /var/www/html/vhosts/ci_bootstrap_3/public_html/';
 alias update='echo va | sudo -S bash ~/bin/update.sh';
 alias code='sudo code --user-data-dir="~/.vscode"';
 
+# Vhosts stuff:
+alias vhostcreate='sudo python ~/bin/vhost_create.py';
+alias vhostdelete='sudo bash ~/bin/vhost_delete.sh';
+
 # Git stuff:
 alias gc='git commit -m ';
 # alias gl='git log --pretty=format:"%h, %ar: %s"'
