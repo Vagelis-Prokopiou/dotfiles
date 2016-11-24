@@ -85,3 +85,5 @@ drupal/
 .drush/cache/
 .remmina/
 Videos/
+.gnome2/
+.scribus/
