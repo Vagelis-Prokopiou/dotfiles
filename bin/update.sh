@@ -107,6 +107,9 @@ sudo apt-get -y install php5 php5-mysql libapache2-mod-php5 php5-curl;
 sudo apt-get -y install php-pear;
 sudo apt-get -y install phpmyadmin;
 sudo a2enmod rewrite;
+# ----- Xdebug -----
+sudo apt-get install -y php5-xdebug;
+sudo service apache2 restart;
 
 # Install Drush.
 function installDrush {
