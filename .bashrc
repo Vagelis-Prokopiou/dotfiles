@@ -111,6 +111,7 @@ alias bnspro='cd /var/www/html/vhosts/bnspro/public_html/';
 alias bnsprogulp='cd /var/www/html/vhosts/bnspro/public_html/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
 alias enalia='cd /var/www/html/vhosts/enalia/public_html/';
+# alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/custom/enalia_classy/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/custom/enalia_classy/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
 alias update='echo va | sudo -S bash ~/bin/update.sh';
