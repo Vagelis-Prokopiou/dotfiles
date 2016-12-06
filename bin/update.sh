@@ -275,7 +275,7 @@ fi
 sudo chown -R va:va /home/va/;
 
 # Remove the previous folders.
-find /home/va/Dropbox/dbs/ -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
+find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
 
 # ----- Enable mssql in PHP. -----
 # See: https://coderwall.com/p/21uxeq/connecting-to-a-mssql-server-database-with-php-on-ubuntu-debian
