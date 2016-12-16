@@ -281,6 +281,9 @@ sudo chown -R ${user}:${user} ${user_home}/;
 # Remove the previous folders.
 find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
 
+# Remove the torrent files from Downloads.
+rm ${user_home}/Downloads/*.torrent;
+
 # ----- Enable mssql in PHP. -----
 # See: https://coderwall.com/p/21uxeq/connecting-to-a-mssql-server-database-with-php-on-ubuntu-debian
 # sudo apt-get install freetds-common freetds-bin unixodbc php5-sybase;
