@@ -97,6 +97,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # My aliases:
 alias phpstorm='echo va | sudo -S bash /home/va/Downloads/jetbrains/PhpStorm/bin/phpstorm.sh';
 alias localhost='cd /var/www/html';
+alias permissions='sudo chown -R www-data:www-data ../public_html && sudo chmod -R 777 sites/default/files';
 
 alias tsini='cd /var/www/html/vhosts/tsinikopoulos/public_html/';
 alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';

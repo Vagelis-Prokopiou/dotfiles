@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Variables:
+user_home='/home/va';
+root_home='/root';
+
 ############################################
 # ----- Edit the Debian sources list.
 ############################################
@@ -96,7 +100,7 @@ sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; don
 sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
 
 # Create a template txt, for use in right click context.
-touch /home/va/Templates/new_file.txt;
+touch ${user_home}/Templates/new_file.txt;
 
 ##############################################
 # ----- LAMP on Debian.
@@ -242,14 +246,14 @@ service bluetooth stop;
 # sudo update-alternatives --config java
 
 # If Dropbox exits.
-if [[ -d /home/va/Dropbox/ ]]; then
+if [[ -d ${user_home}/Dropbox/ ]]; then
 	# If folder for today does not exits, do the backup.
-	if [[ ! -d /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/ ]]; then
+	if [[ ! -d ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d)/ ]]; then
 		# ----- Backup all databases -----
 		echo ''; \
-		echo "----- Exporting the databases to /home/va/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
+		echo "----- Exporting the databases to ${user_home}/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
 		echo ''; \
-		# mysqldump -uroot -proot --all-databases | gzip > /home/va/Dropbox/all_databases.sql.gz;
+		# mysqldump -uroot -proot --all-databases | gzip > ${user_home}/Dropbox/all_databases.sql.gz;
 		dbs=$(echo $( mysql -uroot -proot -e 'show databases;') | \
 		sed "s/Database//g; s/information_schema//g; \
 		s/performance_schema//g; \
@@ -258,12 +262,12 @@ if [[ -d /home/va/Dropbox/ ]]; then
 		s/mysql//g; \
 		s/phpmyadmin//g"; \
 		); \
-		mkdir /home/va/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null; \
+		mkdir ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null; \
 		IFS=' ' read -ra dbs_array <<< "$dbs"; \
 		for db in "${dbs_array[@]}"; do \
 		    # echo "$db"_$(date +%Y-%m-%dT%H:%M).sql.gz; \
 		    mysql -uroot -proot -e "TRUNCATE TABLE $db.watchdog"; \
-		    mysqldump -uroot -proot "$db" | gzip > /home/va/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
+		    mysqldump -uroot -proot "$db" | gzip > ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
 		done;
 		echo '';
 		echo '----- Databases exported successfully -----';
@@ -271,7 +275,7 @@ if [[ -d /home/va/Dropbox/ ]]; then
 	fi
 fi
 
-sudo chown -R va:va /home/va/;
+sudo chown -R va:va ${user_home}/;
 
 # ----- Enable mssql in PHP. -----
 # See: https://coderwall.com/p/21uxeq/connecting-to-a-mssql-server-database-with-php-on-ubuntu-debian
