@@ -107,7 +107,7 @@ touch ${user_home}/Templates/new_file.txt;
 # ----- LAMP on Debian.
 ##############################################
 sudo apt-get -y install apache2;
-sudo apt-get -y install mysql-server mysql-client;
+sudo apt-get -y install mysql-server mysql-client mysql-workbench;
 sudo apt-get -y install php5 php5-mysql libapache2-mod-php5 php5-curl;
 sudo apt-get -y install php-pear;
 sudo apt-get -y install phpmyadmin;
