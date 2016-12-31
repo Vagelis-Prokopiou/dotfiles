@@ -286,6 +286,10 @@ rm ${user_home}/Downloads/*.torrent;
 # sudo apt-get install freetds-common freetds-bin unixodbc php5-sybase;
 # sudo service apache2 restart;
 
+# ----- Install these before installing Virtualbox -----
+# sudo apt-get install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
+
+
 # ----- Various -----
 ############################################
 # ----- Wifi on laptop Debian!!! Source: #https://wiki.debian.org/iwlwifi#Intel_Wireless_WiFi_Link.2C_Wireless-N.2C_Advanced-N.2C_Ultimate-N_devices
