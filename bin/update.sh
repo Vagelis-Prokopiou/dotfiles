@@ -32,8 +32,8 @@ root_home='/root';
 ############################################
 # ----- Various maintenance tasks.
 ############################################
-command -v 1 > /dev/null 2>&1 sudo || apt-get install -y sudo;
-command -v 1 > /dev/null 2>&1 aptitude || apt-get install -y aptitude;
+command -v > /dev/null 2>&1 sudo || apt-get install -y sudo;
+command -v > /dev/null 2>&1 aptitude || apt-get install -y aptitude;
 sudo apt-get update -y;
 sudo apt-get upgrade -y;
 sudo apt-get dist-upgrade -y;
@@ -41,13 +41,12 @@ sudo apt-get autoremove -y;
 sudo apt-get autoclean -y;
 sudo apt-get install -f;
 sudo apt-get clean -y;
-command -v 1 > /dev/null 2>&1 curl || sudo apt-get install -y curl;
-command -v 1 > /dev/null 2>&1 build-essential || sudo apt-get install -y build-essential;
-command -v 1 > /dev/null 2>&1 p7zip-full || sudo apt-get install -y p7zip-full;
-command -v 1 > /dev/null 2>&1 keepass2 || sudo apt-get install -y keepass2;
-command -v 1 > /dev/null 2>&1 git || sudo apt-get install -y git;
-command -v 1 > /dev/null 2>&1 git-flow -y || sudo apt-get install -y git-flow -y;
-command -v 1 > /dev/null 2>&1 qalculate || sudo apt-get install qalculate -y;
+command -v > /dev/null 2>&1 curl || sudo apt-get install -y curl;
+command -v > /dev/null 2>&1 gcc || sudo apt-get install -y build-essential;
+command -v > /dev/null 2>&1 7z || sudo apt-get install -y p7zip-full;
+command -v > /dev/null 2>&1 keepass2 || sudo apt-get install -y keepass2;
+command -v > /dev/null 2>&1 git || sudo apt-get install -y git git-flow;
+command -v > /dev/null 2>&1 qalculate || sudo apt-get install qalculate -y;
 sudo apt-get install linux-headers-$(uname -r) -y;
 # sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
 
@@ -73,16 +72,16 @@ else
 fi
 
 # Import and edit pdfs in Libreoffice Draw.
-command -v 1 > /dev/null 2>&1 libreoffice-pdfimport || sudo apt-get install -y libreoffice-pdfimport;
+sudo apt-get install -y libreoffice-pdfimport;
 
 # Nautilus plugin for opening terminals in arbitrary paths.
-command -v 1 > /dev/null 2>&1 nautilus-open-terminal || sudo apt-get install -y nautilus-open-terminal;
+sudo apt-get install -y nautilus-open-terminal;
 
 # This is needed for Dropbox.
-command -v 1 > /dev/null 2>&1 python-gpgme || sudo apt-get install -y python-gpgme;
+sudo apt-get install -y python-gpgme;
 
 # This fixes the error when using Sublime for git commits && needed for PhpStorm.
-command -v 1 > /dev/null 2>&1 libcanberra-gtk-module || sudo apt-get install libcanberra-gtk-module -y;
+sudo apt-get install libcanberra-gtk-module -y;
 
 # Purges.
 sudo apt-get purge postgresql* -y;
@@ -107,11 +106,7 @@ touch ${user_home}/Templates/new_file.txt;
 ##############################################
 # ----- LAMP on Debian.
 ##############################################
-command -v 1 > /dev/null 2>&1 apache2 || sudo apt-get -y install apache2;
-command -v 1 > /dev/null 2>&1 mysql-server || sudo apt-get -y install mysql-server mysql-client mysql-workbench;
-command -v 1 > /dev/null 2>&1 php5 || sudo apt-get -y install php5 php5-mysql libapache2-mod-php5 php5-curl php-pear phpmyadmin php5-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
-
-
+command -v > /dev/null 2>&1 apache2 || sudo apt-get -y install apache2 mysql-server mysql-client mysql-workbench php5 php5-mysql libapache2-mod-php5 php5-curl php-pear phpmyadmin php5-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
 
 # Install Drush.
 function installDrush {
@@ -289,6 +284,12 @@ rm ${user_home}/Downloads/*.torrent;
 # ----- Install these before installing Virtualbox -----
 # sudo apt-get install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
 
+##############################################
+# ----- Guest additions on Virtualbox.
+##############################################
+# First install headers and build essential.
+#sh /media/cdrom/VBoxLinuxAdditions.run;
+#sudo reboot;
 
 # ----- Various -----
 ############################################
@@ -310,13 +311,6 @@ rm ${user_home}/Downloads/*.torrent;
 # </Directory>
 
 #See: https://www.digitalocean.com/community/tutorials/how-to-set-up-mod_rewrite-for-apache-on-ubuntu-14-04
-
-##############################################
-# ----- Guest additions on Virtualbox.
-##############################################
-# First install headers and build essential.
-#sh /media/cdrom/VBoxLinuxAdditions.run;
-#sudo reboot;
 
 ############################################
 # ----- Install Keepass && Keefox
