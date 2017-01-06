@@ -47,6 +47,8 @@ command -v > /dev/null 2>&1 7z || sudo apt-get install -y p7zip-full;
 command -v > /dev/null 2>&1 keepass2 || sudo apt-get install -y keepass2;
 command -v > /dev/null 2>&1 git || sudo apt-get install -y git git-flow;
 command -v > /dev/null 2>&1 qalculate || sudo apt-get install qalculate -y;
+# For Keepass2 auto-typing.
+command -v > /dev/null 2>&1 xdotool || sudo apt-get install xdotool -y;
 sudo apt-get install linux-headers-$(uname -r) -y;
 # sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
 
