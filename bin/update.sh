@@ -46,11 +46,17 @@ command -v > /dev/null 2>&1 gcc || sudo apt-get install -y build-essential;
 command -v > /dev/null 2>&1 7z || sudo apt-get install -y p7zip-full;
 command -v > /dev/null 2>&1 keepass2 || sudo apt-get install -y keepass2;
 command -v > /dev/null 2>&1 git || sudo apt-get install -y git git-flow;
-command -v > /dev/null 2>&1 qalculate || sudo apt-get install qalculate -y;
+command -v > /dev/null 2>&1 qalculate || sudo apt-get install -y qalculate;
 # For Keepass2 auto-typing.
-command -v > /dev/null 2>&1 xdotool || sudo apt-get install xdotool -y;
-sudo apt-get install linux-headers-$(uname -r) -y;
+command -v > /dev/null 2>&1 xdotool || sudo apt-get install -y xdotool;
+sudo apt-get install-y linux-headers-$(uname -r);
 # sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
+
+# For hardware info.
+# sudo apt-get install -y hardinfo;
+
+# See: https://www.cyberciti.biz/faq/howto-linux-get-sensors-information/
+# sudo apt-get install -y lm-sensors;
 
 # Needed for google chrome.
 sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
