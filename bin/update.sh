@@ -52,11 +52,15 @@ command -v > /dev/null 2>&1 xdotool || sudo apt-get install -y xdotool;
 sudo apt-get install-y linux-headers-$(uname -r);
 # sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
 
-# For hardware info.
+
+# Hardware info and sensors.
 # sudo apt-get install -y hardinfo;
 
 # See: https://www.cyberciti.biz/faq/howto-linux-get-sensors-information/
 # sudo apt-get install -y lm-sensors;
+
+# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
+
 
 # Needed for google chrome.
 sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
