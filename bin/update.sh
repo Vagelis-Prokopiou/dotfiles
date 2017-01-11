@@ -46,9 +46,21 @@ command -v > /dev/null 2>&1 gcc || sudo apt-get install -y build-essential;
 command -v > /dev/null 2>&1 7z || sudo apt-get install -y p7zip-full;
 command -v > /dev/null 2>&1 keepass2 || sudo apt-get install -y keepass2;
 command -v > /dev/null 2>&1 git || sudo apt-get install -y git git-flow;
-command -v > /dev/null 2>&1 qalculate || sudo apt-get install qalculate -y;
-sudo apt-get install linux-headers-$(uname -r) -y;
+command -v > /dev/null 2>&1 qalculate || sudo apt-get install -y qalculate;
+# For Keepass2 auto-typing.
+command -v > /dev/null 2>&1 xdotool || sudo apt-get install -y xdotool;
+sudo apt-get install-y linux-headers-$(uname -r);
 # sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
+
+
+# Hardware info and sensors.
+# sudo apt-get install -y hardinfo;
+
+# See: https://www.cyberciti.biz/faq/howto-linux-get-sensors-information/
+# sudo apt-get install -y lm-sensors;
+
+# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
+
 
 # Needed for google chrome.
 sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
@@ -223,21 +235,6 @@ else
 	installNodeModules;
 fi
 
-# ----- Check all services -----
-# service --status-all;
-# service --status-all | grep '+';
-service bluetooth stop;
-
-# ----- Install Java 8 for PhpStorm -----
-# Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
-# Backport Testing on stable
-# JDK 8
-# sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak;
-# echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list;
-# apt-get update
-# apt-get install openjdk-8-jdk
-# sudo update-alternatives --config java
-
 # If Dropbox exits.
 if [[ -d ${user_home}/Dropbox/ ]]; then
 	# If folder for today does not exits, do the backup.
@@ -275,6 +272,31 @@ find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}"
 
 # Remove the torrent files from Downloads.
 rm ${user_home}/Downloads/*.torrent;
+
+# How To Record and Share Linux Terminal Activity
+# See: http://linoxide.com/tools/record-share-linux-terminal/
+# sudo apt-get install asciinema;
+
+
+# ----- Check all services -----
+# service --status-all;
+# service --status-all | grep '+';
+service bluetooth stop;
+
+# ----- Install Java 8 for PhpStorm -----
+# Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
+# Backport Testing on stable
+# JDK 8
+# sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak;
+# echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list;
+# apt-get update
+# apt-get install openjdk-8-jdk
+# sudo update-alternatives --config java
+
+
+
+
+
 
 # ----- Enable mssql in PHP. -----
 # See: https://coderwall.com/p/21uxeq/connecting-to-a-mssql-server-database-with-php-on-ubuntu-debian
