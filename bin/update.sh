@@ -72,7 +72,7 @@ else
 fi
 
 # Import and edit pdfs in Libreoffice Draw.
-sudo apt-get install -y libreoffice-pdfimport;
+# sudo apt-get install -y libreoffice-pdfimport;
 
 # Nautilus plugin for opening terminals in arbitrary paths.
 sudo apt-get install -y nautilus-open-terminal;
