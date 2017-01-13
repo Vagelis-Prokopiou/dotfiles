@@ -401,3 +401,7 @@ service bluetooth stop;
 
 # Needed for digitally signing android apps.
 # sudo aptitude install zipalign -y;
+
+# Record the desktop.
+# sudo apt-get install -y recordmydesktop;
+# To record the sound see https://ubuntuforums.org/showthread.php?t=1118019
