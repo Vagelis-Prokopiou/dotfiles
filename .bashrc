@@ -134,9 +134,11 @@ function git-format() {
 	if [[ $1 && $2 ]]; then
 		branchName="$1";
 		patchName="$2";
+		# Remove a pre-existing patch.
+		rm "${patchName}".patch 2> /dev/null;
 		git format-patch --binary "${branchName}" --stdout > "${patchName}".patch;
-		# Remove the 2 last unnecessary lines.
-		sed -i "/^--/d;/windows/d;" "${patchName}".patch
+		# Removing the last unnecessary line.
+		sed -i "/windows/d" "${patchName}".patch;
 	else
 		echo "Usage: git-format branchName patchName";
 	fi
