@@ -139,6 +139,7 @@ function git-format() {
 		git format-patch --binary "${branchName}" --stdout > "${patchName}".patch;
 		# Removing the last unnecessary line.
 		sed -i "/windows/d" "${patchName}".patch;
+		echo "The ${patchName}.patch was created successfully.";
 	else
 		echo "Usage: git-format branchName patchName";
 	fi
