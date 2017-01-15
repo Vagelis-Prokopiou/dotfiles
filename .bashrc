@@ -116,20 +116,31 @@ alias enalia='cd /var/www/html/vhosts/enalia/public_html/';
 alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/enalia/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
 alias update='echo va | sudo -S bash ~/bin/update.sh';
-alias code='sudo code --user-data-dir="~/.vscode"';
 
 # Vhosts stuff:
 alias vhostcreate='sudo python ~/bin/vhost_create.py';
 alias vhostdelete='sudo bash ~/bin/vhost_delete.sh';
 
 # Git stuff:
-alias gc='git commit -m ';
+alias gc='git commit --signoff -m ';
 # alias gl='git log --pretty=format:"%h, %ar: %s"'
 alias gl='git log --oneline';
 alias gcf='git checkout -- ';
 alias gs='git status';
 alias grh='git reset --hard';
 alias ga='git add ';
+# Create a formatted git patch.
+function git-format() {
+	if [[ $1 && $2 ]]; then
+		branchName="$1";
+		patchName="$2";
+		git format-patch --binary "${branchName}" --stdout > "${patchName}".patch;
+		# Remove the 2 last unnecessary lines.
+		sed -i "/^--/d;/windows/d;" "${patchName}".patch
+	else
+		echo "Usage: git-format branchName patchName";
+	fi
+}
 # Add git completion.
 source ~/git-completion.bash;
 
