@@ -137,8 +137,8 @@ function git-format() {
 		# Remove a pre-existing patch.
 		rm "${patchName}".patch 2> /dev/null;
 		git format-patch --binary "${branchName}" --stdout > "${patchName}".patch;
-		# Removing the last unnecessary line.
-		sed -i "/windows/d" "${patchName}".patch;
+		# Removing the last unnecessary line. Act only after the "--" line.
+		sed -i '/^--/,$ {/windows/d}' "${patchName}".patch;
 		echo "The ${patchName}.patch was created successfully.";
 	else
 		echo "Usage: git-format branchName patchName";
@@ -176,3 +176,14 @@ if [ -f "/root/.drush/drush.prompt.sh" ] ; then
   source /root/.drush/drush.prompt.sh
 fi
 
+# General functions.
+# Create a report from a GA csv.
+function google-analytics-report() {
+	if [[ $1 ]]; then
+		sourceFile="$1";
+		cat "$sourceFile" | awk -F ',' '{print $1, $2}' | sed "s|/el/άρθρα/|Άρθρο: |g;s|\(\ \)\([0-9]\{1,3\}\)|\. Θεάσεις: \2\.|g" > article_views.txt;
+		echo "The article_views.txt was created successfully.";
+	else
+		echo "Usage: google_analytics_report sourceFile";
+	fi
+}
