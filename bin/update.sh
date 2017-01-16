@@ -49,7 +49,7 @@ command -v > /dev/null 2>&1 git || sudo apt-get install -y git git-flow;
 command -v > /dev/null 2>&1 qalculate || sudo apt-get install -y qalculate;
 # For Keepass2 auto-typing.
 command -v > /dev/null 2>&1 xdotool || sudo apt-get install -y xdotool;
-sudo apt-get install-y linux-headers-$(uname -r);
+sudo apt-get install -y linux-headers-$(uname -r);
 # sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
 
 
@@ -105,8 +105,9 @@ sudo apt-get purge postgresql* -y;
 ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/Trash/*" -iname "*" | xargs sudo rm -r; done;
 ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/.cache/*" -iname "*" | xargs sudo rm -r; done;
 ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/tmp/*" -type f -amin +10 | xargs sudo rm -r; done;
-sudo find /home/ -path "*/drush-backups/*"  -iname "*" | xargs sudo rm -r;
-sudo find /var -iname "*.gz" | grep -v dbexport | xargs sudo rm -r;
+sudo find "$user_home" -path "*/drush-backups/*"  -iname "*" -exec rm -r "{}" \+;
+sudo find "$root_home" -path "*/drush-backups/*"  -iname "*" -exec rm -r "{}" \+;
+sudo find /var -iname "*.gz" | grep -v *.sql.gz | xargs sudo rm -r;
 sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
 
 # Drivers for AMD GPU.
@@ -271,7 +272,7 @@ sudo chown -R ${user}:${user} ${user_home}/;
 find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
 
 # Remove the torrent files from Downloads.
-rm ${user_home}/Downloads/*.torrent;
+rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 
 # How To Record and Share Linux Terminal Activity
 # See: http://linoxide.com/tools/record-share-linux-terminal/
@@ -283,6 +284,10 @@ rm ${user_home}/Downloads/*.torrent;
 # service --status-all | grep '+';
 service bluetooth stop;
 
+echo "Disk usage ($(df | head -n 2 | tail -n 1 | awk '{ print $1 }')): $(df | head -n 2 | tail -n 1 | awk '{ print $5 }').";
+
+
+
 # ----- Install Java 8 for PhpStorm -----
 # Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
 # Backport Testing on stable
@@ -292,10 +297,6 @@ service bluetooth stop;
 # apt-get update
 # apt-get install openjdk-8-jdk
 # sudo update-alternatives --config java
-
-
-
-
 
 
 # ----- Enable mssql in PHP. -----
