@@ -284,8 +284,14 @@ rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 # service --status-all | grep '+';
 service bluetooth stop;
 
-echo "Disk usage ($(df | head -n 2 | tail -n 1 | awk '{ print $1 }')): $(df | head -n 2 | tail -n 1 | awk '{ print $5 }').";
-
+# Display the free space in the Linux partition.
+disk_usage=$(df | head -n 2 | tail -n 1);
+if [[ $(uname) == "MINGW"* ]]; then
+	echo "Disk usage ($(echo $disk_usage | awk '{ print $1 }')): $(echo $disk_usage | awk '{ print $6 }').";
+else
+	echo "Disk usage ($(echo $disk_usage | awk '{ print $1 }')): $(echo $disk_usage | awk '{ print $5 }').";
+fi
+# echo "Disk usage ($(df | head -n 2 | tail -n 1 | awk '{ print $1 }')): $(df | head -n 2 | tail -n 1 | awk '{ print $5 }').";
 
 
 # ----- Install Java 8 for PhpStorm -----
