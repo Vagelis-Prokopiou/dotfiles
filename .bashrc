@@ -79,7 +79,7 @@ esac
 eval "`dircolors`";
 # alias ls='ls --color=auto';
 # alias ll='ls --color=auto -l';
-alias l='ls --color=auto -lA';
+alias l='ls --color=auto -lAh';
 
 # Colored searching.
 alias grep='grep --color=auto'
