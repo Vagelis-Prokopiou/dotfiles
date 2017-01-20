@@ -198,3 +198,12 @@ function disk-usage() {
 		# echo "Disk usage ($(df | head -n 2 | tail -n 1 | awk '{ print $1 }')): $(df | head -n 2 | tail -n 1 | awk '{ print $5 }').";
 	fi
 }
+
+# Function that pipes to less by default.
+function cat-less() {
+    if [[ -f $1 ]]; then
+        cat $1 | less;
+    else
+        echo "Usage: cat fileName";
+    fi
+}
