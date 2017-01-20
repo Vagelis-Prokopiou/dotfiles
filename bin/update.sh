@@ -61,9 +61,11 @@ sudo apt-get install -y linux-headers-$(uname -r);
 
 # See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
 
-
 # Needed for google chrome.
 sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
+
+# Needed for compiling Vim from source.
+sudo apt-get install -y ncurses-devel;
 
 # ----- Install youtube-dl. -----
 function installYoutubeDL {

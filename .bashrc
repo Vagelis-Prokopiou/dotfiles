@@ -79,7 +79,7 @@ esac
 eval "`dircolors`";
 # alias ls='ls --color=auto';
 # alias ll='ls --color=auto -l';
-alias l='ls --color=auto -lA';
+alias l='ls --color=auto -lAh';
 
 # Colored searching.
 alias grep='grep --color=auto'
@@ -197,4 +197,13 @@ function disk-usage() {
 		echo "Disk usage ($(echo $disk_usage | awk '{ print $1 }')): $(echo $disk_usage | awk '{ print $5 }').";
 		# echo "Disk usage ($(df | head -n 2 | tail -n 1 | awk '{ print $1 }')): $(df | head -n 2 | tail -n 1 | awk '{ print $5 }').";
 	fi
+}
+
+# Function that pipes to less by default.
+function cat-less() {
+    if [[ -f $1 ]]; then
+        cat $1 | less;
+    else
+        echo "Usage: cat fileName";
+    fi
 }
