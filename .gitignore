@@ -90,3 +90,8 @@ Videos/
 .v8flags.4.5.103.42.root.json
 .PhpStorm2016.3/
 .mysql
+src
+.gtk-recordmydesktop
+.putty/
+.swp
+.viminfo
