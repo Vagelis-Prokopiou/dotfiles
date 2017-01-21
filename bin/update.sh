@@ -273,6 +273,64 @@ find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}"
 # Remove the torrent files from Downloads.
 rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 
+
+# Install latest Vim.
+function vim-update() {
+	# Create the dir for the source code.
+	# if [[ ! -d "${user}"/src ]]; then
+	# 	mkdir "${user}"/src;
+	# fi
+	cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
+
+	# Needed for compiling Vim from source.
+	sudo apt-get install -y libncurses5-dev;
+
+	command -v vim > /dev/null || sudo apt-get install -y vim;
+	vim_dir="${user_home}/src/vim";
+
+	# Check if repository has already been downloaded.
+	if [[ -d $vim_dir  ]]; then
+		cd $vim_dir;
+		vim_latest=$(git tag | tail -n 1 | sed "s/.*\(...\)/\1/");
+		vim_installed=$(vim --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
+		echo "vim_latest: $vim_latest"
+		echo "vim_installed: $vim_installed"
+		if  [[ $vim_latest -gt $vim_installed ]]  ; then
+			echo "----------------------------------";
+			echo "     Installing latest Vim.";
+			echo "----------------------------------";
+			git reset --hard > /dev/null;
+			git pull > /dev/null;
+		else
+			major_version=$(vim --version | head -n 2 | head -n 1 | awk '{ print $5 }');
+			minor_version=$(vim --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
+			echo "-------------------------------------------------";
+			echo "     Latest Vim (${major_version}.${minor_version}) already installed.";
+			echo "-------------------------------------------------";
+			exit 0;
+		fi
+	else
+		# cd /home/va/src;
+		git clone https://github.com/vim/vim.git;
+		cd "${vim_dir}/src";
+	fi
+
+	# Configure and install.
+	./configure > /dev/null;
+	make > /dev/null;
+	# make distclean > /dev/null;
+	sudo make install > /dev/null;
+	# sudo checkinstall > /dev/null;
+
+	major_version=$(vim --version | head -n 2 | head -n 1 | awk '{ print $5 }');
+	minor_version=$(vim --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
+	echo "--------------------------------------------------------------------------------";
+	echo "     Latest Vim (${major_version}.${minor_version}) successfully installed. ";
+	echo "--------------------------------------------------------------------------------";
+	exit 0;
+}
+vim-update;
+
 # How To Record and Share Linux Terminal Activity
 # See: http://linoxide.com/tools/record-share-linux-terminal/
 # sudo apt-get install asciinema;
@@ -283,51 +341,6 @@ rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 # service --status-all | grep '+';
 service bluetooth stop;
 
-# Install latest Vim.
-function vim-update() {
-	# Create the dir for the source code.
-	if [[ ! -d "${user}"/src ]]; then
-		mkdir "${user}"/src;
-	fi
-
-	# Needed for compiling Vim from source.
-	sudo apt-get install -y libncurses5-dev;
-
-	command -v vim > /dev/null || sudo apt-get install -y vim;
-	vim_latest=$(git tag | tail -n 1 | sed "s/.*\(...\)/\1/");
-	vim_installed=$(vim --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
-	vim_dir="/home/va/src/vim";
-	if  [[ ! $vim_latest -gt $vim_installed ]]  ; then
-		echo "----------------------------------";
-		echo "     Installing latest Vim.";
-		echo "----------------------------------";
-
-		# Check if repository has already been downloaded.
-		if [[ -d $vim_dir  ]]; then
-			cd $vim_dir;
-			git reset --hard > /dev/null;
-			git pull > /dev/null;
-		else
-			cd /home/va/src;
-			git clone https://github.com/vim/vim.git;
-			cd vim/src;
-		fi
-
-		# Configure and install.
-		./configure > /dev/null;
-		make distclean   > /dev/null;
-		sudo make install > /dev/null;
-
-		echo "--------------------------------------------------------------------------------";
-		echo "     Latest Vim successfully installed. $(vim --version | head -n 2 | head -n 1)";
-		echo "--------------------------------------------------------------------------------";
-	else
-		echo "---------------------------------------";
-		echo "     Latest Vim already installed.";
-		echo "---------------------------------------";
-	fi
-}
-vim-update;
 
 
 # ----- Install Java 8 for PhpStorm -----
