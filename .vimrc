@@ -35,3 +35,6 @@ set whichwrap+=<,>,h,l
 
 " Highlight search results
 set hlsearch
+
+" Show the line numbers.
+set number
