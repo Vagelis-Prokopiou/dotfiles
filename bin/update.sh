@@ -64,9 +64,6 @@ sudo apt-get install -y linux-headers-$(uname -r);
 # Needed for google chrome.
 sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
 
-# Needed for compiling Vim from source.
-sudo apt-get install -y ncurses-devel;
-
 # ----- Install youtube-dl. -----
 function installYoutubeDL {
 	# Install latest youtube-dl.
@@ -285,6 +282,53 @@ rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 # service --status-all;
 # service --status-all | grep '+';
 service bluetooth stop;
+
+# Install latest Vim.
+function vim-update() {
+	# Create the dir for the source code.
+	if [[ ! -d "${user}"/src ]]; then
+		mkdir "${user}"/src;
+	fi
+
+	# Needed for compiling Vim from source.
+	sudo apt-get install -y libncurses5-dev;
+
+	command -v vim > /dev/null || sudo apt-get install -y vim;
+	vim_latest=$(git tag | tail -n 1 | sed "s/.*\(...\)/\1/");
+	vim_installed=$(vim --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
+	vim_dir="/home/va/src/vim";
+	if  [[ ! $vim_latest -gt $vim_installed ]]  ; then
+		echo "----------------------------------";
+		echo "     Installing latest Vim.";
+		echo "----------------------------------";
+
+		# Check if repository has already been downloaded.
+		if [[ -d $vim_dir  ]]; then
+			cd $vim_dir;
+			git reset --hard > /dev/null;
+			git pull > /dev/null;
+		else
+			cd /home/va/src;
+			git clone https://github.com/vim/vim.git;
+			cd vim/src;
+		fi
+
+		# Configure and install.
+		./configure > /dev/null;
+		make distclean   > /dev/null;
+		sudo make install > /dev/null;
+
+		echo "--------------------------------------------------------------------------------";
+		echo "     Latest Vim successfully installed. $(vim --version | head -n 2 | head -n 1)";
+		echo "--------------------------------------------------------------------------------";
+	else
+		echo "---------------------------------------";
+		echo "     Latest Vim already installed.";
+		echo "---------------------------------------";
+	fi
+}
+vim-update;
+
 
 # ----- Install Java 8 for PhpStorm -----
 # Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
