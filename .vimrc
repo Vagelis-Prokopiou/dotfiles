@@ -13,7 +13,8 @@ set whichwrap+=<,>,h,l
 " Colors and Fonts
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable
+" syntax enable
+syntax on
 
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
