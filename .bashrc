@@ -163,6 +163,7 @@ function git-format() {
 # Delete local and remote branch.
 function git-delete-branch() {
 	if [[ $1 ]]; then
+		git checkout master;
 		branch_name="$1";
 		git branch -D "$branch_name";
 		git push origin --delete "$branch_name";
