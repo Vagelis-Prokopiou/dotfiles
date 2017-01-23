@@ -131,6 +131,9 @@ alias grh='git reset --hard';
 alias ga='git add ';
 alias git-show-tracked-files='git ls-tree --full-tree -r --name-only HEAD';
 alias gstf='git-show-tracked-files';
+# Add git completion.
+source ~/git-completion.bash;
+
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
 function git-diff-master() {
@@ -157,8 +160,16 @@ function git-format() {
 		echo "Usage: git-format branchName patchName";
 	fi
 }
-# Add git completion.
-source ~/git-completion.bash;
+# Delete local and remote branch.
+function git-delete-branch() {
+	if [[ $1 ]]; then
+		branch_name="$1";
+		git branch -D "$branch_name";
+		git push origin --delete "$branch_name";
+	else
+		echo "Usage: git-delete-branch <branch_name>"
+	fi
+}
 
 # Site audit stuff:
 alias siteaudit7='rm -r ~/.drush/commands/site_audit && unzip ~/.drush/commands/site_audit-7*.zip -d ~/.drush/commands/';
