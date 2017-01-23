@@ -141,7 +141,7 @@ function git-diff-master() {
 	for file in $(git-show-tracked-files); do
 		# Make sure you skip .gitignore.
 		if [[ ! $file = '.gitignore'  ]]; then
-			git diff master $file >> $(git branch | head -n 1 | sed 's|* ||g').patch;
+			git diff master $file >> $(git rev-parse --abbrev-ref HEAD).patch;
 		fi
 	done
 }
