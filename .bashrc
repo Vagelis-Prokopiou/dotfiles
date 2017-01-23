@@ -129,6 +129,19 @@ alias gcf='git checkout -- ';
 alias gs='git status';
 alias grh='git reset --hard';
 alias ga='git add ';
+alias git-show-tracked-files='git ls-tree --full-tree -r --name-only HEAD';
+alias gstf='git-show-tracked-files';
+# Create a patch (diff) file, for only the tracked files of the repository.
+# Useful when the master branch tracks for files than the current branch.
+function git-diff-master() {
+	alias git-show-tracked-files='git ls-tree --full-tree -r --name-only HEAD';
+	for file in $(git-show-tracked-files); do
+		# Make sure you skip .gitignore.
+		if [[ ! $file = '.gitignore'  ]]; then
+			git diff master $file >> $(git branch | head -n 1 | sed 's|* ||g').patch;
+		fi
+	done
+}
 # Create a formatted git patch.
 function git-format() {
 	if [[ $1 && $2 ]]; then
