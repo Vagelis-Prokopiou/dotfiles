@@ -134,6 +134,15 @@ alias gstf='git-show-tracked-files';
 # Add git completion.
 source ~/git-completion.bash;
 
+# Report from git log.
+function git-create-report() {
+	if [[ "$1" ]]; then
+		git log --since="$1" --no-merges --date=format:'%Y-%m-%d, %H:%M' --format='%ad: %s.' > git_report.txt;
+	else
+		echo 'Usage: git-create-report <date>';
+	fi
+}
+
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
 function git-diff-master() {
@@ -166,7 +175,7 @@ function git-delete-branch() {
 	if [[ $1 ]]; then
         	git checkout master > /dev/null;
 		branch_name="$1";
-        	echo "Deleting local $branch_name branch..."; 
+        	echo "Deleting local $branch_name branch...";
 		git branch -D "$branch_name";
         	echo "Deleting remote $branch_name branch...";
 		git push origin --delete "$branch_name";
