@@ -135,7 +135,7 @@ alias gstf='git-show-tracked-files';
 source ~/git-completion.bash;
 
 # Report from git log.
-function git-create-report() {
+function git-log-report() {
 	if [[ "$1" ]]; then
 		git log --since="$1" --no-merges --date=format:'%Y-%m-%d, %H:%M' --format='%ad: %s.' > git_report.txt;
 	else
@@ -155,7 +155,7 @@ function git-diff-master() {
 	done
 }
 # Create a formatted git patch.
-function git-format() {
+function git-patch-formatted() {
 	if [[ $1 && $2 ]]; then
 		branchName="$1";
 		patchName="$2";
