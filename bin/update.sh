@@ -274,7 +274,7 @@ find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}"
 rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 
 
-# Install latest Vim.
+# Install latest.
 function vim-update() {
 	# Create the dir for the source code.
 	# if [[ ! -d "${user}"/src ]]; then
@@ -330,6 +330,70 @@ function vim-update() {
 	exit 0;
 }
 vim-update;
+
+
+# Install latest git.
+function git-update() {
+	git_latest=$(git tag | tail -n 1 | sed 's|v||g; s|\.||g');
+	git_installed=$(git --version | awk '{ print $3 }' | sed 's|\.||g; s|windows.*$||g; s|\(...\)\(.*\)|\1|g');
+	# Create the dir for the source code.
+	# if [[ ! -d "${user}"/src ]]; then
+	# 	mkdir "${user}"/src;
+	# fi
+	cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
+
+	# Needed for compiling Vim from source.
+	sudo apt-get install -y libncurses5-dev;
+
+	command -v git > /dev/null || sudo apt-get install -y git;
+	git_dir="${user_home}/src/git";
+
+	# Check if repository has already been downloaded.
+	if [[ -d $git_dir  ]]; then
+		cd $git_dir;
+		git_latest=$(git tag | tail -n 1 | sed "s/.*\(...\)/\1/");
+		git_installed=$(git --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
+		echo "git_latest: $git_latest"
+		echo "git_installed: $git_installed"
+		if  [[ $git_latest -gt $git_installed ]]  ; then
+			echo "----------------------------------";
+			echo "     Installing latest Vim.";
+			echo "----------------------------------";
+			git reset --hard > /dev/null;
+			git pull > /dev/null;
+		else
+			major_version=$(git --version | head -n 2 | head -n 1 | awk '{ print $5 }');
+			minor_version=$(git --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
+			echo "-------------------------------------------------";
+			echo "     Latest Vim (${major_version}.${minor_version}) already installed.";
+			echo "-------------------------------------------------";
+			exit 0;
+		fi
+	else
+		# cd /home/va/src;
+		git clone https://github.com/git/git.git;
+		cd "${git_dir}/src";
+	fi
+
+	# Configure and install.
+	./configure > /dev/null;
+	make > /dev/null;
+	# make distclean > /dev/null;
+	sudo make install > /dev/null;
+	# sudo checkinstall > /dev/null;
+
+	major_version=$(git --version | head -n 2 | head -n 1 | awk '{ print $5 }');
+	minor_version=$(git --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
+	echo "--------------------------------------------------------------------------------";
+	echo "     Latest Vim (${major_version}.${minor_version}) successfully installed. ";
+	echo "--------------------------------------------------------------------------------";
+	exit 0;
+}
+# git-update;
+
+
+
+
 
 # How To Record and Share Linux Terminal Activity
 # See: http://linoxide.com/tools/record-share-linux-terminal/
