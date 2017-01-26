@@ -273,9 +273,20 @@ find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}"
 # Remove the torrent files from Downloads.
 rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 
-
-# Install latest.
+# Install latest Vim.
 function vim-update() {
+	# curl GitHub for the latest version.
+	vim_latest=$(curl https://github.com/vim/vim/releases | \
+	grep '<span class="tag-name">' | \
+	sed 's|<span class="tag-name">v||;' | \
+	sed 's|</span>||' | \
+	head -n 1 | \
+	sed 's|[[:space:]]||g');
+	
+	# Get the installed version.
+	vim_installed_version=$(vim --version | head -n 1 | awk '{ print $5 }');
+	vim_installed_tag=$(vim --version | head -n 2 | tail -n 1 | awk '{ print $3 }' | sed 's|^[0-9]-|0|g');
+
 	# Create the dir for the source code.
 	# if [[ ! -d "${user}"/src ]]; then
 	# 	mkdir "${user}"/src;
