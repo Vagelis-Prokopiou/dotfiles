@@ -340,15 +340,15 @@ function git-update() {
 	head -n 1 | \
 	sed 's|[[:space:]]||g');
 
-	git_installed=$(git --version | \
-	awk '{ print $3 }' | \
-	sed 's|\.windows.*||g');
+	git_installed=$(git  --version | \
+	awk '{print $3}' | \
+	sed 's|\(.*\)\([.a-z0-9]\{13\}\)|\1|');
 
 	cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
 
-	if [[ "$vim_latest" == "${vim_installed_version}.${vim_installed_tag}" ]]; then
+	if [[ "$git_latest" == "$git_installed" ]]; then
 		echo "-------------------------------------------------";
-		echo "     Latest Vim (${vim_installed_version}.${vim_installed_tag}) already installed.";
+		echo "     Latest Git ($git_installed) already installed.";
 		echo "-------------------------------------------------";
 	else
 		# Build the latest Git.
