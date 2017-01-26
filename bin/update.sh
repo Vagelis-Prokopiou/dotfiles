@@ -279,6 +279,7 @@ function vim-update() {
 	command -v vim > /dev/null || sudo apt-get install -y vim;
 
 	# curl GitHub for the latest version.
+	echo -e "\nGetting the latest Vim...\n";
 	vim_latest=$(curl https://github.com/vim/vim/releases | \
 	grep '<span class="tag-name">' | \
 	sed 's|<span class="tag-name">v||;' | \
@@ -326,13 +327,14 @@ function vim-update() {
 		sudo rm -rf vim/;
 	fi
 }
-# vim-update;
+vim-update;
 
 # Install the latest Git from source.
 function git-update() {
 	# Make sure Git is installed.
 	command -v git > /dev/null || sudo apt-get install -y git;
 
+	echo -e "\nGetting the latest Git...\n";
 	git_latest=$(curl https://github.com/git/git/releases | \
 	grep '<span class="tag-name">' | \
 	sed 's|<span class="tag-name">v||;' | \
