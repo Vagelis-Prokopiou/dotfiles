@@ -324,11 +324,9 @@ function vim-update() {
 
 		# Cleanup.
 		sudo rm -rf vim/;
-
-		exit 0;
 	fi
 }
-vim-update;
+# vim-update;
 
 # Install the latest Git from source.
 function git-update() {
@@ -356,6 +354,10 @@ function git-update() {
 		# Build the latest Git.
 		# Needed for compiling Git from source.
 		sudo apt-get install -y zlib1g-dev;
+		sudo apt-get install -y libcurl4-openssl-dev;
+		sudo apt-get install -y libssl-dev;
+		sudo apt-get install libexpat1-dev;
+		# fatal error: expat.h: No such file or directory
 
 		cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
 
@@ -366,17 +368,13 @@ function git-update() {
 		cd "${user_home}/src/git/src";
 
 		# Configure and install.
-		make configure > /dev/null;
-		./configure --prefix=/usr > /dev/null;
-		# make all doc > /dev/null;
-		make all > /dev/null;
-		# sudo make install install-doc install-html > /dev/null;
-		sudo make install > /dev/null;
+		make prefix=/usr;
+		sudo make prefix=/usr install;
 
 		# Get the installed version again.
-		git_installed=$(git --version | \
-		awk '{ print $3 }' | \
-		sed 's|\.windows.*||g');
+		git_installed=$(git  --version | \
+		awk '{print $3}' | \
+		sed 's|\(.*\)\([.a-z0-9]\{13\}\)|\1|');
 		echo "--------------------------------------------------------------------------------";
 		echo "     Latest Git (${git_installed}) successfully installed. ";
 		echo "--------------------------------------------------------------------------------";
@@ -384,11 +382,9 @@ function git-update() {
 
 		# Cleanup.
 		sudo rm -rf git/;
-
-		exit 0;
 	fi
 }
-# git-update;
+git-update;
 
 # How To Record and Share Linux Terminal Activity
 # See: http://linoxide.com/tools/record-share-linux-terminal/
