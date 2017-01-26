@@ -345,6 +345,9 @@ vim-update;
 
 # Install latest git.
 function git-update() {
+	# Necessary package to install from source. 	
+	sudo apt-get install -y zlib1g-dev;
+	
 	git_latest=$(curl https://github.com/git/git/releases | \
 	grep '<span class="tag-name">' | \
 	sed 's|<span class="tag-name">v||;' | \
