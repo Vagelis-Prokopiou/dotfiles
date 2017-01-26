@@ -273,8 +273,11 @@ find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}"
 # Remove the torrent files from Downloads.
 rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 
-# Install latest Vim.
+# Install the latest Vim from source.
 function vim-update() {
+	# Make sure Vim is installed.
+	command -v vim > /dev/null || sudo apt-get install -y vim;
+
 	# curl GitHub for the latest version.
 	vim_latest=$(curl https://github.com/vim/vim/releases | \
 	grep '<span class="tag-name">' | \
@@ -282,66 +285,50 @@ function vim-update() {
 	sed 's|</span>||' | \
 	head -n 1 | \
 	sed 's|[[:space:]]||g');
-	
+
 	# Get the installed version.
 	vim_installed_version=$(vim --version | head -n 1 | awk '{ print $5 }');
 	vim_installed_tag=$(vim --version | head -n 2 | tail -n 1 | awk '{ print $3 }' | sed 's|^[0-9]-|0|g');
 
-	# Create the dir for the source code.
-	# if [[ ! -d "${user}"/src ]]; then
-	# 	mkdir "${user}"/src;
-	# fi
-	cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
-
-	# Needed for compiling Vim from source.
-	sudo apt-get install -y libncurses5-dev;
-
-	command -v vim > /dev/null || sudo apt-get install -y vim;
-	vim_dir="${user_home}/src/vim";
-
-	# Check if repository has already been downloaded.
-	if [[ -d $vim_dir  ]]; then
-		cd $vim_dir;
-		vim_latest=$(git tag | tail -n 1 | sed "s/.*\(...\)/\1/");
-		vim_installed=$(vim --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
-		echo "vim_latest: $vim_latest"
-		echo "vim_installed: $vim_installed"
-		if  [[ $vim_latest -gt $vim_installed ]]  ; then
-			echo "----------------------------------";
-			echo "     Installing latest Vim.";
-			echo "----------------------------------";
-			git reset --hard > /dev/null;
-			git pull > /dev/null;
-		else
-			major_version=$(vim --version | head -n 2 | head -n 1 | awk '{ print $5 }');
-			minor_version=$(vim --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
-			echo "-------------------------------------------------";
-			echo "     Latest Vim (${major_version}.${minor_version}) already installed.";
-			echo "-------------------------------------------------";
-			exit 0;
-		fi
+	if [[ "$vim_latest" == "${vim_installed_version}.${vim_installed_tag}" ]]; then
+		echo "-------------------------------------------------";
+		echo "     Latest Vim (${vim_installed_version}.${vim_installed_tag}) already installed.";
+		echo "-------------------------------------------------";
 	else
-		# cd /home/va/src;
+		# Build latest Vim.
+		# Needed for compiling Vim from source.
+		sudo apt-get install -y libncurses5-dev;
+
+		cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
+
+		# Download latest Vim.
 		git clone https://github.com/vim/vim.git;
-		cd "${vim_dir}/src";
+
+		# cd in the downloaded source code.
+		cd "${user_home}/src/vim/src";
+
+		# Configure and install.
+		./configure > /dev/null;
+		make > /dev/null;
+		# make distclean > /dev/null;
+		sudo make install > /dev/null;
+		# sudo checkinstall > /dev/null;
+
+		# Get the installed version again.
+		vim_installed_version=$(vim --version | head -n 1 | awk '{ print $5 }');
+		vim_installed_tag=$(vim --version | head -n 2 | tail -n 1 | awk '{ print $3 }' | sed 's|^[0-9]-|0|g');
+		echo "--------------------------------------------------------------------------------";
+		echo "     Latest Vim (${vim_installed_version}.${vim_installed_tag}) successfully installed. ";
+		echo "--------------------------------------------------------------------------------";
+		cd "${user_home}/src";
+
+		# Cleanup.
+		sudo rm -rf vim/;
+
+		exit 0;
 	fi
-
-	# Configure and install.
-	./configure > /dev/null;
-	make > /dev/null;
-	# make distclean > /dev/null;
-	sudo make install > /dev/null;
-	# sudo checkinstall > /dev/null;
-
-	major_version=$(vim --version | head -n 2 | head -n 1 | awk '{ print $5 }');
-	minor_version=$(vim --version | head -n 2 | tail -n 1 | sed "s/.*\(...\)/\1/");
-	echo "--------------------------------------------------------------------------------";
-	echo "     Latest Vim (${major_version}.${minor_version}) successfully installed. ";
-	echo "--------------------------------------------------------------------------------";
-	exit 0;
 }
 vim-update;
-
 
 # Install latest git.
 function git-update() {
