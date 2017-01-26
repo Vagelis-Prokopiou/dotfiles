@@ -334,8 +334,16 @@ vim-update;
 
 # Install latest git.
 function git-update() {
-	git_latest=$(git tag | tail -n 1 | sed 's|v||g; s|\.||g');
-	git_installed=$(git --version | awk '{ print $3 }' | sed 's|\.||g; s|windows.*$||g; s|\(...\)\(.*\)|\1|g');
+	git_latest=$(curl https://github.com/git/git/releases | \
+	grep '<span class="tag-name">' | \
+	sed 's|<span class="tag-name">v||;' | \
+	sed 's|</span>||' | \
+	head -n 1 | \
+	sed 's|[[:space:]]||g');
+
+	git_installed=$(git --version | \
+	awk '{ print $3 }' | \
+	sed 's|\.windows.*||g');
 	# Create the dir for the source code.
 	# if [[ ! -d "${user}"/src ]]; then
 	# 	mkdir "${user}"/src;
