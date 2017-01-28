@@ -631,6 +631,12 @@ function software-update() {
 			# cd "${user_home}/src";
 			# sudo rm -rf git/;
 		fi
+
+		# Continue with Git Flow.
+		cd "${user_home}/src";
+		curl -OL https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh;
+		sudo bash ./gitflow-installer.sh;
+		rm -rf ./gitflow*;
 	}
 
 	# Start the updates.
