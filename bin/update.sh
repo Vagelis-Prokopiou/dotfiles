@@ -647,11 +647,6 @@ function software-update() {
 	# Findutils (find, xargs)
 	# full_version=`curl 'https://ftp.gnu.org/pub/gnu/findutils/?C=M;O=D' | grep 'a href="findutils-' | head -n 1 | sed 's|\(.*\)\(findutils\)|\2|g; s|gz\.sig.*|gz|g'`;
 	# Link address: curl -O https://ftp.gnu.org/pub/gnu/findutils/${full_version}
-
-
-
-	alt="[   ]"></td><td><a href="findutils-4.6.0.tar.gz.sig">findutils-4.6.0.tar.gz.sig</a></td><td align="right">2015-12-28 16:53  </td><td align="right">152 </td><td>&nbsp;</td></tr>
-
 }
 
 software-update;
