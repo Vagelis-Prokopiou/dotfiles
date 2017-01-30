@@ -522,7 +522,7 @@ function main-update() {
 	# sudo apt-get install -y recordmydesktop;
 	# To record the sound see https://ubuntuforums.org/showthread.php?t=1118019
 }
-# main-update;
+main-update;
 
 
 function software-update() {
