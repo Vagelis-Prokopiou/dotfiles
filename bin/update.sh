@@ -276,121 +276,6 @@ function main-update() {
 	# Remove the torrent files from Downloads.
 	rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 
-	# Install the latest Vim from source.
-	function vim-update() {
-		# Make sure Vim is installed.
-		command -v vim > /dev/null || sudo apt-get install -y vim;
-
-		# curl GitHub for the latest version.
-		echo -e "\nGetting the latest Vim...\n";
-		vim_latest=$(curl https://github.com/vim/vim/releases | \
-		grep '<span class="tag-name">' | \
-		sed 's|<span class="tag-name">v||;' | \
-		sed 's|</span>||' | \
-		head -n 1 | \
-		sed 's|[[:space:]]||g');
-
-		# Get the installed version.
-		vim_installed_version=$(vim --version | head -n 1 | awk '{ print $5 }');
-		vim_installed_tag=$(vim --version | head -n 2 | tail -n 1 | awk '{ print $3 }' | sed 's|^[0-9]-|0|g');
-
-		if [[ "$vim_latest" == "${vim_installed_version}.${vim_installed_tag}" ]]; then
-			echo "-------------------------------------------------";
-			echo "     Latest Vim (${vim_installed_version}.${vim_installed_tag}) already installed.";
-			echo "-------------------------------------------------";
-		else
-			# Build latest Vim.
-			# Needed for compiling Vim from source.
-			sudo apt-get install -y libncurses5-dev;
-
-			cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
-
-			# Download latest Vim.
-			git clone https://github.com/vim/vim.git;
-
-			# cd in the downloaded source code.
-			cd "${user_home}/src/vim/src";
-
-			# Configure and install.
-			./configure > /dev/null;
-			make > /dev/null;
-			# make distclean > /dev/null;
-			sudo make install > /dev/null;
-			# sudo checkinstall > /dev/null;
-
-			# Get the installed version again.
-			vim_installed_version=$(vim --version | head -n 1 | awk '{ print $5 }');
-			vim_installed_tag=$(vim --version | head -n 2 | tail -n 1 | awk '{ print $3 }' | sed 's|^[0-9]-|0|g');
-			echo "--------------------------------------------------------------------------------";
-			echo "     Latest Vim (${vim_installed_version}.${vim_installed_tag}) successfully installed. ";
-			echo "--------------------------------------------------------------------------------";
-			cd "${user_home}/src";
-
-			# Cleanup.
-			sudo rm -rf vim/;
-		fi
-	}
-	vim-update;
-
-	# Install the latest Git from source.
-	function git-update() {
-		# Make sure Git is installed.
-		command -v git > /dev/null || sudo apt-get install -y git;
-
-		echo -e "\nGetting the latest Git...\n";
-		git_latest=$(curl https://github.com/git/git/releases | \
-		grep '<span class="tag-name">' | \
-		sed 's|<span class="tag-name">v||;' | \
-		sed 's|</span>||' | \
-		head -n 1 | \
-		sed 's|[[:space:]]||g');
-
-		git_installed=$(git  --version | \
-		awk '{print $3}' | \
-		sed 's|\(.*\)\([.a-z0-9]\{13\}\)|\1|');
-
-		cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
-
-		if [[ "$git_latest" == "$git_installed" ]]; then
-			echo "-------------------------------------------------";
-			echo "     Latest Git ($git_installed) already installed.";
-			echo "-------------------------------------------------";
-		else
-			# Build the latest Git.
-			# Needed for compiling Git from source.
-			sudo apt-get install -y zlib1g-dev;
-			sudo apt-get install -y libcurl4-openssl-dev;
-			sudo apt-get install -y libssl-dev;
-			sudo apt-get install libexpat1-dev;
-			# fatal error: expat.h: No such file or directory
-
-			cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
-
-			# Download the latest Git.
-			git clone https://github.com/git/git.git;
-
-			# cd in the downloaded source code.
-			cd "${user_home}/src/git/src";
-
-			# Configure and install.
-			make prefix=/usr;
-			sudo make prefix=/usr install;
-
-			# Get the installed version again.
-			git_installed=$(git  --version | \
-			awk '{print $3}' | \
-			sed 's|\(.*\)\([.a-z0-9]\{13\}\)|\1|');
-			echo "--------------------------------------------------------------------------------";
-			echo "     Latest Git (${git_installed}) successfully installed. ";
-			echo "--------------------------------------------------------------------------------";
-			cd "${user_home}/src";
-
-			# Cleanup.
-			sudo rm -rf git/;
-		fi
-	}
-	git-update;
-
 	# How To Record and Share Linux Terminal Activity
 	# See: http://linoxide.com/tools/record-share-linux-terminal/
 	# sudo apt-get install asciinema;
@@ -640,13 +525,67 @@ function software-update() {
 		fi
 	}
 
+	function sed-update() {
+		sed_newest_version=`curl 'https://ftp.gnu.org/gnu/sed/?C=M;O=D' | \
+		grep 'a href="sed-' | \
+		head -n 1 | \
+		sed 's|\(.*\)\(sed\)|\2|g; s|xz\.sig.*|xz|g'`;
+
+		sed_newest_version_number=$( echo "${sed_newest_version}" | sed 's/sed-//g; s/\.tar.*//g' );
+
+		sed_url="https://ftp.gnu.org/gnu/sed/${sed_newest_version}";
+
+		sed_installed_version=$(sed --version | head -n 1 | awk '{ print $4 }');
+
+		echo "sed_newest_version: $sed_newest_version";
+		echo "sed_newest_version_number: $sed_newest_version_number";
+		echo "sed_installed_version: $sed_installed_version";
+
+		if [[ "$sed_newest_version_number" == "$sed_installed_version" ]]; then
+			echo -e "\nThe newest sed is already installed.\n";
+		else
+			echo -e "Installing latest sed... Please, wait...";
+			cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src" && cd "${user_home}/src";
+			curl $sed_url;
+			tar -xf sed-*.tar.xz;
+			cd sed-*/;
+			./configure > /dev/null;
+			make > /dev/null;
+			sudo make install;
+			cd ../;
+			rm -rf sed*;
+			echo -e "\nThe newest sed has been installed.\n";
+		fi
+	}
+
+	function findutils-update() {
+		findutils_newest_version=`curl 'https://ftp.gnu.org/pub/gnu/findutils/?C=M;O=D' | \
+		grep 'a href="findutils-' | \
+		head -n 1 | \
+		sed 's|\(.*\)\(findutils\)|\2|g; s|gz\.sig.*|gz|g'`;
+
+		findutils_newest_version_number=$( echo "${findutils_newest_version}" | sed 's/findutils-//g; s/\.tar.gz//g' );
+
+		findutils_url="https://ftp.gnu.org/pub/gnu/findutils/${findutils_newest_version}";
+
+		findutils_installed_version=$(find --version | head -n 1 | awk '{ print $4 }');
+
+		echo "findutils_newest_version: $findutils_newest_version";
+		echo "findutils_newest_version_number: $findutils_newest_version_number";
+		echo "findutils_installed_version: $findutils_installed_version";
+
+		if [[ "$findutils_newest_version_number" == "$findutils_installed_version" ]]; then
+			echo -e "\nThe newest findutils are already installed.\n";
+		else
+			echo "Installing";
+		fi
+	}
+
 	# Start the updates.
 	vim-update;
 	git-update;
-
-	# Findutils (find, xargs)
-	# full_version=`curl 'https://ftp.gnu.org/pub/gnu/findutils/?C=M;O=D' | grep 'a href="findutils-' | head -n 1 | sed 's|\(.*\)\(findutils\)|\2|g; s|gz\.sig.*|gz|g'`;
-	# Link address: curl -O https://ftp.gnu.org/pub/gnu/findutils/${full_version}
+	sed-update;
+	# findutils-update;
 }
 
 software-update;
