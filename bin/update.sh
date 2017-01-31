@@ -526,6 +526,9 @@ function software-update() {
 	}
 
 	function sed-update() {
+		# Necessary for ACL support.
+		sudo apt-get install -y libacl1-dev;
+
 		sed_newest_version=`curl 'https://ftp.gnu.org/gnu/sed/?C=M;O=D' | \
 		grep 'a href="sed-' | \
 		head -n 1 | \
@@ -551,7 +554,7 @@ function software-update() {
 			cd sed-*/;
 			./configure > /dev/null;
 			make > /dev/null;
-			sudo make install;
+			sudo make install > /dev/null;
 			cd ../;
 			rm -rf sed*;
 			echo -e "\nThe newest sed has been installed.\n";
