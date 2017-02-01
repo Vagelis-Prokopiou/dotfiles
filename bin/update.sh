@@ -549,7 +549,7 @@ function software-update() {
 		else
 			echo -e "Installing latest sed... Please, wait...";
 			cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src" && cd "${user_home}/src";
-			curl $sed_url;
+			curl -O $sed_url;
 			tar -xf sed-*.tar.xz;
 			cd sed-*/;
 			./configure > /dev/null;
