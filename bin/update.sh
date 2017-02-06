@@ -406,6 +406,16 @@ function main-update() {
 	# Record the desktop.
 	# sudo apt-get install -y recordmydesktop;
 	# To record the sound see https://ubuntuforums.org/showthread.php?t=1118019
+
+	# ----- Database error after updating to 5.7 from the MySQL repo. -----
+	# Error
+	# SQL query: Edit Edit
+	# SHOW VARIABLES LIKE 'character_set_results'
+	# MySQL said: Documentation
+	#1146 - Table 'performance_schema.session_variables' doesn't exist
+	#1682 - Native table 'performance_schema'.'session_variables' has the wrong structure
+	# Solution: Run "sudo mysql_upgrade -u root -p --force && sudo service mysql restart";
+	# ----- Database error after updating to 5.7 from the MySQL repo (end). -----
 }
 main-update;
 
