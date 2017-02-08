@@ -419,7 +419,7 @@ function main-update() {
 }
 main-update;
 
-
+# All the packages for installation from source.
 function software-update() {
 	# Install the latest Vim from source.
 	function vim-update() {
@@ -479,40 +479,36 @@ function software-update() {
 		command -v git > /dev/null || sudo apt-get install -y git;
 
 		echo -e "\nGetting the latest Git...\n";
-		git_latest=$(curl https://github.com/git/git/releases | \
+		git_latest=$(curl 'https://github.com/git/git/releases' | \
 		grep '<span class="tag-name">' | \
-		sed 's|<span class="tag-name">v||;' | \
+		sed 's|<span class="tag-name">v||' | \
 		sed 's|</span>||' | \
 		head -n 1 | \
 		sed 's|[[:space:]]||g');
 
-		git_installed=$(git  --version | \
-		awk '{print $3}' | \
-		sed 's|\(.*\)\([.a-z0-9]\{13\}\)|\1|');
+		git_installed=$(git --version | awk '{print $3}' | sed 's|\(.*\)\([.a-z0-9]\{13\}\)|\1|; s/\.rc/-rc/');
 
-		cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
-
-		if [[ "$git_latest" == "$git_installed" ]]; then
+		if [[ "$git_latest" = "$git_installed" ]]; then
 			echo "-------------------------------------------------";
 			echo "     Latest Git ($git_installed) already installed.";
 			echo "-------------------------------------------------";
 		else
 			# Build the latest Git.
 			# Needed for compiling Git from source.
-			sudo apt-get install -y zlib1g-dev;
-			sudo apt-get install -y libcurl4-openssl-dev;
-			sudo apt-get install -y libssl-dev;
-			sudo apt-get install libexpat1-dev;
+			sudo apt-get install -y zlib1g-dev > /dev/null;
+			sudo apt-get install -y libcurl4-openssl-dev > /dev/null;
+			sudo apt-get install -y libssl-dev > /dev/null;
+			sudo apt-get install libexpat1-dev > /dev/null;
 			# fatal error: expat.h: No such file or directory
 
 			cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
 
 			# Download the latest Git.
-			(git clone https://github.com/git/git.git && cd "${user_home}/src/git/src") || cd "${user_home}/src/git/src" && git reset --hard && git pull;
+			(git clone https://github.com/git/git.git 2> /dev/null && cd "${user_home}/src/git/") || cd "${user_home}/src/git/" && git reset --hard && git pull;
 
 			# Configure and install.
-			make prefix=/usr;
-			sudo make prefix=/usr install;
+			make prefix=/usr > /dev/null;
+			sudo make prefix=/usr install > /dev/null;
 
 			# Get the installed version again.
 			git_installed=$(git  --version | \
