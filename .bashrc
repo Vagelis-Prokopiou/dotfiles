@@ -95,7 +95,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # alias mv='mv -i'
 
 # My aliases:
-alias phpstorm='echo va | sudo -S bash /home/va/Downloads/jetbrains/PhpStorm/bin/phpstorm.sh';
+alias phpstorm='echo vadead | sudo -S bash /home/va/Downloads/jetbrains/PhpStorm/bin/phpstorm.sh';
 alias localhost='cd /var/www/html';
 alias permissions='sudo chown -R www-data:www-data ../public_html && sudo chmod -R 777 sites/default/files';
 
@@ -115,7 +115,7 @@ alias enalia='cd /var/www/html/vhosts/enalia/public_html/';
 # alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/custom/enalia_classy/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/enalia/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
-alias update='echo va | sudo -S bash ~/bin/update.sh';
+alias update='echo vadead | sudo -S bash ~/bin/update.sh';
 
 # Vhosts stuff:
 alias vhostcreate='sudo python ~/bin/vhost_create.py';
