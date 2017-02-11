@@ -249,3 +249,10 @@ function cat-less() {
         echo "Usage: cat fileName";
     fi
 }
+
+function restore-folder-file-permissions() {
+	# Directories.
+	find . -type d -exec chmod 775 {} \;
+	# Files.
+	find . -type f -exec chmod 644 {} \;
+}
