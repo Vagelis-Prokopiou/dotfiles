@@ -127,6 +127,7 @@ alias gc='git commit --signoff -m ';
 alias gl='git log --oneline';
 alias gcf='git checkout -- ';
 alias gs='git status';
+alias gba='git branch --all';
 alias grh='git reset --hard';
 alias ga='git add ';
 alias git-show-tracked-files='git ls-tree --full-tree -r --name-only HEAD';
