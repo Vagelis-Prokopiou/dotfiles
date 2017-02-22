@@ -113,8 +113,8 @@ function main-update() {
 	sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
 
 	# Working!!!
-	for dir in /root /home /var ; do find "$dir" -path "*/.cache/*"  -type f -iname "*" -delete; done;
-	for dir in /root /home /var ; do find "$dir" -path "*/tmp/*"  -type f -iname "*" -delete; done;
+	for dir in /root /home /var ; do find "$dir" -path "*/.cache/*" -type f -iname "*" -delete; done;
+	for dir in /root /home /var ; do find "$dir" -path "*/tmp/*" -type f -iname "*" -delete; done;
 
 	# Drivers for AMD GPU.
 	sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
