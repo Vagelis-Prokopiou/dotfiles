@@ -104,13 +104,17 @@ function main-update() {
 	# sudo apt-get remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
 
 	# Remove all the caches.
-	ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/Trash/*" -iname "*" | xargs sudo rm -r; done;
-	ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/.cache/*" -iname "*" | xargs sudo rm -r; done;
-	ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/tmp/*" -type f -amin +10 | xargs sudo rm -r; done;
-	sudo find "$user_home" -path "*/drush-backups/*"  -iname "*" -exec rm -r "{}" \+;
-	sudo find "$root_home" -path "*/drush-backups/*"  -iname "*" -exec rm -r "{}" \+;
+	# ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/Trash/*" -iname "*" | xargs sudo rm -r; done;
+	# ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/.cache/*" -iname "*" | xargs sudo rm -r; done;
+	# ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/tmp/*" -type f -amin +10 | xargs sudo rm -r; done;
+	sudo find "$user_home" -path "*/drush-backups/*"  -iname "*" -delete;
+	sudo find "$root_home" -path "*/drush-backups/*"  -iname "*" -delete;
 	sudo find /var -iname "*.gz" | grep -v *.sql.gz | xargs sudo rm -r;
 	sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
+
+	# Working!!!
+	for dir in /root /home /var ; do find "$dir" -path "*/.cache/*"  -type f -iname "*" -delete; done;
+	for dir in /root /home /var ; do find "$dir" -path "*/tmp/*"  -type f -iname "*" -delete; done;
 
 	# Drivers for AMD GPU.
 	sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
