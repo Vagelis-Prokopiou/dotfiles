@@ -95,7 +95,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # alias mv='mv -i'
 
 # My aliases:
-alias phpstorm='echo vadead | sudo -S bash /home/va/Downloads/jetbrains/PhpStorm/bin/phpstorm.sh';
+alias phpstorm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
 alias localhost='cd /var/www/html';
 alias permissions='sudo chown -R www-data:www-data ../public_html && sudo chmod -R 777 sites/default/files';
 
@@ -256,4 +256,10 @@ function restore-folder-file-permissions() {
 	find . -type d -exec chmod 775 {} \;
 	# Files.
 	find . -type f -exec chmod 644 {} \;
+}
+
+function docker-clean() {
+	docker stop *;
+	docker rm -f $(docker ps -a -q);
+	docker rmi -f $(docker images --quiet); # -q, --quiet Only show numeric ID
 }

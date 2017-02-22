@@ -448,10 +448,10 @@ function software-update() {
 			# Needed for compiling Vim from source.
 			sudo apt-get install -y libncurses5-dev;
 
-			cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
+			cd "/media/va/52AF7EBE182A63E2/src" 2> /dev/null || mkdir "/media/va/52AF7EBE182A63E2/src";
 
 			# Download latest Vim.
-			(git clone https://github.com/vim/vim.git && cd "${user_home}/src/vim/src") || cd "${user_home}/src/vim/src" && git reset --hard && git pull;
+			(git clone https://github.com/vim/vim.git && cd "/media/va/52AF7EBE182A63E2/src/vim/src") || cd "/media/va/52AF7EBE182A63E2/src/vim/src" && git reset --hard && git pull;
 
 			# Configure and install.
 			./configure > /dev/null;
@@ -468,7 +468,7 @@ function software-update() {
 			echo "--------------------------------------------------------------------------------";
 
 			# Cleanup.
-			# cd "${user_home}/src";
+			# cd "/media/va/52AF7EBE182A63E2/src";
 			# sudo rm -rf vim/;
 		fi
 	}
@@ -501,10 +501,10 @@ function software-update() {
 			sudo apt-get install libexpat1-dev > /dev/null;
 			# fatal error: expat.h: No such file or directory
 
-			cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src";
+			cd "/media/va/52AF7EBE182A63E2/src" 2> /dev/null || mkdir "/media/va/52AF7EBE182A63E2/src";
 
 			# Download the latest Git.
-			(git clone https://github.com/git/git.git 2> /dev/null && cd "${user_home}/src/git/") || cd "${user_home}/src/git/" && git reset --hard && git pull;
+			(git clone https://github.com/git/git.git 2> /dev/null && cd "/media/va/52AF7EBE182A63E2/src/git/") || cd "/media/va/52AF7EBE182A63E2/src/git/" && git reset --hard && git pull;
 
 			# Configure and install.
 			make prefix=/usr > /dev/null;
@@ -519,12 +519,12 @@ function software-update() {
 			echo "--------------------------------------------------------------------------------";
 
 			# Cleanup.
-			# cd "${user_home}/src";
+			# cd "/media/va/52AF7EBE182A63E2/src";
 			# sudo rm -rf git/;
 
 
 			# Continue with Git Flow since the Git binary gets overridden.
-			cd "${user_home}/src";
+			cd "/media/va/52AF7EBE182A63E2/src";
 			curl -OL https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh;
 			sudo bash ./gitflow-installer.sh;
 			rm -rf ./gitflow*;
@@ -554,7 +554,7 @@ function software-update() {
 			echo -e "\nThe newest sed is already installed.\n";
 		else
 			echo -e "Installing latest sed... Please, wait...";
-			cd "${user_home}/src" 2> /dev/null || mkdir "${user_home}/src" && cd "${user_home}/src";
+			cd "/media/va/52AF7EBE182A63E2/src" 2> /dev/null || mkdir "/media/va/52AF7EBE182A63E2/src" && cd "/media/va/52AF7EBE182A63E2/src";
 			curl -O $sed_url;
 			tar -xf sed-*.tar.xz;
 			cd sed-*/;
