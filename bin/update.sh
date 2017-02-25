@@ -428,7 +428,7 @@ function software-update() {
 	# Install the latest Vim from source.
 	function vim-update() {
 		# Make sure Vim is installed.
-		command -v vim > /dev/null || sudo apt-get install -y vim;
+		command -v vim > /dev/null || sudo apt-get install -y vim vim-runtime;
 
 		# curl GitHub for the latest version.
 		echo -e "\nGetting the latest Vim...\n";
