@@ -5,6 +5,8 @@ user='va';
 user_home="/home/${user}";
 root_home='/root';
 
+echo -e "\n\tWorking!!!!!!!!!!!\n\n";
+
 # Check sed, grep, find, xargs.
 
 function main-update() {
@@ -589,16 +591,16 @@ software-update;
 
 
 # Remove all the caches.
-sudo rm -rf ${user_home}/drush-backups/*;
-sudo rm -rf /root/drush-backups/*;
-sudo find /var -iname "*.gz" | grep -v *.sql.gz | xargs sudo rm -r;
-sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
-
-# Working!!!
-for dir in /root /home /var ; do find "$dir" -ipath "*/.cache/*" -type f -delete; done;
-for dir in /root /home /var ; do find "$dir" -ipath "*/cache/*" -type f -delete; done;
-for dir in /root /home /var ; do find "$dir" -ipath "*/tmp/*" -type f -delete; done;
-
+function clear-caches() {
+	sudo rm -rf ${user_home}/drush-backups/*;
+	sudo rm -rf /root/drush-backups/*;
+	sudo find /var -iname "*.gz" | grep -v *.sql.gz | xargs sudo rm -r;
+	sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
+	for dir in /root /home /var ; do find "$dir" -ipath "*/.cache/*" -type f -delete; done;
+	for dir in /root /home /var ; do find "$dir" -ipath "*/cache/*" -type f -delete; done;
+	for dir in /root /home /var ; do find "$dir" -ipath "*/tmp/*" -type f -delete; done;
+}
+clear-caches();
 
 #### Remove all unused kernels with 1 command in debian based systems #####.
 # sudo apt-get remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
