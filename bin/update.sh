@@ -100,22 +100,6 @@ function main-update() {
 	# Purges.
 	sudo apt-get purge postgresql* -y;
 
-	#### Remove all unused kernels with 1 command in debian based systems #####.
-	# sudo apt-get remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
-
-	# Remove all the caches.
-	# ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/Trash/*" -iname "*" | xargs sudo rm -r; done;
-	# ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/.cache/*" -iname "*" | xargs sudo rm -r; done;
-	# ARRAY=($(ls / | grep -v media)); for i in ${ARRAY[@]}; do find "$i" -path "*/tmp/*" -type f -amin +10 | xargs sudo rm -r; done;
-	sudo find "$user_home" -path "*/drush-backups/*"  -iname "*" -delete;
-	sudo find "$root_home" -path "*/drush-backups/*"  -iname "*" -delete;
-	sudo find /var -iname "*.gz" | grep -v *.sql.gz | xargs sudo rm -r;
-	sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
-
-	# Working!!!
-	for dir in /root /home /var ; do find "$dir" -path "*/.cache/*" -type f -iname "*" -delete; done;
-	for dir in /root /home /var ; do find "$dir" -path "*/tmp/*" -type f -iname "*" -delete; done;
-
 	# Drivers for AMD GPU.
 	sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
 
@@ -602,3 +586,31 @@ function software-update() {
 }
 
 software-update;
+
+
+# Remove all the caches.
+sudo rm -rf ${user_home}/drush-backups/*;
+sudo rm -rf /root/drush-backups/*;
+sudo find /var -iname "*.gz" | grep -v *.sql.gz | xargs sudo rm -r;
+sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
+
+# Working!!!
+for dir in /root /home /var ; do find "$dir" -ipath "*/.cache/*" -type f -delete; done;
+for dir in /root /home /var ; do find "$dir" -ipath "*/cache/*" -type f -delete; done;
+for dir in /root /home /var ; do find "$dir" -ipath "*/tmp/*" -type f -delete; done;
+
+
+#### Remove all unused kernels with 1 command in debian based systems #####.
+# sudo apt-get remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
+
+# To list all installed Linux kernel images, type the following dpkg command:
+# dpkg --list | egrep -i --color 'linux-image|linux-headers'
+
+# http://ubuntuhandbook.org/index.php/2016/05/remove-old-kernels-ubuntu-16-04/
+# List all kernels excluding the current booted:
+old_kernels=$(dpkg -l | tail -n +6 | grep -E 'linux-image-[0-9]+' | grep -Fv $(uname -r));
+if [[ $old_kernels == '' ]]; then
+	echo -e "\nThere are no old/unused kernels.\n";
+else
+	echo -e "\nThere are old kernels that need to be taken care of!!!\n";
+fi
