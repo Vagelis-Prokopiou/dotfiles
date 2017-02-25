@@ -263,3 +263,14 @@ function docker-clean() {
 	docker rm -f $(docker ps -a -q);
 	docker rmi -f $(docker images --quiet); # -q, --quiet Only show numeric ID
 }
+
+
+# Fix "The following module is missing from the file system..."
+# See: https://www.drupal.org/node/2487215
+function drupal-fix-missing-module() {
+	if [[ $1 ]]; then
+		drush sql-query "DELETE from system where name = '"$1"' AND type = 'module';";
+	else
+		echo "Usage: drupal-fix-missing-module <moduleName>";
+	fi
+}
