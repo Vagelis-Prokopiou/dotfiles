@@ -96,6 +96,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 # My aliases:
 alias phpstorm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
+alias pycharm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PyCharm/bin/pycharm.sh';
 alias localhost='cd /var/www/html';
 alias permissions='sudo chown -R www-data:www-data ../public_html && sudo chmod -R 777 sites/default/files';
 

@@ -5,8 +5,6 @@ user='va';
 user_home="/home/${user}";
 root_home='/root';
 
-echo -e "\n\tWorking!!!!!!!!!!!\n\n";
-
 # Check sed, grep, find, xargs.
 
 function main-update() {
@@ -52,6 +50,10 @@ function main-update() {
 	command -v > /dev/null 2>&1 keepass2 || sudo apt-get install -y keepass2;
 	command -v > /dev/null 2>&1 git || sudo apt-get install -y git git-flow;
 	command -v > /dev/null 2>&1 qalculate || sudo apt-get install -y qalculate;
+
+	# For right-click archive extraction.
+	sudo apt-get install -y nemo-fileroller; # For right-click archive extraction.
+
 	# For Keepass2 auto-typing.
 	command -v > /dev/null 2>&1 xdotool || sudo apt-get install -y xdotool;
 	sudo apt-get install -y linux-headers-$(uname -r);
@@ -600,7 +602,7 @@ function clear-caches() {
 	for dir in /root /home /var ; do find "$dir" -ipath "*/cache/*" -type f -delete; done;
 	for dir in /root /home /var ; do find "$dir" -ipath "*/tmp/*" -type f -delete; done;
 }
-clear-caches();
+clear-caches;
 
 #### Remove all unused kernels with 1 command in debian based systems #####.
 # sudo apt-get remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
