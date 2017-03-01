@@ -496,7 +496,7 @@ function software-update() {
 			cd "/media/va/52AF7EBE182A63E2/src" 2> /dev/null || mkdir "/media/va/52AF7EBE182A63E2/src";
 
 			# Download the latest Git.
-			(git clone https://github.com/git/git.git 2> /dev/null && cd "/media/va/52AF7EBE182A63E2/src/git/") || cd "/media/va/52AF7EBE182A63E2/src/git/" && git reset --hard && git pull;
+			(git clone git://git.kernel.org/pub/scm/git/git.git 2> /dev/null && cd "/media/va/52AF7EBE182A63E2/src/git/") || cd "/media/va/52AF7EBE182A63E2/src/git/" && git reset --hard && git pull;
 
 			# Configure and install.
 			make prefix=/usr > /dev/null;
