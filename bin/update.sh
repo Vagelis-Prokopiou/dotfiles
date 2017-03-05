@@ -8,6 +8,14 @@ root_home='/root';
 # Check sed, grep, find, xargs.
 
 function main-update() {
+
+	############################################
+	# Testing repository!!!
+	# deb ftp://ftp.gr.debian.org/debian/ testing main contrib  non-free
+	############################################
+
+
+
 	############################################
 	# ----- Edit the Debian sources list.
 	############################################
@@ -114,6 +122,23 @@ function main-update() {
 	# ----- LAMP on Debian.
 	##############################################
 	command -v > /dev/null 2>&1 apache2 || sudo apt-get -y install apache2 mysql-server mysql-client mysql-workbench php5 php5-mysql libapache2-mod-php5 php5-curl php-pear phpmyadmin php5-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
+	##############################################
+	# ----- Error 'The requested URL /el was not found on this server.'
+	##############################################
+	# Edit '/etc/apache2/apache2.conf' and change the 'AllowOverride None' && restart apache (/etc/init.d/apache2 restart).
+	# See: http://stackoverflow.com/questions/18740419/how-to-set-allowoverride-all.
+
+	# <Directory /var/www/>
+		# Options Indexes FollowSymLinks
+		# AllowOverride All
+		# Require all granted
+	# </Directory>
+
+	#See: https://www.digitalocean.com/community/tutorials/how-to-set-up-mod_rewrite-for-apache-on-ubuntu-14-04
+	if [ ! -f /etc/apache2/apache2.conf.bak ]; then
+    	sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak;
+		sudo sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf;
+	fi
 
 	# Install Drush.
 	function installDrush {
@@ -312,20 +337,6 @@ function main-update() {
 	############################################
 	 #sudo apt-get update && apt-get install firmware-iwlwifi;
 	 #modprobe -r iwlwifi ; modprobe iwlwifi;
-
-	##############################################
-	# ----- Error 'The requested URL /el was not found on this server.'
-	##############################################
-	# Edit '/etc/apache2/apache2.conf' and change the 'AllowOverride None' && restart apache (/etc/init.d/apache2 restart).
-	# See: http://stackoverflow.com/questions/18740419/how-to-set-allowoverride-all.
-
-	# <Directory /var/www/>
-		# Options Indexes FollowSymLinks
-		# AllowOverride All
-		# Require all granted
-	# </Directory>
-
-	#See: https://www.digitalocean.com/community/tutorials/how-to-set-up-mod_rewrite-for-apache-on-ubuntu-14-04
 
 	############################################
 	# ----- Install Keepass && Keefox
