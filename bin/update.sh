@@ -110,7 +110,7 @@ function main-update() {
 	sudo apt-get install libcanberra-gtk-module -y;
 
 	# Purges.
-	sudo apt-get purge postgresql* -y;
+	# sudo apt-get purge postgresql* -y;
 
 	# Drivers for AMD GPU.
 	sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
