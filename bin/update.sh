@@ -612,6 +612,7 @@ function clear-caches() {
 	for dir in /root /home /var ; do find "$dir" -ipath "*/.cache/*" -type f -delete; done;
 	for dir in /root /home /var ; do find "$dir" -ipath "*/cache/*" -type f -delete; done;
 	for dir in /root /home /var ; do find "$dir" -ipath "*/tmp/*" -type f -delete; done;
+	sudo find /var/www/ -path "*/devel_themer/*" -delete;
 }
 clear-caches;
 
