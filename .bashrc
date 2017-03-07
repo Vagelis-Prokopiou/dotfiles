@@ -275,3 +275,6 @@ function drupal-fix-missing-module() {
 		echo "Usage: drupal-fix-missing-module <moduleName>";
 	fi
 }
+
+# Postgresql
+alias 'psql'='sudo -u postgres psql';
