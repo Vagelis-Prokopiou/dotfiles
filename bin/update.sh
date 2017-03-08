@@ -35,8 +35,8 @@ function main-update() {
 	############################################
 	# ----- Install Sublime Text 3
 	############################################
-	# Sublime 3 (3114)
-	# wget wget https://download.sublimetext.com/sublime-text_build-3114_amd64.deb && dpkg -i sublime*.deb -y;
+	# Sublime 3 (3126)
+	# wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb && dpkg -i sublime*.deb -y;
 	# Install Monokai-Midnight as theme.
 
 	############################################
