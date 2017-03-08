@@ -599,8 +599,7 @@ function software-update() {
 	sed-update;
 	# findutils-update;
 }
-
-software-update;
+# software-update;
 
 
 # Remove all the caches.
