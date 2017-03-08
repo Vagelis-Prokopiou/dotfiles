@@ -1,6 +1,6 @@
 {
 	"ensure_newline_at_eof_on_save": true,
-	"font_size": 13,
+	"font_size": 15,
 	"ignored_packages":
 	[
 		"Vintage"
