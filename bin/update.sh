@@ -15,18 +15,22 @@ function main-update() {
 	############################################
 
 
-
 	############################################
 	# ----- Edit the Debian sources list.
 	############################################
-	# sudo echo "deb http://httpredir.debian.org/debian jessie main contrib non-free
-	# deb-src http://httpredir.debian.org/debian jessie main contrib non-free
+	# sudo echo "deb http://security.debian.org/ jessie/updates main contrib non-free
+	# deb-src http://security.debian.org/ jessie/updates main contrib non-free
 
-	# deb http://httpredir.debian.org/debian jessie-updates main contrib non-free
-	# deb-src http://httpredir.debian.org/debian jessie-updates main contrib non-free
+	# deb http://http.debian.net/debian jessie-backports main
 
-	# deb http://security.debian.org/ jessie/updates main contrib non-free
-	# deb-src http://security.debian.org/ jessie/updates main contrib non-free" > /etc/apt/sources.list;
+	# deb https://apt.dockerproject.org/repo/ debian-jessie main
+	# # deb-src https://apt.dockerproject.org/repo/ debian-jessie main
+
+	# deb ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
+	# deb-src ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
+
+	# deb ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
+	# deb-src ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free" > /etc/apt/sources.list;
 
 	############################################
 	# ----- Install Sublime Text 3
