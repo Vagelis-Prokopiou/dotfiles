@@ -119,8 +119,8 @@ alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/enalia/ && s
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
 
 # Vhosts stuff:
-alias vhostcreate='sudo python ~/bin/vhost_create.py';
-alias vhostdelete='sudo bash ~/bin/vhost_delete.sh';
+alias 'vhost-create'='sudo bash ~/bin/vhost_create.sh';
+alias 'vhost-delete'='sudo bash ~/bin/vhost_delete.sh';
 
 # Git stuff:
 alias gc='git commit --signoff -m ';
