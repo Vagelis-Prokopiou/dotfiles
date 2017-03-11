@@ -8,30 +8,6 @@ root_home='/root';
 # Check sed, grep, find, xargs.
 
 function main-update() {
-
-	############################################
-	# Testing repository!!!
-	# deb ftp://ftp.gr.debian.org/debian/ testing main contrib  non-free
-	############################################
-
-
-	############################################
-	# ----- Edit the Debian sources list.
-	############################################
-	# sudo echo "deb http://security.debian.org/ jessie/updates main contrib non-free
-	# deb-src http://security.debian.org/ jessie/updates main contrib non-free
-
-	# deb http://http.debian.net/debian jessie-backports main
-
-	# deb https://apt.dockerproject.org/repo/ debian-jessie main
-	# # deb-src https://apt.dockerproject.org/repo/ debian-jessie main
-
-	# deb ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
-	# deb-src ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
-
-	# deb ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
-	# deb-src ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free" > /etc/apt/sources.list;
-
 	############################################
 	# ----- Install Sublime Text 3
 	############################################
@@ -62,6 +38,9 @@ function main-update() {
 	command -v > /dev/null 2>&1 keepass2 || sudo aptitude install -y keepass2;
 	command -v > /dev/null 2>&1 git || sudo aptitude install -y git git-flow;
 	# command -v > /dev/null 2>&1 qalculate || sudo aptitude install -y qalculate;
+
+	# Delete all Gnome games.
+	sudo aptitude purge -y aisleriot gnome-mahjongg gnome-mines gnome-sudoku;
 
 	# For right-click archive extraction.
 	# sudo aptitude install -y nemo-fileroller; # For right-click archive extraction.
