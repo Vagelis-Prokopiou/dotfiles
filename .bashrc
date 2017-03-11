@@ -283,7 +283,6 @@ function Dropbox-import-dbs() {
 	cd  /home/va/Dropbox/dbs/*/;
 	for db in *; do
 		new_db=$( echo "$db" | sed "s|/home/va/Dropbox/dbs/.*/||g; s|\.sql\.gz||g");
-		echo $new_db;
 		mysql -u root -p'root' -e "CREATE DATABASE IF NOT EXISTS $new_db;";
 		zcat "${new_db}.sql.gz" | mysql -u root -p'root' "$new_db";
 	done;
