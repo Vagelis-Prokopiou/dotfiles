@@ -80,14 +80,18 @@ function main-update() {
 
 	# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
 
-	# Needed for google chrome (Debian).
-	# sudo aptitude install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
+	# Google Chrome (Ubuntu 16.04).
+	if [[ ! $(which google-chrome) ]]; then
+		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+		sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb;
+		sudo apt-get install -y -f;
+		sudo rm google-chrome-stable_current_amd64.deb;
+	fi
 
-	# Needed for google chrome (Ubuntu 16.04).
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
-	sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb;
-	sudo apt-get install -y -f;
-	sudo rm google-chrome-stable_current_amd64.deb;
+	# Teamviewer
+	echo 'Teamviewer installation:';
+	echo 'Download the package and run the following command:';
+	echo 'sudo dpkg -i --force-depends teamviewer*.deb && sudo apt-get install -y -f && sudo rm teamviewer*.deb';
 
 	# ----- Install youtube-dl. -----
 	function installYoutubeDL {
