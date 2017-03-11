@@ -47,41 +47,47 @@ function main-update() {
 	############################################
 	# ----- Various maintenance tasks.
 	############################################
-	command -v > /dev/null 2>&1 sudo || apt-get install -y sudo;
-	command -v > /dev/null 2>&1 aptitude || apt-get install -y aptitude;
-	sudo apt-get update -y;
-	sudo apt-get upgrade -y;
-	sudo apt-get dist-upgrade -y;
-	sudo apt-get autoremove -y;
-	sudo apt-get autoclean -y;
-	sudo apt-get install -f;
-	sudo apt-get clean -y;
-	command -v > /dev/null 2>&1 curl || sudo apt-get install -y curl;
-	command -v > /dev/null 2>&1 gcc || sudo apt-get install -y build-essential;
-	command -v > /dev/null 2>&1 7z || sudo apt-get install -y p7zip-full;
-	command -v > /dev/null 2>&1 keepass2 || sudo apt-get install -y keepass2;
-	command -v > /dev/null 2>&1 git || sudo apt-get install -y git git-flow;
-	command -v > /dev/null 2>&1 qalculate || sudo apt-get install -y qalculate;
+	# command -v > /dev/null 2>&1 sudo || apt-get install -y sudo;
+	command -v > /dev/null 2>&1 aptitude || sudo apt-get install -y aptitude;
+	sudo aptitude update -y;
+	sudo aptitude upgrade -y;
+	# sudo aptitude dist-upgrade -y;
+	sudo aptitude autoremove -y;
+	sudo aptitude autoclean -y;
+	sudo aptitude install -f;
+	sudo aptitude clean -y;
+	command -v > /dev/null 2>&1 curl || sudo aptitude install -y curl;
+	command -v > /dev/null 2>&1 gcc || sudo aptitude install -y build-essential;
+	command -v > /dev/null 2>&1 7z || sudo aptitude install -y p7zip-full;
+	command -v > /dev/null 2>&1 keepass2 || sudo aptitude install -y keepass2;
+	command -v > /dev/null 2>&1 git || sudo aptitude install -y git git-flow;
+	# command -v > /dev/null 2>&1 qalculate || sudo aptitude install -y qalculate;
 
 	# For right-click archive extraction.
-	sudo apt-get install -y nemo-fileroller; # For right-click archive extraction.
+	# sudo aptitude install -y nemo-fileroller; # For right-click archive extraction.
 
 	# For Keepass2 auto-typing.
-	command -v > /dev/null 2>&1 xdotool || sudo apt-get install -y xdotool;
-	sudo apt-get install -y linux-headers-$(uname -r);
-	# sudo apt-get install trimage -y; # Tool to compress images for the web!!!.
+	# command -v > /dev/null 2>&1 xdotool || sudo aptitude install -y xdotool;
+	# sudo aptitude install -y linux-headers-$(uname -r);
+	# sudo aptitude install trimage -y; # Tool to compress images for the web!!!.
 
 
 	# Hardware info and sensors.
-	# sudo apt-get install -y hardinfo;
+	# sudo aptitude install -y hardinfo;
 
 	# See: https://www.cyberciti.biz/faq/howto-linux-get-sensors-information/
-	# sudo apt-get install -y lm-sensors;
+	# sudo aptitude install -y lm-sensors;
 
 	# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
 
-	# Needed for google chrome.
-	sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
+	# Needed for google chrome (Debian).
+	# sudo aptitude install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
+
+	# Needed for google chrome (Ubuntu 16.04).
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+	sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb;
+	sudo apt-get install -y -f;
+	sudo rm google-chrome-stable_current_amd64.deb;
 
 	# ----- Install youtube-dl. -----
 	function installYoutubeDL {
@@ -102,22 +108,22 @@ function main-update() {
 	fi
 
 	# Import and edit pdfs in Libreoffice Draw.
-	# sudo apt-get install -y libreoffice-pdfimport;
+	# sudo aptitude install -y libreoffice-pdfimport;
 
 	# Nautilus plugin for opening terminals in arbitrary paths.
-	sudo apt-get install -y nautilus-open-terminal;
+	# sudo aptitude install -y nautilus-open-terminal;
 
 	# This is needed for Dropbox.
-	sudo apt-get install -y python-gpgme;
+	# sudo aptitude install -y python-gpgme;
 
 	# This fixes the error when using Sublime for git commits && needed for PhpStorm.
-	sudo apt-get install libcanberra-gtk-module -y;
+	# sudo aptitude install libcanberra-gtk-module -y;
 
 	# Purges.
-	# sudo apt-get purge postgresql* -y;
+	# sudo aptitude purge postgresql* -y;
 
 	# Drivers for AMD GPU.
-	sudo apt-get install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
+	# sudo aptitude install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
 
 	# Create a template txt, for use in right click context.
 	touch ${user_home}/Templates/new_file.txt;
@@ -125,7 +131,10 @@ function main-update() {
 	##############################################
 	# ----- LAMP on Debian.
 	##############################################
-	command -v > /dev/null 2>&1 apache2 || sudo apt-get -y install apache2 mysql-server mysql-client mysql-workbench php5 php5-mysql libapache2-mod-php5 php5-curl php-pear phpmyadmin php5-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
+	# command -v > /dev/null 2>&1 apache2 || sudo aptitude -y install apache2 mysql-server mysql-client mysql-workbench php7.0 php7.0-mysql libapache2-mod-php7.0 php7.0-curl php-pear phpmyadmin php7.0-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
+
+
+	sudo aptitude -y install apache2 mysql-server mysql-client php7.0 php7.0-mysql libapache2-mod-php7.0 php7.0-curl php-pear phpmyadmin php7.0-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
 	##############################################
 	# ----- Error 'The requested URL /el was not found on this server.'
 	##############################################
@@ -197,7 +206,7 @@ function main-update() {
 	# ----- Install NodeJS. -----
 	function installNodeJS {
 		curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -;
-		sudo apt-get install -y nodejs;
+		sudo aptitude install -y nodejs;
 	}
 
 	if [[ -a /usr/bin/node ]]; then
@@ -252,11 +261,11 @@ function main-update() {
 		echo "The NodeJS modules are already installed."
 		if [[ $(date +%m) == 1 || $(date +%m) == 6 ]]; then
 			echo "Updating the NodeJS modules..."
-			installNodeModules;
+			# installNodeModules;
 		fi
 	else
 		echo "Installing the NodeJS modules..."
-		installNodeModules;
+		# installNodeModules;
 	fi
 
 	# If Dropbox exits.
@@ -286,26 +295,27 @@ function main-update() {
 			echo '';
 			echo '----- Databases exported successfully -----';
 			echo '';
+
+			# Remove the previous folders.
+			find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
 		fi
 	fi
 
 	sudo chown -R ${user}:${user} ${user_home}/;
 
-	# Remove the previous folders.
-	find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
 
 	# Remove the torrent files from Downloads.
 	rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 
 	# How To Record and Share Linux Terminal Activity
 	# See: http://linoxide.com/tools/record-share-linux-terminal/
-	# sudo apt-get install asciinema;
+	# sudo aptitude install asciinema;
 
 
 	# ----- Check all services -----
 	# service --status-all;
 	# service --status-all | grep '+';
-	service bluetooth stop;
+	sudo service bluetooth stop;
 
 
 
@@ -315,18 +325,18 @@ function main-update() {
 	# JDK 8
 	# sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak;
 	# echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list;
-	# apt-get update
-	# apt-get install openjdk-8-jdk
+	# aptitude update
+	# aptitude install openjdk-8-jdk
 	# sudo update-alternatives --config java
 
 
 	# ----- Enable mssql in PHP. -----
 	# See: https://coderwall.com/p/21uxeq/connecting-to-a-mssql-server-database-with-php-on-ubuntu-debian
-	# sudo apt-get install freetds-common freetds-bin unixodbc php5-sybase;
+	# sudo aptitude install freetds-common freetds-bin unixodbc php7.0-sybase;
 	# sudo service apache2 restart;
 
 	# ----- Install these before installing Virtualbox -----
-	# sudo apt-get install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
+	# sudo aptitude install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
 
 	##############################################
 	# ----- Guest additions on Virtualbox.
@@ -339,13 +349,13 @@ function main-update() {
 	############################################
 	# ----- Wifi on laptop Debian!!! Source: #https://wiki.debian.org/iwlwifi#Intel_Wireless_WiFi_Link.2C_Wireless-N.2C_Advanced-N.2C_Ultimate-N_devices
 	############################################
-	 #sudo apt-get update && apt-get install firmware-iwlwifi;
+	 #sudo aptitude update && aptitude install firmware-iwlwifi;
 	 #modprobe -r iwlwifi ; modprobe iwlwifi;
 
 	############################################
 	# ----- Install Keepass && Keefox
 	############################################
-	# sudo apt-get install keepass2;
+	# sudo aptitude install keepass2;
 	# Install the 'CKP' extension for the Chrome.
 
 	##############################################
@@ -371,9 +381,9 @@ function main-update() {
 	# Available platform plugins are: eglfs, linuxfb, minimal, minimalegl, offscreen, wayland-egl, wayland, xcb.
 	#
 	# Fixed by installing:
-	# sudo apt-get install libqt5gui5
+	# sudo aptitude install libqt5gui5
 	# and re-installing viber
-	# sudo apt-get install libqt5gui5 -y && wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb && sudo dpkg -i viber.debviber;
+	# sudo aptitude install libqt5gui5 -y && wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb && sudo dpkg -i viber.debviber;
 
 	##############################################
 	# ----- Skype for Debian 8
@@ -393,25 +403,25 @@ function main-update() {
 	# cat ~/.ssh/id_rsa.pub | xclip -sel clip
 
 	#### ----- To mount Smba shares #####.
-	# sudo apt-get install cifs-utils -y;
+	# sudo aptitude install cifs-utils -y;
 
 	# All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
-	# sudo apt-get install task-print-server -y;
+	# sudo aptitude install task-print-server -y;
 
-	# apt-get install bum -y; # bootup manager
-	# sudo apt-get install ttf-mscorefonts-installer;
+	# aptitude install bum -y; # bootup manager
+	# sudo aptitude install ttf-mscorefonts-installer;
 
 	# Includes mysqldbcompare
 	# sudo aptitude install mysql-utilities -y;
 
 	# Required when installing Python from source.
-	# sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev;
+	# sudo aptitude install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev;
 
 	# Needed for digitally signing android apps.
 	# sudo aptitude install zipalign -y;
 
 	# Record the desktop.
-	# sudo apt-get install -y recordmydesktop;
+	# sudo aptitude install -y recordmydesktop;
 	# To record the sound see https://ubuntuforums.org/showthread.php?t=1118019
 
 	# ----- Database error after updating to 5.7 from the MySQL repo. -----
@@ -431,7 +441,7 @@ function software-update() {
 	# Install the latest Vim from source.
 	function vim-update() {
 		# Make sure Vim is installed.
-		command -v vim > /dev/null || sudo apt-get install -y vim vim-runtime;
+		command -v vim > /dev/null || sudo aptitude install -y vim vim-runtime;
 
 		# curl GitHub for the latest version.
 		echo -e "\nGetting the latest Vim...\n";
@@ -453,7 +463,7 @@ function software-update() {
 		else
 			# Build latest Vim.
 			# Needed for compiling Vim from source.
-			sudo apt-get install -y libncurses5-dev;
+			sudo aptitude install -y libncurses5-dev;
 
 			cd "/media/va/52AF7EBE182A63E2/src" 2> /dev/null || mkdir "/media/va/52AF7EBE182A63E2/src";
 
@@ -483,7 +493,7 @@ function software-update() {
 	# Install the latest Git from source.
 	function git-update() {
 		# Make sure Git is installed.
-		command -v git > /dev/null || sudo apt-get install -y git;
+		command -v git > /dev/null || sudo aptitude install -y git;
 
 		echo -e "\nGetting the latest Git...\n";
 		git_latest=$(curl 'https://github.com/git/git/releases' | \
@@ -502,10 +512,10 @@ function software-update() {
 		else
 			# Build the latest Git.
 			# Needed for compiling Git from source.
-			sudo apt-get install -y zlib1g-dev > /dev/null;
-			sudo apt-get install -y libcurl4-openssl-dev > /dev/null;
-			sudo apt-get install -y libssl-dev > /dev/null;
-			sudo apt-get install libexpat1-dev > /dev/null;
+			sudo aptitude install -y zlib1g-dev > /dev/null;
+			sudo aptitude install -y libcurl4-openssl-dev > /dev/null;
+			sudo aptitude install -y libssl-dev > /dev/null;
+			sudo aptitude install libexpat1-dev > /dev/null;
 			# fatal error: expat.h: No such file or directory
 
 			cd "/media/va/52AF7EBE182A63E2/src" 2> /dev/null || mkdir "/media/va/52AF7EBE182A63E2/src";
@@ -540,7 +550,7 @@ function software-update() {
 
 	function sed-update() {
 		# Necessary for ACL support.
-		sudo apt-get install -y libacl1-dev;
+		sudo aptitude install -y libacl1-dev;
 
 		sed_newest_version=`curl 'https://ftp.gnu.org/gnu/sed/?C=M;O=D' | \
 		grep 'a href="sed-' | \
@@ -621,7 +631,7 @@ function clear-caches() {
 clear-caches;
 
 #### Remove all unused kernels with 1 command in debian based systems #####.
-# sudo apt-get remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
+# sudo aptitude remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
 
 # To list all installed Linux kernel images, type the following dpkg command:
 # dpkg --list | egrep -i --color 'linux-image|linux-headers'

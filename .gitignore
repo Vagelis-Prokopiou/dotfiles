@@ -79,3 +79,4 @@ workspace/
 .synaptic
 *Cache*
 .pgadmin3
+.sudo_as_admin_successful
