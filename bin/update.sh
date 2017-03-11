@@ -91,7 +91,7 @@ function main-update() {
 	# Teamviewer
 	echo 'Teamviewer installation:';
 	echo 'Download the package and run the following command:';
-	echo 'sudo dpkg -i --force-depends teamviewer*.deb && sudo apt-get install -y -f && sudo rm teamviewer*.deb';
+	echo 'sudo dpkg -i --force-depends teamviewer*.deb && sudo apt-get install -y -f && sudo rm teamviewer*.deb && teamviewer --daemon start';
 
 	# ----- Install youtube-dl. -----
 	function installYoutubeDL {
