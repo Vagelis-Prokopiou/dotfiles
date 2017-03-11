@@ -28,7 +28,6 @@ function main-update() {
 	sudo aptitude update -y;
 	sudo aptitude upgrade -y;
 	# sudo aptitude dist-upgrade -y;
-	sudo aptitude autoremove -y;
 	sudo aptitude autoclean -y;
 	sudo aptitude install -f;
 	sudo aptitude clean -y;
@@ -68,9 +67,9 @@ function main-update() {
 	fi
 
 	# Teamviewer
-	echo 'Teamviewer installation:';
-	echo 'Download the package and run the following command:';
-	echo 'sudo dpkg -i --force-depends teamviewer*.deb && sudo apt-get install -y -f && sudo rm teamviewer*.deb && teamviewer --daemon start';
+	echo -e '\n\n\tTeamviewer installation:';
+	echo -e '\tDownload the package and run the following command:';
+	echo -e '\tsudo dpkg -i --force-depends teamviewer*.deb && sudo apt-get install -y -f && sudo rm teamviewer*.deb && teamviewer --daemon start\n\n';
 
 	# ----- Install youtube-dl. -----
 	function installYoutubeDL {
@@ -143,7 +142,7 @@ function main-update() {
 		# Test your install.
 		php drush core-status;
 		# Make `drush` executable as a command from anywhere. Destination can be anywhere on $PATH.
-		chmod +x drush;
+		sudo chmod +x drush;
 		sudo mv drush /usr/local/bin;
 		#### ----- Enrich the bash startup file with completion and aliases #####.
 		drush init;
@@ -164,7 +163,7 @@ function main-update() {
 	if [[ -a /usr/local/bin/composer ]]; then
 		echo "Composer is already installed."
 		echo "Updating..."
-		sudo -H composer self-update
+		sudo -H composer self-update;
 	else
 		echo "Installing Composer..."
 		php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');";
@@ -181,7 +180,7 @@ function main-update() {
 		sudo drupal self-update;
 	else
 		echo "Installing Drupal Console..."
-		curl https://drupalconsole.com/installer -L -o drupal.phar;
+		curl -O https://drupalconsole.com/installer -L -o drupal.phar;
 		sudo mv drupal.phar /usr/local/bin/drupal;
 		sudo chmod +x /usr/local/bin/drupal;
 	fi
