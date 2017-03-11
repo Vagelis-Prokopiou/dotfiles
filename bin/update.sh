@@ -66,6 +66,9 @@ function main-update() {
 		sudo rm google-chrome-stable_current_amd64.deb;
 	fi
 
+	# Dropbox
+	wget 'https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb' && sudo dpkg -i --force-depends *dropbox*.deb && sudo apt-get install -y -f;
+
 	# Teamviewer
 	echo -e '\n\n\tTeamviewer installation:';
 	echo -e '\tDownload the package and run the following command:';
