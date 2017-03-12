@@ -350,19 +350,18 @@ function vhost-delete() {
 	if [[ "$1" ]]; then
 		vhost="$1";
 
+		# Disable the vhost.
 		sudo a2dissite "${vhost}.local";
 
 		if [[ -d "/var/www/html/vhosts/${vhost}" ]]; then
 			# Delete all files associated with this site.
 			sudo rm -r /var/www/html/vhosts/${vhost};
 			sudo rm "/etc/apache2/sites-available/${vhost}.local.conf";
-			# sudo rm "/etc/apache2/sites-enabled/${vhost}.local.conf";
 
 			# Restart Apache.
 			sudo service apache2 restart;
 			echo "The ${vhost} vhost was deleted successfully.";
 			echo "Apache was restarted. All set.";
-			# exit 0;
 		else
 			echo "No such vhost found.";
 		fi
@@ -373,13 +372,11 @@ function vhost-delete() {
 
 function bitbucket-clone-dev-sites() {
 	# Todo: Create and loop array.
-	# for site in tsinikopoulos drupaland riggingservices; do
-	for site in drupaland; do
-		echo $site;
+	for site in tsinikopoulos drupaland riggingservices; do
 		vhost-create "$site";
-		cd /var/www/html/vhosts/"$site";
-		# sudo rm -rf public_html;
-		# git clone "git@bitbucket.org:drz4007/${site}.git" public_html;
-		# sudo chown -R www-data:www-data public_html/;
+		cd "/var/www/html/vhosts/${site}";
+		sudo rm -rf public_html;
+		sudo git clone "git@bitbucket.org:drz4007/${site}.git" public_html;
+		sudo chown -R www-data:www-data public_html/;
 	done
 }
