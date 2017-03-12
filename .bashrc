@@ -118,10 +118,6 @@ alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/enalia/ && s
 
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
 
-# Vhosts stuff:
-alias 'vhost-create'='sudo bash ~/bin/vhost_create.sh';
-alias 'vhost-delete'='sudo bash ~/bin/vhost_delete.sh';
-
 # Git stuff:
 alias gc='git commit --signoff -m ';
 # alias gl='git log --pretty=format:"%h, %ar: %s"'
@@ -135,6 +131,9 @@ alias git-show-tracked-files='git ls-tree --full-tree -r --name-only HEAD';
 alias gstf='git-show-tracked-files';
 # Add git completion.
 source ~/git-completion.bash;
+
+# Postgresql
+alias 'psql'='sudo -u postgres psql';
 
 # Report from git log.
 function git-log-report() {
@@ -252,7 +251,7 @@ function cat-less() {
     fi
 }
 
-function restore-folder-file-permissions() {
+function restore-permissions-folders-files() {
 	# Directories.
 	find . -type d -exec chmod 775 {} \;
 	# Files.
@@ -276,8 +275,6 @@ function drupal-fix-missing-module() {
 	fi
 }
 
-# Postgresql
-alias 'psql'='sudo -u postgres psql';
 
 function Dropbox-import-dbs() {
 	cd  /home/va/Dropbox/dbs/*/;
@@ -287,4 +284,102 @@ function Dropbox-import-dbs() {
 		zcat "${new_db}.sql.gz" | mysql -u root -p'root' "$new_db";
 	done;
 	cd ~;
+}
+
+# Vhosts
+function vhost-create() {
+	if [[ ! -d '/var/www/html/vhosts/' ]]; then
+		sudo mkdir /var/www/html/vhosts/;
+	fi
+
+	if [[ "$1" ]]; then
+	  base_path='/var/www/html/vhosts';
+	  domain="$1";
+
+	  if [[ ! -d "${base_path}/${domain}" ]]; then
+	    sudo mkdir "${base_path}/${domain}";
+	    sudo mkdir "${base_path}/${domain}/public_html/";
+	    sudo mkdir "${base_path}/${domain}/logs/";
+	    # Create an index file.
+	    echo "<h1>${domain}.local has been created successfully.</h1>" | sudo tee "${base_path}/${domain}/public_html/index.html";
+
+	    # Create the Apache config files.
+	    echo "
+<VirtualHost *:80>
+    # Enable the site with sudo a2ensite site_name && sudo /etc/init.d/apache2 restart
+    ServerName ${domain}.local
+	ServerAlias www.${domain}.local
+    ServerAdmin ${domain}@localhost
+    DocumentRoot /var/www/html/vhosts/${domain}/public_html
+    <Directory /var/www/html/vhosts/${domain}/public_html/>
+      Options Indexes FollowSymLinks
+      AllowOverride All
+      Require all granted
+    </Directory>
+    LogLevel info warn
+    ErrorLog /var/www/html/vhosts/${domain}/logs/error.log
+    CustomLog /var/www/html/vhosts/${domain}/logs/access.log combined
+</VirtualHost>" | sudo tee "/etc/apache2/sites-available/${domain}.local.conf";
+
+
+		# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+		# See: http://stackoverflow.com/questions/84882/sudo-echo-something-etc-privilegedfile-doesnt-work-is-there-an-alterna
+      	# echo 'hello' | sudo tee /etc/apache2/sites-available/hello.txt
+
+
+	      # Enable the site.
+	      sudo a2ensite "${domain}.local";
+
+	      echo "127.0.0.1	${domain}.local" | sudo tee --append /etc/hosts;
+
+	      # Restart Apache.
+	      sudo service apache2 restart;
+
+	      echo "Done.";
+	      echo "You can access the site at http://${domain}.local/";
+	  else
+	    echo "${domain} already exists. Skipping...";
+	  fi
+	else
+	  echo "Usage: vhost-create <hostName>"
+	fi
+}
+
+function vhost-delete() {
+	# Todo: Delete from /etc/hosts
+	if [[ "$1" ]]; then
+		vhost="$1";
+
+		sudo a2dissite "${vhost}.local";
+
+		if [[ -d "/var/www/html/vhosts/${vhost}" ]]; then
+			# Delete all files associated with this site.
+			sudo rm -r /var/www/html/vhosts/${vhost};
+			sudo rm "/etc/apache2/sites-available/${vhost}.local.conf";
+			# sudo rm "/etc/apache2/sites-enabled/${vhost}.local.conf";
+
+			# Restart Apache.
+			sudo service apache2 restart;
+			echo "The ${vhost} vhost was deleted successfully.";
+			echo "Apache was restarted. All set.";
+			# exit 0;
+		else
+			echo "No such vhost found.";
+		fi
+	else
+		echo "Usage: vhost-delete <hostName>"
+	fi
+}
+
+function bitbucket-clone-dev-sites() {
+	# Todo: Create and loop array.
+	# for site in tsinikopoulos drupaland riggingservices; do
+	for site in drupaland; do
+		echo $site;
+		vhost-create "$site";
+		cd /var/www/html/vhosts/"$site";
+		# sudo rm -rf public_html;
+		# git clone "git@bitbucket.org:drz4007/${site}.git" public_html;
+		# sudo chown -R www-data:www-data public_html/;
+	done
 }
