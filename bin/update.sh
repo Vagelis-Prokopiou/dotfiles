@@ -66,8 +66,21 @@ function main-update() {
 		sudo rm google-chrome-stable_current_amd64.deb;
 	fi
 
-	# Dropbox
-	wget 'https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb' && sudo dpkg -i --force-depends *dropbox*.deb && sudo apt-get install -y -f;
+	# Skype (Ubuntu 16.04).
+	if [[ ! $(which skype) ]]; then
+		wget skype-install.deb http://www.skype.com/go/getskype-linux-deb;
+		sudo dpkg -i --force-depends skype-install.deb;
+		sudo apt-get install -y -f;
+		sudo rm skype*.deb;
+	fi
+
+	# Dropbox (Ubuntu 16.04).
+	if [[ ! $(which skype) ]]; then
+		wget 'https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb'
+		sudo sudo dpkg -i --force-depends *dropbox*.deb;
+		sudo apt-get install -y -f;
+		sudo rm *dropbox*.deb;
+	fi
 
 	# Teamviewer
 	echo -e '\n\n\tTeamviewer installation:';
