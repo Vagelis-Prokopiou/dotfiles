@@ -9,6 +9,42 @@ root_home='/root';
 
 function main-update() {
 	############################################
+	# Testing repository!!!
+	# deb ftp://ftp.gr.debian.org/debian/ testing main contrib  non-free
+	############################################
+
+
+	############################################
+	# ----- Edit the Debian sources list.
+	############################################
+	# echo "deb http://security.debian.org/ jessie/updates main contrib non-free
+	# deb-src http://security.debian.org/ jessie/updates main contrib non-free
+
+	# deb http://http.debian.net/debian jessie-backports main
+
+	# # deb https://apt.dockerproject.org/repo/ debian-jessie main
+	# # # deb-src https://apt.dockerproject.org/repo/ debian-jessie main
+
+	# #deb ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
+	# #deb-src ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
+	# #
+	# #deb ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
+	# #deb-src ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
+
+	# ## Germany
+	#  deb ftp://ftp.de.debian.org/debian/ jessie main contrib non-free
+	#  deb-src ftp://ftp.de.debian.org/debian/ jessie main contrib non-free
+	#  deb ftp://ftp.de.debian.org/debian/ jessie-updates main contrib non-free
+	#  deb-src ftp://ftp.de.debian.org/debian/ jessie-updates main contrib non-free
+## Germany" > /etc/apt/sources.list;
+
+	# Add va to sudoers.
+	sudo grep 'va	ALL=(ALL:ALL) ALL' /etc/sudoers > /dev/null && found=0;
+	if [[ ! $found ]]; then
+		echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
+	fi
+
+	############################################
 	# ----- Install Sublime Text 3
 	############################################
 	# Sublime 3 (3126)
@@ -83,7 +119,7 @@ function main-update() {
 	fi
 
 	# Dropbox
-	if [[ ! $(command -v viber) ]]; then
+	if [[ ! -d "/usr/share/viber" ]]; then
 		wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb;
 		sudo sudo dpkg -i --force-depends viber.deb;
 		sudo apt-get install -y -f;
