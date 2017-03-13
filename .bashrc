@@ -93,3 +93,11 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # alias rm='rm -i'
 # alias cp='cp -i'
 # alias mv='mv -i'
+
+if [[ -f ~/.git-prompt.sh ]]; then
+    . ~/.git-prompt.sh;
+fi
+
+if [[ -f ~/.bash_aliases ]]; then
+    . ~/.bash_aliases;
+fi
