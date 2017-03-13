@@ -80,8 +80,42 @@ function main-update() {
 
 	# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
 
-	# Needed for google chrome.
-	sudo apt-get install -y libappindicator1 libdbusmenu-glib4 libdbusmenu-gtk4 libindicator7;
+	# Google Chrome
+	if [[ ! $(command -v google-chrome) ]]; then
+		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+		sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb;
+		sudo apt-get install -y -f;
+		sudo rm google-chrome-stable_current_amd64.deb;
+	fi
+
+	# Skype
+	if [[ ! $(command -v skype) ]]; then
+		wget skype-install.deb http://www.skype.com/go/getskype-linux-deb;
+		sudo dpkg -i --force-depends skype-install.deb;
+		sudo apt-get install -y -f;
+		sudo rm skype*.deb;
+	fi
+
+	# Dropbox
+	if [[ ! $(command -v dropbox) ]]; then
+		wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
+		sudo sudo dpkg -i --force-depends *dropbox*.deb;
+		sudo apt-get install -y -f;
+		sudo rm *dropbox*.deb;
+	fi
+
+	# Dropbox
+	if [[ ! $(command -v viber) ]]; then
+		wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb;
+		sudo sudo dpkg -i --force-depends viber.deb;
+		sudo apt-get install -y -f;
+		sudo rm viber.deb;
+	fi
+
+	# Teamviewer
+	echo -e '\n\n\tTeamviewer installation:';
+	echo -e '\tDownload the package and run the following command:';
+	echo -e '\tsudo dpkg -i --force-depends teamviewer*.deb && sudo apt-get install -y -f && sudo rm teamviewer*.deb && teamviewer --daemon start\n\n';
 
 	# ----- Install youtube-dl. -----
 	function installYoutubeDL {
@@ -111,7 +145,7 @@ function main-update() {
 	sudo apt-get install -y python-gpgme;
 
 	# This fixes the error when using Sublime for git commits && needed for PhpStorm.
-	sudo apt-get install libcanberra-gtk-module -y;
+	# sudo apt-get install libcanberra-gtk-module -y;
 
 	# Purges.
 	# sudo apt-get purge postgresql* -y;
@@ -286,13 +320,13 @@ function main-update() {
 			echo '';
 			echo '----- Databases exported successfully -----';
 			echo '';
+
+			# Remove the previous folders.
+			find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
 		fi
 	fi
 
 	sudo chown -R ${user}:${user} ${user_home}/;
-
-	# Remove the previous folders.
-	find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
 
 	# Remove the torrent files from Downloads.
 	rm ${user_home}/Downloads/*.torrent 2> /dev/null;
@@ -306,8 +340,6 @@ function main-update() {
 	# service --status-all;
 	# service --status-all | grep '+';
 	service bluetooth stop;
-
-
 
 	# ----- Install Java 8 for PhpStorm -----
 	# Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
@@ -363,26 +395,6 @@ function main-update() {
 	# /etc/init.d/gdm stop; install the drivers
 	# /etc/init.d/gdm start; and I'm back in business.
 
-	##############################################
-	# ----- Viber for Debian 8
-	##############################################
-	# Error message:
-	# This application failed to start because it could not find or load the Qt platform plugin "xcb".
-	# Available platform plugins are: eglfs, linuxfb, minimal, minimalegl, offscreen, wayland-egl, wayland, xcb.
-	#
-	# Fixed by installing:
-	# sudo apt-get install libqt5gui5
-	# and re-installing viber
-	# sudo apt-get install libqt5gui5 -y && wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb && sudo dpkg -i viber.debviber;
-
-	##############################################
-	# ----- Skype for Debian 8
-	##############################################
-	# sudo dpkg --add-architecture i386;
-	# sudo aptitude update;
-	# sudo aptitude install libc6:i386 libqt4-dbus:i386 libqt4-network:i386 libqt4-xml:i386 libqtcore4:i386 libqtgui4:i386 libqtwebkit4:i386 libstdc++6:i386 libx11-6:i386 libxext6:i386 libxss1:i386 libxv1:i386 libssl1.0.0:i386 libpulse0:i386 libasound2-plugins:i386;
-	# wget -O skype-install.deb http://www.skype.com/go/getskype-linux-deb;
-	# sudo dpkg -i skype-install.deb;
 
 	##############################################
 	# ----- Create ssh key pair
