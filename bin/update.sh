@@ -91,11 +91,15 @@ function main-update() {
 	fi
 
 	# Teamviewer
-	echo -e '\n\n\tTeamviewer installation:';
-	echo -e '\tDownload the package and run the following command:';
-	echo -e '\tsudo dpkg -i --force-depends teamviewer*.deb && sudo apt-get install -y -f && sudo rm teamviewer*.deb && teamviewer --daemon start\n\n';
+	if [[ ! $(command -v teamviewer) ]]; then
+		wget 'https://download.teamviewer.com/download/teamviewer_i386.deb';
+		sudo sudo dpkg -i --force-depends "teamviewer*.deb";
+		sudo apt-get install -y -f;
+		teamviewer --daemon start;
+		sudo rm "teamviewer*.deb";
+	fi
 
-	# ----- Install youtube-dl. -----
+	# ----- Youtube-dl -----
 	function installYoutubeDL {
 		# Install latest youtube-dl.
 		sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
