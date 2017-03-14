@@ -168,11 +168,14 @@ if  $is_initial_install; then
 	sudo rm viber.deb;
 
 	# Teamviewer
-	wget 'https://download.teamviewer.com/download/teamviewer_i386.deb';
-	sudo sudo dpkg -i --force-depends "teamviewer*.deb";
+	# See: https://www.teamviewer.com/en/help/363-how-do-i-install-teamviewer-on-my-linux-distribution
+	# See: https://www.linuxbabe.com/desktop-linux/install-teamviewer-debian-8
+	wget 'http://download.teamviewer.com/download/teamviewer_i386.deb';
+	sudo aptitude install -y teamviewer*.deb;
+	# sudo dpkg -i --force-depends "teamviewer*.deb";
 	sudo apt-get install -y -f;
 	teamviewer --daemon start;
-	sudo rm "teamviewer*.deb";
+	sudo rm teamviewer*.deb;
 
 	# Youtube-dl.
 	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
