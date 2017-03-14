@@ -162,9 +162,9 @@ if  $is_initial_install; then
 	sudo rm *dropbox*.deb;
 
 	# Viber
-	wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb;
-	sudo sudo dpkg -i --force-depends viber.deb;
-	sudo apt-get install -y -f;
+	sudo aptitude install -y libqt5gui5;
+	wget 'http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb';
+	sudo dpkg -i viber.deb;
 	sudo rm viber.deb;
 
 	# Teamviewer
