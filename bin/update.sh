@@ -149,10 +149,11 @@ if  $is_initial_install; then
 	sudo rm google-chrome-stable_current_amd64.deb;
 
 	# Skype
-	wget skype-install.deb http://www.skype.com/go/getskype-linux-deb;
-	sudo dpkg -i --force-depends skype-install.deb;
-	sudo apt-get install -y -f;
-	sudo rm skype*.deb;
+	sudo dpkg --add-architecture i386 && sudo aptitude update;
+	sudo aptitude install -y libc6:i386 libqt4-dbus:i386 libqt4-network:i386 libqt4-xml:i386 libqtcore4:i386 libqtgui4:i386 libqtwebkit4:i386 libstdc++6:i386 libx11-6:i386 libxext6:i386 libxss1:i386 libxv1:i386 libssl1.0.0:i386 libpulse0:i386 libasound2-plugins:i386;
+	wget http://www.skype.com/go/getskype-linux-deb;
+	sudo dpkg -i skype-install.deb;
+	sudo rm skype-install.deb;
 
 	# Dropbox
 	wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
@@ -160,7 +161,7 @@ if  $is_initial_install; then
 	sudo apt-get install -y -f;
 	sudo rm *dropbox*.deb;
 
-	# Dropbox
+	# Viber
 	wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb;
 	sudo sudo dpkg -i --force-depends viber.deb;
 	sudo apt-get install -y -f;
