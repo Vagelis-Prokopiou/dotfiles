@@ -3,6 +3,7 @@
 # Variables:
 user='va';
 user_home="/home/${user}";
+downloads_dir="/home/${user}/Downloads";
 root_home='/root';
 is_initial_install=false;
 
@@ -170,12 +171,12 @@ if  $is_initial_install; then
 	# Teamviewer
 	# See: https://www.teamviewer.com/en/help/363-how-do-i-install-teamviewer-on-my-linux-distribution
 	# See: https://www.linuxbabe.com/desktop-linux/install-teamviewer-debian-8
-	wget 'http://download.teamviewer.com/download/teamviewer_i386.deb';
-	sudo aptitude install -y teamviewer*.deb;
+	# wget 'https://downloadus2.teamviewer.com/download/version_12x/teamviewer_12.0.71510_i386.deb';
+	sudo aptitude install -y ${downloads_dir}/teamviewer*.deb;
 	# sudo dpkg -i --force-depends "teamviewer*.deb";
 	sudo apt-get install -y -f;
-	teamviewer --daemon start;
-	sudo rm teamviewer*.deb;
+	# teamviewer --daemon start;
+	sudo rm ${downloads_dir}/teamviewer*.deb;
 
 	# Youtube-dl.
 	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
