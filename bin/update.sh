@@ -146,6 +146,7 @@ if  $is_initial_install; then
 	aptitude install -y keepass2;
 	aptitude install -y git git-flow;
 	aptitude install -y qalculate;
+	aptitude install -y qbittorrent;
 	# Delete all Gnome games.
 	sudo aptitude purge -y aisleriot gnome-mahjongg gnome-mines gnome-sudoku;
 
@@ -178,7 +179,7 @@ if  $is_initial_install; then
 	# See: https://www.teamviewer.com/en/help/363-how-do-i-install-teamviewer-on-my-linux-distribution
 	# See: https://www.linuxbabe.com/desktop-linux/install-teamviewer-debian-8
 	# wget 'https://downloadus2.teamviewer.com/download/version_12x/teamviewer_12.0.71510_i386.deb';
-	sudo aptitude install -y ${downloads_dir}/teamviewer*.deb;
+	sudo dpkg -i ${downloads_dir}/teamviewer*.deb;
 	# sudo dpkg -i --force-depends "teamviewer*.deb";
 	sudo apt-get install -y -f;
 	# teamviewer --daemon start;
@@ -195,7 +196,7 @@ if  $is_initial_install; then
 	sudo aptitude install -y nautilus-open-terminal;
 
 	# This is needed for Dropbox.
-	# sudo aptitude install -y python-gpgme;
+	sudo aptitude install -y python-gpgme;
 
 	# This fixes the error when using Sublime for git commits && needed for PhpStorm.
 	# sudo apt-get install libcanberra-gtk-module -y;
@@ -247,12 +248,12 @@ if  $is_initial_install; then
 
 # Non initial setup.
 else
-	aptitude update -y;
-	aptitude upgrade -y;
-	# aptitude dist-upgrade -y;
-	aptitude autoclean -y;
-	aptitude install -f;
-	aptitude clean -y;
+	sudo aptitude update -y;
+	sudo aptitude upgrade -y;
+	# sudo aptitude dist-upgrade -y;
+	sudo aptitude autoclean -y;
+	sudo aptitude install -f;
+	sudo aptitude clean -y;
 
 	# Update Composer
 	sudo -H composer self-update;
