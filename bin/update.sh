@@ -4,51 +4,121 @@
 user='va';
 user_home="/home/${user}";
 root_home='/root';
+is_initial_install=false;
 
-# Check sed, grep, find, xargs.
 
-function main-update() {
+# Drush.
+function installDrush() {
+	# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
+	php -r "readfile('http://files.drush.org/drush.phar');" > drush
+	# Test your install.
+	php drush core-status;
+	# Make `drush` executable as a command from anywhere. Destination can be anywhere on $PATH.
+	sudo chmod +x drush;
+	sudo mv drush /usr/local/bin;
+	#### ----- Enrich the bash startup file with completion and aliases #####.
+	drush init;
+}
+
+# Composer
+function installComposer() {
+	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');";
+	php -r "if (hash_file('SHA384', 'composer-setup.php') === 'aa96f26c2b67226a324c27919f1eb05f21c248b987e6195cad9690d5c1ff713d53020a02ac8c217dbf90a7eacc9d141d') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;";
+	php composer-setup.php;
+	php -r "unlink('composer-setup.php');";
+	mv composer.phar /usr/local/bin/composer;
+}
+
+# Drupal Console
+function installDrupalConsole() {
+	curl -O https://drupalconsole.com/installer -L -o drupal.phar;
+	sudo mv drupal.phar /usr/local/bin/drupal;
+	sudo chmod +x /usr/local/bin/drupal;
+}
+
+# NodeJS
+function installNodeJS() {
+	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -;
+	sudo aptitude install -y nodejs;
+}
+
+# Node modules
+function installNodeModules {
+	sudo npm install -g \
+	yarn \
+	webpack \
+	gulp \
+	gulp-sass \
+	gulp-sourcemaps \
+	gulp-autoprefixer \
+	node-sass-globbing \
+	gulp-plumber \
+	browser-sync \
+	gulp-sass-glob \
+	jshint \
+	breakpoint-sass;
+
+	# The latest node-sass that is inside gulp-sass cretates a problem with the compass-mixins.
+	# Install globally the node-sass@3.4.2, and copy it in gulp-sass/node_modules.
+	# sudo npm install -g node-sass@3.4.2;
+	# sudo cp -r /usr/lib/node_modules/node-sass/ /usr/lib/node_modules/gulp-sass/node_modules/;
+	# Remove all the info files of the node modules.
+	# sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
+
+	# ----- Extra node modules -----
+	# gulp-postcss \
+	# lost \
+	# gulp-uncss \
+	# gulp.spritesmith \
+	# gulp-uglify \
+	# gulp-image-optimization \
+	# compass-mixins \
+	# gulp-group-css-media-queries \
+
+	# Delete the .info files.
+	sudo find /usr/lib/node_modules/ -iname "*.info" -exec sudo rm "{}" \+;
+	echo "All *.info files were successfully deleted.";
+}
+
+# If it is initlia setup after a fresh install.
+if  $is_initial_install; then
 	############################################
-	# Testing repository!!!
+	# Debian testing repository!!!
 	# deb ftp://ftp.gr.debian.org/debian/ testing main contrib  non-free
 	############################################
-
 
 	############################################
 	# ----- Edit the Debian sources list.
 	############################################
-	# echo "deb http://security.debian.org/ jessie/updates main contrib non-free
-	# deb-src http://security.debian.org/ jessie/updates main contrib non-free
+	echo "deb http://security.debian.org/ jessie/updates main contrib non-free
+	deb-src http://security.debian.org/ jessie/updates main contrib non-free
 
-	# deb http://http.debian.net/debian jessie-backports main
+	deb http://http.debian.net/debian jessie-backports main
 
-	# # deb https://apt.dockerproject.org/repo/ debian-jessie main
-	# # # deb-src https://apt.dockerproject.org/repo/ debian-jessie main
+	# deb https://apt.dockerproject.org/repo/ debian-jessie main
+	# deb-src https://apt.dockerproject.org/repo/ debian-jessie main
 
-	# #deb ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
-	# #deb-src ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
-	# #
-	# #deb ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
-	# #deb-src ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
+	# deb ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
+	# deb-src ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
 
-	# ## Germany
-	#  deb ftp://ftp.de.debian.org/debian/ jessie main contrib non-free
-	#  deb-src ftp://ftp.de.debian.org/debian/ jessie main contrib non-free
-	#  deb ftp://ftp.de.debian.org/debian/ jessie-updates main contrib non-free
-	#  deb-src ftp://ftp.de.debian.org/debian/ jessie-updates main contrib non-free
-## Germany" > /etc/apt/sources.list;
+	# deb ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
+	# deb-src ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
+
+	# Germany
+	 deb ftp://ftp.de.debian.org/debian/ jessie main contrib non-free
+	 deb-src ftp://ftp.de.debian.org/debian/ jessie main contrib non-free
+	 deb ftp://ftp.de.debian.org/debian/ jessie-updates main contrib non-free
+	 deb-src ftp://ftp.de.debian.org/debian/ jessie-updates main contrib non-free
+    # Germany" > /etc/apt/sources.list;
 
 	# Add va to sudoers.
-	sudo grep 'va	ALL=(ALL:ALL) ALL' /etc/sudoers > /dev/null && found=0;
-	if [[ ! $found ]]; then
-		echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
-	fi
+	echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
 
 	############################################
 	# ----- Install Sublime Text 3
 	############################################
 	# Sublime 3 (3126)
-	# wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb && dpkg -i sublime*.deb -y;
+	wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb && dpkg -i sublime*.deb -y;
 	# Install Monokai-Midnight as theme.
 
 	############################################
@@ -59,105 +129,59 @@ function main-update() {
 	############################################
 	# ----- Various maintenance tasks.
 	############################################
-	# command -v > /dev/null 2>&1 sudo || apt-get install -y sudo;
-	command -v > /dev/null 2>&1 aptitude || sudo apt-get install -y aptitude;
-	sudo aptitude update -y;
-	sudo aptitude upgrade -y;
-	# sudo aptitude dist-upgrade -y;
-	sudo aptitude autoclean -y;
-	sudo aptitude install -f;
-	sudo aptitude clean -y;
-	command -v > /dev/null 2>&1 curl || sudo aptitude install -y curl;
-	command -v > /dev/null 2>&1 gcc || sudo aptitude install -y build-essential;
-	command -v > /dev/null 2>&1 7z || sudo aptitude install -y p7zip-full;
-	command -v > /dev/null 2>&1 keepass2 || sudo aptitude install -y keepass2;
-	command -v > /dev/null 2>&1 git || sudo aptitude install -y git git-flow;
-	# command -v > /dev/null 2>&1 qalculate || sudo aptitude install -y qalculate;
-
+	apt-get install -y sudo;
+	apt-get install -y aptitude;
+	aptitude update -y;
+	aptitude upgrade -y;
+	aptitude install -y curl;
+	aptitude install -y build-essential;
+	aptitude install -y p7zip-full;
+	aptitude install -y keepass2;
+	aptitude install -y git git-flow;
+	aptitude install -y qalculate;
 	# Delete all Gnome games.
 	sudo aptitude purge -y aisleriot gnome-mahjongg gnome-mines gnome-sudoku;
 
-	# For right-click archive extraction.
-	# sudo aptitude install -y nemo-fileroller; # For right-click archive extraction.
-
-	# For Keepass2 auto-typing.
-	# command -v > /dev/null 2>&1 xdotool || sudo aptitude install -y xdotool;
-	# sudo aptitude install -y linux-headers-$(uname -r);
-	# sudo aptitude install trimage -y; # Tool to compress images for the web!!!.
-
-
-	# Hardware info and sensors.
-	# sudo aptitude install -y hardinfo;
-
-	# See: https://www.cyberciti.biz/faq/howto-linux-get-sensors-information/
-	# sudo aptitude install -y lm-sensors;
-
-	# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
-
 	# Google Chrome
-	if [[ ! $(command -v google-chrome) ]]; then
-		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
-		sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb;
-		sudo apt-get install -y -f;
-		sudo rm google-chrome-stable_current_amd64.deb;
-	fi
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+	sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb;
+	sudo apt-get install -y -f;
+	sudo rm google-chrome-stable_current_amd64.deb;
 
 	# Skype
-	if [[ ! $(command -v skype) ]]; then
-		wget skype-install.deb http://www.skype.com/go/getskype-linux-deb;
-		sudo dpkg -i --force-depends skype-install.deb;
-		sudo apt-get install -y -f;
-		sudo rm skype*.deb;
-	fi
+	wget skype-install.deb http://www.skype.com/go/getskype-linux-deb;
+	sudo dpkg -i --force-depends skype-install.deb;
+	sudo apt-get install -y -f;
+	sudo rm skype*.deb;
 
 	# Dropbox
-	if [[ ! $(command -v dropbox) ]]; then
-		wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
-		sudo sudo dpkg -i --force-depends *dropbox*.deb;
-		sudo apt-get install -y -f;
-		sudo rm *dropbox*.deb;
-	fi
+	wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
+	sudo sudo dpkg -i --force-depends *dropbox*.deb;
+	sudo apt-get install -y -f;
+	sudo rm *dropbox*.deb;
 
 	# Dropbox
-	if [[ ! -d "/usr/share/viber" ]]; then
-		wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb;
-		sudo sudo dpkg -i --force-depends viber.deb;
-		sudo apt-get install -y -f;
-		sudo rm viber.deb;
-	fi
+	wget http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb;
+	sudo sudo dpkg -i --force-depends viber.deb;
+	sudo apt-get install -y -f;
+	sudo rm viber.deb;
 
 	# Teamviewer
-	if [[ ! $(command -v teamviewer) ]]; then
-		wget 'https://download.teamviewer.com/download/teamviewer_i386.deb';
-		sudo sudo dpkg -i --force-depends "teamviewer*.deb";
-		sudo apt-get install -y -f;
-		teamviewer --daemon start;
-		sudo rm "teamviewer*.deb";
-	fi
+	wget 'https://download.teamviewer.com/download/teamviewer_i386.deb';
+	sudo sudo dpkg -i --force-depends "teamviewer*.deb";
+	sudo apt-get install -y -f;
+	teamviewer --daemon start;
+	sudo rm "teamviewer*.deb";
 
-	# ----- Youtube-dl -----
-	function installYoutubeDL {
-		# Install latest youtube-dl.
-		sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
-		sudo chmod a+rx /usr/local/bin/youtube-dl;
-	}
-
-	if [[ -a /usr/local/bin/youtube-dl ]]; then
-		echo "youtube-dl is already installed."
-		if [[ $(date +%d) == 1 || $(date +%d) == 15 ]]; then
-			echo "Updating youtube-dl..."
-			installYoutubeDL;
-		fi
-	else
-		echo "Installing youtube-dl..."
-		installYoutubeDL;
-	fi
+	# Youtube-dl.
+	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
+	sudo chmod a+rx /usr/local/bin/youtube-dl;
 
 	# Import and edit pdfs in Libreoffice Draw.
 	# sudo aptitude install -y libreoffice-pdfimport;
 
 	# Nautilus plugin for opening terminals in arbitrary paths.
-	# sudo aptitude install -y nautilus-open-terminal;
+	sudo aptitude install -y nautilus-open-terminal;
 
 	# This is needed for Dropbox.
 	# sudo aptitude install -y python-gpgme;
@@ -169,7 +193,7 @@ function main-update() {
 	# sudo aptitude purge postgresql* -y;
 
 	# Drivers for AMD GPU.
-	# sudo aptitude install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
+	sudo aptitude install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
 
 	# Create a template txt, for use in right click context.
 	touch ${user_home}/Templates/new_file.txt;
@@ -177,21 +201,7 @@ function main-update() {
 	##############################################
 	# ----- LAMP on Debian.
 	##############################################
-	# command -v > /dev/null 2>&1 apache2 || sudo aptitude -y install apache2 mysql-server mysql-client mysql-workbench php7.0 php7.0-mysql libapache2-mod-php7.0 php7.0-curl php-pear phpmyadmin php7.0-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
-
-
-	sudo aptitude -y install apache2 mysql-server mysql-client php7.0 php7.0-mysql libapache2-mod-php7.0 php7.0-curl php-pear phpmyadmin php7.0-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
-	##############################################
-	# ----- Error 'The requested URL /el was not found on this server.'
-	##############################################
-	# Edit '/etc/apache2/apache2.conf' and change the 'AllowOverride None' && restart apache (/etc/init.d/apache2 restart).
-	# See: http://stackoverflow.com/questions/18740419/how-to-set-allowoverride-all.
-
-	# <Directory /var/www/>
-		# Options Indexes FollowSymLinks
-		# AllowOverride All
-		# Require all granted
-	# </Directory>
+	command -v > /dev/null 2>&1 apache2 || sudo aptitude -y install apache2 mysql-server mysql-client mysql-workbench php5 php5-mysql libapache2-mod-php5 php5-curl php-pear phpmyadmin php5-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
 
 	#See: https://www.digitalocean.com/community/tutorials/how-to-set-up-mod_rewrite-for-apache-on-ubuntu-14-04
 	if [ ! -f /etc/apache2/apache2.conf.bak ]; then
@@ -199,120 +209,45 @@ function main-update() {
 		sudo sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf;
 	fi
 
-	# Install Drush.
-	function installDrush {
-		# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
-		php -r "readfile('http://files.drush.org/drush.phar');" > drush
-		# Test your install.
-		php drush core-status;
-		# Make `drush` executable as a command from anywhere. Destination can be anywhere on $PATH.
-		sudo chmod +x drush;
-		sudo mv drush /usr/local/bin;
-		#### ----- Enrich the bash startup file with completion and aliases #####.
-		drush init;
-	}
+	# For right-click archive extraction.
+	sudo aptitude install -y nemo-fileroller;
 
-	if [[ -a /usr/local/bin/drush ]]; then
-		echo "Drush is already installed."
-		if [[ $(date +%d) == 1 || $(date +%d) == 15 ]]; then
-			echo "Updating..."
-			installDrush;
-		fi
-	else
-		echo "Installing Drush..."
-		installDrush;
-	fi
+	# For Keepass2 auto-typing.
+	# command -v > /dev/null 2>&1 xdotool || sudo aptitude install -y xdotool;
 
-	# ----- Install Composer. -----
-	if [[ -a /usr/local/bin/composer ]]; then
-		echo "Composer is already installed."
-		echo "Updating..."
-		sudo -H composer self-update;
-	else
-		echo "Installing Composer..."
-		php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');";
-		php -r "if (hash_file('SHA384', 'composer-setup.php') === 'aa96f26c2b67226a324c27919f1eb05f21c248b987e6195cad9690d5c1ff713d53020a02ac8c217dbf90a7eacc9d141d') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;";
-		php composer-setup.php;
-		php -r "unlink('composer-setup.php');";
-		mv composer.phar /usr/local/bin/composer;
-	fi
+	sudo aptitude install -y linux-headers-$(uname -r);
 
-	# ----- Install Drupal Console. -----
-	if [[ -a /usr/local/bin/drupal ]]; then
-		echo "Drupal Console is already installed."
-		echo "Updating..."
-		sudo drupal self-update;
-	else
-		echo "Installing Drupal Console..."
-		curl -O https://drupalconsole.com/installer -L -o drupal.phar;
-		sudo mv drupal.phar /usr/local/bin/drupal;
-		sudo chmod +x /usr/local/bin/drupal;
-	fi
+	# Tool to compress images for the web!!!.
+	# sudo aptitude install trimage -y;
 
-	# ----- Install NodeJS. -----
-	function installNodeJS {
-		curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -;
-		sudo aptitude install -y nodejs;
-	}
+	# Hardware info and sensors.
+	# sudo aptitude install -y hardinfo;
 
-	if [[ -a /usr/bin/node ]]; then
-		echo "NodeJS is already installed."
-		if [[ $(date +%d) == 1 || $(date +%d) == 16 ]]; then
-			echo "Updating NodeJS..."
-			installNodeJS;
-		fi
-	else
-		echo "Installing NodeJS..."
-		installNodeJS;
-	fi
+	# See: https://www.cyberciti.biz/faq/howto-linux-get-sensors-information/
+	# sudo aptitude install -y lm-sensors;
 
-	# ----- Install all node modules globally. -----
-	function installNodeModules {
-		sudo npm install -g \
-		webpack \
-		gulp \
-		gulp-sass \
-		gulp-sourcemaps \
-		gulp-autoprefixer \
-		node-sass-globbing \
-		gulp-plumber \
-		browser-sync \
-		gulp-sass-glob \
-		jshint \
-		breakpoint-sass;
+	# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
 
-		# The latest node-sass that is inside gulp-sass cretates a problem with the compass-mixins.
-		# Install globally the node-sass@3.4.2, and copy it in gulp-sass/node_modules.
-		# sudo npm install -g node-sass@3.4.2;
-		# sudo cp -r /usr/lib/node_modules/node-sass/ /usr/lib/node_modules/gulp-sass/node_modules/;
-		# Remove all the info files of the node modules.
-		# sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
+	installDrush;
+	installComposer;
+	installDrupalConsole;
+	installNodeJS;
+	installNodeModules;
 
-		# ----- Extra node modules -----
-		# gulp-postcss \
-		# lost \
-		# gulp-uncss \
-		# gulp.spritesmith \
-		# gulp-uglify \
-		# gulp-image-optimization \
-		# compass-mixins \
-		# gulp-group-css-media-queries \
+# Non initial setup.
+else
+	aptitude update -y;
+	aptitude upgrade -y;
+	# aptitude dist-upgrade -y;
+	aptitude autoclean -y;
+	aptitude install -f;
+	aptitude clean -y;
 
-		# Delete the .info files.
-		sudo find /usr/lib/node_modules/ -iname "*.info" -exec sudo rm "{}" \+;
-		echo "All *.info files were successfully deleted.";
-	}
+	# Update Composer
+	sudo -H composer self-update;
 
-	if [[ -d /usr/lib/node_modules/gulp/ ]]; then
-		echo "The NodeJS modules are already installed."
-		if [[ $(date +%m) == 1 || $(date +%m) == 6 ]]; then
-			echo "Updating the NodeJS modules..."
-			# installNodeModules;
-		fi
-	else
-		echo "Installing the NodeJS modules..."
-		# installNodeModules;
-	fi
+	# Update Drupal Console.
+	sudo drupal self-update;
 
 	# If Dropbox exits.
 	if [[ -d ${user_home}/Dropbox/ ]]; then
@@ -351,113 +286,9 @@ function main-update() {
 
 	# Remove the torrent files from Downloads.
 	rm ${user_home}/Downloads/*.torrent 2> /dev/null;
+fi
 
-	# How To Record and Share Linux Terminal Activity
-	# See: http://linoxide.com/tools/record-share-linux-terminal/
-	# sudo aptitude install asciinema;
-
-
-	# ----- Check all services -----
-	# service --status-all;
-	# service --status-all | grep '+';
-	sudo service bluetooth stop;
-
-	# ----- Install Java 8 for PhpStorm -----
-	# Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
-	# Backport Testing on stable
-	# JDK 8
-	# sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak;
-	# echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list;
-	# aptitude update
-	# aptitude install openjdk-8-jdk
-	# sudo update-alternatives --config java
-
-
-	# ----- Enable mssql in PHP. -----
-	# See: https://coderwall.com/p/21uxeq/connecting-to-a-mssql-server-database-with-php-on-ubuntu-debian
-	# sudo aptitude install freetds-common freetds-bin unixodbc php7.0-sybase;
-	# sudo service apache2 restart;
-
-	# ----- Install these before installing Virtualbox -----
-	# sudo aptitude install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
-
-	##############################################
-	# ----- Guest additions on Virtualbox.
-	##############################################
-	# First install headers and build essential.
-	#sh /media/cdrom/VBoxLinuxAdditions.run;
-	#sudo reboot;
-
-	# ----- Various -----
-	############################################
-	# ----- Wifi on laptop Debian!!! Source: #https://wiki.debian.org/iwlwifi#Intel_Wireless_WiFi_Link.2C_Wireless-N.2C_Advanced-N.2C_Ultimate-N_devices
-	############################################
-	 #sudo aptitude update && aptitude install firmware-iwlwifi;
-	 #modprobe -r iwlwifi ; modprobe iwlwifi;
-
-	############################################
-	# ----- Install Keepass && Keefox
-	############################################
-	# sudo aptitude install keepass2;
-	# Install the 'CKP' extension for the Chrome.
-
-	##############################################
-	# ----- Mount a LAN location to my filesystem.
-	##############################################
-	# mount -t cifs //target_ip_address/name_of_folder_in_samba.conf /local_mount_location -o user=root
-	# mount -t cifs //server/www /mnt/smb -o user=root
-	# mount -t cifs //192.168.1.75/www /mnt/smb -o user=root
-
-	##############################################
-	# ----- Various.
-	##############################################
-	# Kill xserver.
-	# CTRL+ALT+F2 login as root
-	# /etc/init.d/gdm stop; install the drivers
-	# /etc/init.d/gdm start; and I'm back in business.
-
-
-	##############################################
-	# ----- Create ssh key pair
-	##############################################
-	# ssh-keygen -t rsa -b 4096 -C "drz4007@gmail.com"
-
-	# Copy ssh key to clipboard
-	# cat ~/.ssh/id_rsa.pub | xclip -sel clip
-
-	#### ----- To mount Smba shares #####.
-	# sudo aptitude install cifs-utils -y;
-
-	# All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
-	# sudo aptitude install task-print-server -y;
-
-	# aptitude install bum -y; # bootup manager
-	# sudo aptitude install ttf-mscorefonts-installer;
-
-	# Includes mysqldbcompare
-	# sudo aptitude install mysql-utilities -y;
-
-	# Required when installing Python from source.
-	# sudo aptitude install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev;
-
-	# Needed for digitally signing android apps.
-	# sudo aptitude install zipalign -y;
-
-	# Record the desktop.
-	# sudo aptitude install -y recordmydesktop;
-	# To record the sound see https://ubuntuforums.org/showthread.php?t=1118019
-
-	# ----- Database error after updating to 5.7 from the MySQL repo. -----
-	# Error
-	# SQL query: Edit Edit
-	# SHOW VARIABLES LIKE 'character_set_results'
-	# MySQL said: Documentation
-	#1146 - Table 'performance_schema.session_variables' doesn't exist
-	#1682 - Native table 'performance_schema'.'session_variables' has the wrong structure
-	# Solution: Run "sudo mysql_upgrade -u root -p --force && sudo service mysql restart";
-	# ----- Database error after updating to 5.7 from the MySQL repo (end). -----
-}
-main-update;
+sudo service bluetooth stop;
 
 # All the packages for installation from source.
 function software-update() {
@@ -638,7 +469,6 @@ function software-update() {
 }
 # software-update;
 
-
 # Remove all the caches.
 function clear-caches() {
 	sudo rm -rf ${user_home}/drush-backups/*;
@@ -667,3 +497,110 @@ if [[ $old_kernels == '' ]]; then
 else
 	echo -e "\nThere are old kernels that need to be taken care of!!!\n";
 fi
+
+
+
+# How To Record and Share Linux Terminal Activity
+# See: http://linoxide.com/tools/record-share-linux-terminal/
+# sudo aptitude install asciinema;
+
+
+# ----- Check all services -----
+# service --status-all;
+# service --status-all | grep '+';
+
+
+# ----- Install Java 8 for PhpStorm -----
+# Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
+# Backport Testing on stable
+# JDK 8
+# sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak;
+# echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list;
+# aptitude update
+# aptitude install openjdk-8-jdk
+# sudo update-alternatives --config java
+
+
+# ----- Enable mssql in PHP. -----
+# See: https://coderwall.com/p/21uxeq/connecting-to-a-mssql-server-database-with-php-on-ubuntu-debian
+# sudo aptitude install freetds-common freetds-bin unixodbc php5-sybase;
+# sudo service apache2 restart;
+
+# ----- Install these before installing Virtualbox -----
+# sudo aptitude install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
+
+##############################################
+# ----- Guest additions on Virtualbox.
+##############################################
+# First install headers and build essential.
+#sh /media/cdrom/VBoxLinuxAdditions.run;
+#sudo reboot;
+
+# ----- Various -----
+############################################
+# ----- Wifi on laptop Debian!!! Source: #https://wiki.debian.org/iwlwifi#Intel_Wireless_WiFi_Link.2C_Wireless-N.2C_Advanced-N.2C_Ultimate-N_devices
+############################################
+ #sudo aptitude update && aptitude install firmware-iwlwifi;
+ #modprobe -r iwlwifi ; modprobe iwlwifi;
+
+############################################
+# ----- Install Keepass && Keefox
+############################################
+# sudo aptitude install keepass2;
+# Install the 'CKP' extension for the Chrome.
+
+##############################################
+# ----- Mount a LAN location to my filesystem.
+##############################################
+# mount -t cifs //target_ip_address/name_of_folder_in_samba.conf /local_mount_location -o user=root
+# mount -t cifs //server/www /mnt/smb -o user=root
+# mount -t cifs //192.168.1.75/www /mnt/smb -o user=root
+
+##############################################
+# ----- Various.
+##############################################
+# Kill xserver.
+# CTRL+ALT+F2 login as root
+# /etc/init.d/gdm stop; install the drivers
+# /etc/init.d/gdm start; and I'm back in business.
+
+
+##############################################
+# ----- Create ssh key pair
+##############################################
+# ssh-keygen -t rsa -b 4096 -C "drz4007@gmail.com"
+
+# Copy ssh key to clipboard
+# cat ~/.ssh/id_rsa.pub | xclip -sel clip
+
+#### ----- To mount Smba shares #####.
+# sudo aptitude install cifs-utils -y;
+
+# All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
+# sudo aptitude install task-print-server -y;
+
+# aptitude install bum -y; # bootup manager
+# sudo aptitude install ttf-mscorefonts-installer;
+
+# Includes mysqldbcompare
+# sudo aptitude install mysql-utilities -y;
+
+# Required when installing Python from source.
+# sudo aptitude install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev;
+
+# Needed for digitally signing android apps.
+# sudo aptitude install zipalign -y;
+
+# Record the desktop.
+# sudo aptitude install -y recordmydesktop;
+# To record the sound see https://ubuntuforums.org/showthread.php?t=1118019
+
+# ----- Database error after updating to 5.7 from the MySQL repo. -----
+# Error
+# SQL query: Edit Edit
+# SHOW VARIABLES LIKE 'character_set_results'
+# MySQL said: Documentation
+#1146 - Table 'performance_schema.session_variables' doesn't exist
+#1682 - Native table 'performance_schema'.'session_variables' has the wrong structure
+# Solution: Run "sudo mysql_upgrade -u root -p --force && sudo service mysql restart";
+# ----- Database error after updating to 5.7 from the MySQL repo (end). -----
