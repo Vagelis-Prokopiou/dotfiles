@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Download Viber, Teamviewer, Dropbox, Chrome:
+# https://www.viber.com/en/products/linux
+# https://www.teamviewer.com/en/download/linux/
+# https://www.dropbox.com/install-linux
+# https://www.google.com/chrome/browser/desktop/
+
 # Variables:
 user='va';
 user_home="/home/${user}";
@@ -144,29 +150,29 @@ if  $is_initial_install; then
 	sudo aptitude purge -y aisleriot gnome-mahjongg gnome-mines gnome-sudoku;
 
 	# Google Chrome
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
-	sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb;
+	# wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+	sudo dpkg -i --force-depends ${downloads_dir}/google-chrome-stable_current_amd64.deb;
 	sudo apt-get install -y -f;
-	sudo rm google-chrome-stable_current_amd64.deb;
+	sudo rm ${downloads_dir}/google-chrome-stable_current_amd64.deb;
 
 	# Skype
 	sudo dpkg --add-architecture i386 && sudo aptitude update;
 	sudo aptitude install -y libc6:i386 libqt4-dbus:i386 libqt4-network:i386 libqt4-xml:i386 libqtcore4:i386 libqtgui4:i386 libqtwebkit4:i386 libstdc++6:i386 libx11-6:i386 libxext6:i386 libxss1:i386 libxv1:i386 libssl1.0.0:i386 libpulse0:i386 libasound2-plugins:i386;
-	wget http://www.skype.com/go/getskype-linux-deb;
-	sudo dpkg -i skype-install.deb;
-	sudo rm skype-install.deb;
+	# wget http://www.skype.com/go/getskype-linux-deb;
+	sudo dpkg -i ${downloads_dir}/skype*.deb;
+	sudo rm ${downloads_dir}/skype*.deb;
 
 	# Dropbox
-	wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
-	sudo sudo dpkg -i --force-depends *dropbox*.deb;
+	# wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
+	sudo sudo dpkg -i --force-depends ${downloads_dir}/*dropbox*.deb;
 	sudo apt-get install -y -f;
-	sudo rm *dropbox*.deb;
+	sudo rm ${downloads_dir}/*dropbox*.deb;
 
 	# Viber
 	sudo aptitude install -y libqt5gui5;
-	wget 'http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb';
-	sudo dpkg -i viber.deb;
-	sudo rm viber.deb;
+	# wget 'http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb';
+	sudo dpkg -i ${downloads_dir}/viber.deb;
+	sudo rm ${downloads_dir}/viber.deb;
 
 	# Teamviewer
 	# See: https://www.teamviewer.com/en/help/363-how-do-i-install-teamviewer-on-my-linux-distribution
