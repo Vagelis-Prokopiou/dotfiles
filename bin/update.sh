@@ -38,9 +38,11 @@ function installComposer() {
 
 # Drupal Console
 function installDrupalConsole() {
-	curl -O https://drupalconsole.com/installer -L -o drupal.phar;
-	sudo mv drupal.phar /usr/local/bin/drupal;
+	# php -r "readfile('https://drupalconsole.com/installer');" > drupal.phar;
+	curl -O https://drupalconsole.com/installer;
+	sudo mv installer /usr/local/bin/drupal;
 	sudo chmod +x /usr/local/bin/drupal;
+	sudo drupal init;
 }
 
 # NodeJS

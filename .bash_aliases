@@ -1,4 +1,14 @@
-# My aliases:
+# Drupal Console
+if [[ -f ~/.console/console.rc ]]; then
+    . ~/.console/console.rc 2>/dev/null;
+fi
+
+# Add git completion.
+if [[ -f ~/git-completion.bash ]]; then
+    . ~/git-completion.bash;
+fi
+
+# Aliases
 alias phpstorm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
 alias pycharm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PyCharm/bin/pycharm.sh';
 alias localhost='cd /var/www/html';
@@ -33,8 +43,6 @@ alias grh='git reset --hard';
 alias ga='git add ';
 alias git-show-tracked-files='git ls-tree --full-tree -r --name-only HEAD';
 alias gstf='git-show-tracked-files';
-# Add git completion.
-source ~/git-completion.bash;
 
 # Postgresql
 alias 'psql'='sudo -u postgres psql';
