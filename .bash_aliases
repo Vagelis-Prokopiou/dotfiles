@@ -253,17 +253,20 @@ function vhost-delete() {
     if [[ "$1" ]]; then
         vhost="$1";
 
-        # Disable the vhost.
-        sudo a2dissite "${vhost}.local";
-
         if [[ -d "/var/www/html/vhosts/${vhost}" ]]; then
+	        # Disable the vhost.
+	        sudo a2dissite "${vhost}.local";
+
             # Delete all files associated with this site.
             sudo rm -r /var/www/html/vhosts/${vhost};
             sudo rm "/etc/apache2/sites-available/${vhost}.local.conf";
 
+            # Clean the /etc/hosts
+            sudo sed -i "/${vhost}/d" /etc/hosts;
+
             # Restart Apache.
             sudo service apache2 restart;
-            echo "The ${vhost} vhost was deleted successfully.";
+            echo "The ${vhost}.local vhost was deleted successfully.";
             echo "Apache was restarted. All set.";
         else
             echo "No such vhost found.";
