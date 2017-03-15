@@ -259,22 +259,22 @@ function vhost-create() {
 function vhost-delete() {
     # Todo: Delete from /etc/hosts
     if [[ "$1" ]]; then
-        vhost="$1";
+        domain="$1";
 
-        if [[ -d "/var/www/html/vhosts/${vhost}" ]]; then
+        if [[ -d "/var/www/html/vhosts/${domain}" ]]; then
 	        # Disable the vhost.
-	        sudo a2dissite "${vhost}.local";
+	        sudo a2dissite "${domain}.local";
 
             # Delete all files associated with this site.
-            sudo rm -r /var/www/html/vhosts/${vhost};
-            sudo rm "/etc/apache2/sites-available/${vhost}.local.conf";
+            sudo rm -r /var/www/html/vhosts/${domain};
+            sudo rm "/etc/apache2/sites-available/${domain}.local.conf";
 
             # Clean the /etc/hosts
-            sudo sed -i "/${vhost}/d" /etc/hosts;
+            sudo sed -i "/${domain}/d" /etc/hosts;
 
             # Restart Apache.
             sudo service apache2 restart;
-            echo "The ${vhost}.local vhost was deleted successfully.";
+            echo "The ${domain}.local vhost was deleted successfully.";
             echo "Apache was restarted. All set.";
         else
             echo "No such vhost found.";
@@ -285,12 +285,19 @@ function vhost-delete() {
 }
 
 function bitbucket-clone-dev-sites() {
-    # Todo: Create and loop array.
-    for site in tsinikopoulos drupaland riggingservices; do
-        vhost-create "$site";
-        cd "/var/www/html/vhosts/${site}";
-        sudo rm -rf public_html;
-        sudo git clone "git@bitbucket.org:drz4007/${site}.git" public_html;
-        sudo chown -R www-data:www-data public_html/;
+    domains=(
+        tsinikopoulos
+        drupaland
+        riggingservices
+    );
+
+    domains_length=${#domains[@]};
+
+    for (( i = 0; i < ${domains_length}; i++ )); do
+        domain=${domains[$i]};
+        vhost-create "$domain";
+        sudo rm -rf "/var/www/html/vhosts/${domain}/public_html";
+        sudo git clone "git@bitbucket.org:drz4007/${domain}.git" "/var/www/html/vhosts/${domain}/public_html";
+        sudo chown -R www-data:www-data "/var/www/html/vhosts/${domain}/public_html";
     done
 }

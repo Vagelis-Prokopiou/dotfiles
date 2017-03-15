@@ -256,9 +256,6 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 
 # Non initial setup.
 else
-	installDrush;
-	installComposer;
-	installDrupalConsole;
 	sudo aptitude update -y;
 	sudo aptitude upgrade -y;
 	# sudo aptitude dist-upgrade -y;
