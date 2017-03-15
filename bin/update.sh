@@ -121,6 +121,12 @@ if  $is_initial_install; then
 	# Add va to sudoers.
 	echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
 
+	cp /etc/fstab /etc/fstab.bak;
+	echo "
+# The following is the disk that has the torrents folder.
+UUID=1A52BBE952BBC7B1   /media/va/local_disk   ntfs    auto,user,exec,rw,suid,noatime,relatime   0   0
+UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,suid,noatime,relatime    0   0" 	>> /etc/fstab;
+
 	############################################
 	# ----- Install Sublime Text 3
 	############################################
