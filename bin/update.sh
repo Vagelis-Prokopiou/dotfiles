@@ -13,7 +13,6 @@ downloads_dir="/home/${user}/Downloads";
 root_home='/root';
 is_initial_install=false;
 
-
 # Drush.
 function installDrush() {
 	# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
