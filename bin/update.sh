@@ -156,7 +156,7 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	aptitude install -y qalculate;
 	aptitude install -y qbittorrent;
 	# Delete all Gnome games.
-	sudo aptitude purge -y aisleriot gnome-mahjongg gnome-mines gnome-sudoku;
+	sudo aptitude purge -y gnome-nibbles aisleriot gnome-mahjongg gnome-mines gnome-sudoku gnome-chess inkscape;
 
 	# Google Chrome
 	# wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
@@ -260,7 +260,7 @@ else
 	sudo aptitude upgrade -y;
 	# sudo aptitude dist-upgrade -y;
 	sudo aptitude autoclean -y;
-	sudo aptitude install -f;
+	sudo aptitude install -f -y;
 	sudo aptitude clean -y;
 
 	# Update Composer
