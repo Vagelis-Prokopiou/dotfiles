@@ -155,7 +155,7 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	aptitude install -y qalculate;
 	aptitude install -y qbittorrent;
 	# Delete all Gnome games.
-	sudo aptitude purge -y gnome-nibbles aisleriot gnome-mahjongg gnome-mines gnome-sudoku gnome-chess inkscape;
+	sudo aptitude purge -y gnome-nibbles aisleriot gnome-mahjongg gnome-mines gnome-sudoku gnome-chess gnome-robots gnome-tetravex inkscape;
 
 	# Google Chrome
 	# wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
