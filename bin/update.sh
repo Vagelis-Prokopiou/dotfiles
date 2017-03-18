@@ -135,9 +135,11 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb && dpkg -i sublime*.deb -y;
 	# Install Monokai-Midnight as theme: http://colorsublime.com/theme/Monokai-Midnight
     wget 'http://colorsublime.com/theme/download/61775';
-    sudo mkdir -p ~/.config/sublime-text-3/Packages/Themes;
+    sudo mkdir -p /root/.config/sublime-text-3/Packages/Themes;
+    sudo mkdir -p ${user_home}/.config/sublime-text-3/Packages/Themes;
     sudo cp 61775 /root/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
     sudo cp 61775 ${user_home}/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
+    sudo rm 61775;
 
 
 	############################################
