@@ -301,3 +301,13 @@ function bitbucket-clone-dev-sites() {
         sudo chown -R www-data:www-data "/var/www/html/vhosts/${domain}/public_html";
     done
 }
+
+function LAMP() {
+    sudo aptitude -y install apache2;
+    sudo aptitude -y install mysql-server mysql-client;
+    # sudo aptitude -y install mysql-workbench
+    sudo aptitude -y install php5 php5-mysql libapache2-mod-php5 php5-curl php5-xdebug php-pear;
+    sudo aptitude -y install phpmyadmin
+    sudo a2enmod rewrite;
+    sudo service apache2 restart;
+}
