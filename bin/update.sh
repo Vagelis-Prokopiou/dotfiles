@@ -275,42 +275,6 @@ else
 	# Update Drupal Console.
 	sudo drupal self-update;
 
-	# If Dropbox exits.
-	if [[ -d ${user_home}/Dropbox/ ]]; then
-		# If folder for today does not exits, do the backup.
-		if [[ ! -d ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d)/ ]]; then
-			# ----- Backup all databases -----
-			echo ''; \
-			echo "----- Exporting the databases to ${user_home}/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
-			echo ''; \
-			# mysqldump -uroot -proot --all-databases | gzip > ${user_home}/Dropbox/all_databases.sql.gz;
-			dbs=$(echo $( mysql -uroot -proot -e 'show databases;') | \
-			sed "s/Database//g; s/information_schema//g; \
-			s/performance_schema//g; \
-			s/sys//g; \
-			s/d7//g; \
-			s/d8//g; \
-			s/mysql//g; \
-			s/phpmyadmin//g"; \
-			); \
-			mkdir ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null; \
-			IFS=' ' read -ra dbs_array <<< "$dbs"; \
-			for db in "${dbs_array[@]}"; do \
-			    # echo "$db"_$(date +%Y-%m-%dT%H:%M).sql.gz; \
-			    mysql -uroot -proot -e "TRUNCATE TABLE $db.watchdog"; \
-			    mysqldump -uroot -proot "$db" | gzip > ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
-			done;
-			echo '';
-			echo '----- Databases exported successfully -----';
-			echo '';
-
-			# Remove the previous folders.
-			find /home/va/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
-		fi
-	fi
-
-	sudo chown -R ${user}:${user} ${user_home}/;
-
 	# Remove the torrent files from Downloads.
 	rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 fi
