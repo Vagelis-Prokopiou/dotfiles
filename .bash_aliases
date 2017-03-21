@@ -223,6 +223,8 @@ function dbs-export() {
 
             # Remove the previous folders.
             find ${user_home}/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
+        else
+            echo -e '\nThe dbs have already been exported today.\n';
         fi
     fi
 
