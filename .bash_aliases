@@ -50,6 +50,15 @@ alias gstf='git-show-tracked-files';
 # Postgresql
 alias 'psql'='sudo -u postgres psql';
 
+# Fix the '^M' in git diffs.
+function git-fix-line-endings() {
+    git config --global core.autocrlf true;
+    git rm --cached -r .;
+    git diff --cached --name-only -z | xargs -0 git add;
+    git commit -m "Fix CRLF";
+    echo -e "\n\tRun it per branch.\n";
+}
+
 # Report from git log.
 function git-log-report() {
     if [[ "$1" ]]; then
