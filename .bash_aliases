@@ -50,7 +50,7 @@ alias gstf='git-show-tracked-files';
 # Postgresql
 alias 'psql'='sudo -u postgres psql';
 
-# Fix the '^M' in git diffs.
+# Fix the '^M' in git diffs. See: http://stackoverflow.com/questions/1889559/git-diff-to-ignore-m
 function git-fix-line-endings() {
     git config --global core.autocrlf true;
     git rm --cached -r .;
