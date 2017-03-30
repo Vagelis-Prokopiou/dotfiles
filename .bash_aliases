@@ -62,6 +62,7 @@ function git-fix-line-endings() {
 # Show only filenames with differences.
 function git-diff-files() {
     if [[ "$1" ]]; then
+    	echo -e "\n*** Show only the filenames of the files with differences ***\n";
 	git diff "$1" | grep -- '--- a/' | sed 's/--- a\///g';
     else
 	echo -e "\nUsage: git-diff-files <branch>\n"
