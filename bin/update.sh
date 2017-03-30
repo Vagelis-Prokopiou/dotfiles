@@ -131,6 +131,9 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	############################################
 	# ----- Install Sublime Text 3
 	############################################
+	# Instructions for Greek spell checking:
+	# https://www.sublimetext.com/docs/3/spell_checking.html
+	# https://github.com/titoBouzout/Dictionaries/blob/master/Greek.dic
 	# Sublime 3 (3126)
 	wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb && dpkg -i sublime*.deb -y;
 	# Install Monokai-Midnight as theme: http://colorsublime.com/theme/Monokai-Midnight
