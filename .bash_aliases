@@ -59,6 +59,15 @@ function git-fix-line-endings() {
     echo -e "\n\tRun it per branch.\n";
 }
 
+# Show only filenames with differences.
+function git-diff-files() {
+    if [[ "$1" ]]; then
+	git diff "$1" | grep -- '--- a/' | sed 's/--- a\///g';
+    else
+	echo -e "\nUsage: git-diff-files <branch>\n"
+    fi
+}
+
 # Report from git log.
 function git-log-report() {
     if [[ "$1" ]]; then
