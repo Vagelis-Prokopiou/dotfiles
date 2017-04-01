@@ -23,8 +23,8 @@ alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/the
 alias drupaland='cd /var/www/html/vhosts/drupaland/public_html/';
 alias drupalandgulp='cd /var/www/html/vhosts/drupaland/public_html/themes/drupaland && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
-alias rs='cd /var/www/html/vhosts/rigging/public_html/';
-alias rsgulp='cd /var/www/html/vhosts/rigging/public_html/sites/all/themes/skeletontheme_testing && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
+alias rs='cd /var/www/html/vhosts/riggingservices/public_html/';
+alias rsgulp='cd /var/www/html/vhosts/riggingservices/public_html/sites/all/themes/skeletontheme_testing && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
 alias bnspro='cd /var/www/html/vhosts/bnspro/public_html/';
 alias bnsprogulp='cd /var/www/html/vhosts/bnspro/public_html/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
