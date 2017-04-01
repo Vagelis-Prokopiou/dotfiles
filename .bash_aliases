@@ -1,3 +1,5 @@
+export PATH=$PATH:/usr/local/go/bin;
+
 user="va";
 user_home="/home/${user}";
 
