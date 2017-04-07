@@ -83,3 +83,5 @@ workspace/
 .wget-hsts
 .mono/
 VirtualBox VMs/
+go
+projects
