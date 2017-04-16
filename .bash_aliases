@@ -1,8 +1,11 @@
-export PATH=$PATH:/usr/local/go/bin;
-export PATH=$PATH:~/go/bin;
-
 user="va";
 user_home="/home/${user}";
+
+# GO stuff.
+export PATH=$PATH:/usr/local/go/bin;
+export GOPATH=$user_home/go;
+export PATH=$PATH:$GOPATH/bin;
+
 
 # Drupal Console
 if [[ -f ~/.console/console.rc ]]; then
