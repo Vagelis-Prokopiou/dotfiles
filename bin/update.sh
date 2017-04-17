@@ -161,7 +161,7 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	aptitude install -y build-essential;
 	aptitude install -y p7zip-full;
 	aptitude install -y keepass2;
-	aptitude install -y git git-flow;
+	# aptitude install -y git git-flow;
 	aptitude install -y qalculate;
 	aptitude install -y qbittorrent;
 	# Delete all Gnome games.
