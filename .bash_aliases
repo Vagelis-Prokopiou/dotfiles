@@ -372,3 +372,8 @@ function LAMP() {
     sudo a2enmod rewrite;
     sudo service apache2 restart;
 }
+
+function web-images() {
+    # Resize to 1200px width and remove metadata (-strip flag).
+    for image in *; do convert $image -resize 1200 -strip $image; done;
+}

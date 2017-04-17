@@ -246,8 +246,8 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 
 	sudo aptitude install -y linux-headers-$(uname -r);
 
-	# Tool to compress images for the web!!!.
-	# sudo aptitude install trimage -y;
+	# Tool to manipulate images for the web!!!.
+	sudo aptitude install imagemagick -y;
 
 	# Hardware info and sensors.
 	# sudo aptitude install -y hardinfo;
