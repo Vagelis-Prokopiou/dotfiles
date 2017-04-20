@@ -117,14 +117,16 @@ function git-patch-formatted() {
 # Delete local and remote branch.
 function git-delete-branch() {
     if [[ $1 ]]; then
-            git checkout master > /dev/null;
+        git checkout master > /dev/null;
         branch_name="$1";
-            echo "Deleting local $branch_name branch...";
+        echo "Deleting local $branch_name branch...";
         git branch -D "$branch_name";
-            echo "Deleting remote $branch_name branch...";
+        echo "Deleting remote $branch_name branch...";
         git push origin --delete "$branch_name";
-            echo "Your current branches are:";
-            git branch -a;
+	# Updates all local branch references.
+        git remote prune origin;
+        echo "Your current branches are:";
+        git branch -a;
     else
         echo "Usage: git-delete-branch <branch_name>"
     fi
