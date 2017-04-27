@@ -40,6 +40,7 @@ alias enalia='cd /var/www/html/vhosts/enalia/public_html/';
 alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/enalia/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
+alias karma='su va -c "npm run test:karma"';
 
 # Git stuff:
 alias gc='git commit --signoff -m ';
