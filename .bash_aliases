@@ -18,10 +18,11 @@ if [[ -f ~/git-completion.bash ]]; then
 fi
 
 # Aliases
-alias phpstorm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
+alias storm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
 alias pycharm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PyCharm/bin/pycharm.sh';
 alias localhost='cd /var/www/html';
-alias permissions='sudo chown -R www-data:www-data ../public_html && sudo chmod -R 777 sites/default/files';
+alias setPermissionsToApacheUser='sudo chown -R www-data:www-data ../public_html && sudo chmod -R 777 sites/default/files';
+alias setPermissionsForFilesFolders='find ./ -type d -exec chmod 775 {} \; find ./ -type f -exec chmod 644 {} \;'
 
 alias tsini='cd /var/www/html/vhosts/tsinikopoulos/public_html/';
 alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
@@ -183,13 +184,6 @@ function disk-usage() {
         echo "Disk usage ($(echo $disk_usage | awk '{ print $1 }')): $(echo $disk_usage | awk '{ print $5 }').";
         # echo "Disk usage ($(df | head -n 2 | tail -n 1 | awk '{ print $1 }')): $(df | head -n 2 | tail -n 1 | awk '{ print $5 }').";
     fi
-}
-
-function fix-permissions() {
-    # Directories.
-    find . -type d -exec chmod 775 {} \;
-    # Files.
-    find . -type f -exec chmod 644 {} \;
 }
 
 function docker-clean() {
