@@ -125,6 +125,8 @@ function git-delete-branch() {
         git branch -D "$branch_name";
         echo "Deleting remote $branch_name branch...";
         git push origin --delete "$branch_name";
+        # If the develop branch is available switch to it.
+        git checkout develop > /dev/null;
 	# Updates all local branch references.
         git remote prune origin;
         echo "Your current branches are:";
