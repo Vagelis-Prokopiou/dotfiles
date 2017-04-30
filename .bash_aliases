@@ -118,6 +118,7 @@ function git-patch-formatted() {
 # Delete local and remote branch.
 # Delete local and remote branch.
 function git-delete-branch() {
+    # The "git branch -rd origin/<branchName>" removed the local branch reference, when all other failed.
     if [[ $1 ]]; then
         git checkout master > /dev/null;
         branch_name="$1";
