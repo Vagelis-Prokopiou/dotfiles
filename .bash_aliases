@@ -46,13 +46,13 @@ alias karma='su va -c "npm run test:karma"';
 # Git stuff:
 alias gc='git commit --signoff -m ';
 # alias gl='git log --pretty=format:"%h, %ar: %s"'
-alias gl='git log --oneline';
+alias gl='clear && git log --oneline';
 alias gcf='git checkout -- ';
-alias gs='git status';
-alias gba='git branch --all';
-alias grh='git reset --hard';
+alias gs='clear && git status';
+alias gba='clear && git branch --all';
+alias grh='clear && git reset --hard';
 alias ga='git add ';
-alias git-show-tracked-files='git ls-tree --full-tree -r --name-only HEAD';
+alias git-show-tracked-files='clear && git ls-tree --full-tree -r --name-only HEAD';
 alias gstf='git-show-tracked-files';
 
 # Postgresql
@@ -60,6 +60,7 @@ alias 'psql'='sudo -u postgres psql';
 
 # Fix the '^M' in git diffs. See: http://stackoverflow.com/questions/1889559/git-diff-to-ignore-m
 function git-fix-line-endings() {
+	clear;
     git config --global core.autocrlf true;
     git rm --cached -r .;
     git diff --cached --name-only -z | xargs -0 git add;
@@ -69,6 +70,7 @@ function git-fix-line-endings() {
 
 # Show only filenames with differences.
 function git-diff-files() {
+	clear;
     if [[ "$1" ]]; then
     	echo -e "\n*** Show only the filenames of the files with differences ***\n";
 	git diff "$1" | grep -- '--- a/' | sed 's/--- a\///g';
@@ -79,6 +81,7 @@ function git-diff-files() {
 
 # Report from git log.
 function git-log-report() {
+	clear;
     if [[ "$1" ]]; then
         git log --since="$1" --no-merges --date=format:'%Y-%m-%d, %H:%M' --format='%ad: %s.' > report.txt;
         sed -i 's|\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\)\(, \)\([0-9]\{2\}:[0-9]\{2\}\)\(: \)\(.*\)|Date: \1 on \3. Task: \5|g' report.txt;
@@ -92,6 +95,7 @@ function git-log-report() {
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
 function git-diff-master() {
+	clear;
     alias git-show-tracked-files='git ls-tree --full-tree -r --name-only HEAD';
     for file in $(git-show-tracked-files); do
         # Make sure you skip .gitignore.
@@ -102,6 +106,7 @@ function git-diff-master() {
 }
 # Create a formatted git patch.
 function git-patch-formatted() {
+	clear;
     if [[ $1 && $2 ]]; then
         branchName="$1";
         patchName="$2";
@@ -118,6 +123,7 @@ function git-patch-formatted() {
 # Delete local and remote branch.
 # Delete local and remote branch.
 function git-delete-branch() {
+	clear;
     # The "git branch -rd origin/<branchName>" removed the local branch reference, when all other failed.
     if [[ $1 ]]; then
         git checkout master > /dev/null;
