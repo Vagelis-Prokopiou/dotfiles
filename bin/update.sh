@@ -216,10 +216,10 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	sudo aptitude install -y python-gpgme;
 
 	# This fixes the error when using Sublime for git commits && needed for PhpStorm.
-	# sudo apt-get install libcanberra-gtk-module -y;
+	# sudo apt-get install -y libcanberra-gtk-module;
 
 	# Purges.
-	# sudo aptitude purge postgresql* -y;
+	# sudo aptitude purge -y postgresql*;
 
 	# Drivers for AMD GPU.
 	sudo aptitude install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
@@ -247,7 +247,9 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	sudo aptitude install -y linux-headers-$(uname -r);
 
 	# Tool to manipulate images for the web!!!.
-	sudo aptitude install imagemagick -y;
+	sudo aptitude install -y imagemagick;
+
+	sudo aptitude install -y mesa-vdpau-drivers;
 
 	# Hardware info and sensors.
 	# sudo aptitude install -y hardinfo;
@@ -265,12 +267,12 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 
 # Non initial setup.
 else
-	sudo aptitude update -y;
-	sudo aptitude upgrade -y;
-	# sudo aptitude dist-upgrade -y;
-	sudo aptitude autoclean -y;
+	sudo aptitude -y update;
+	sudo aptitude -y upgrade;
+	# sudo aptitude -y dist-upgrade;
+	sudo aptitude -y autoclean;
 	sudo aptitude install -f -y;
-	sudo aptitude clean -y;
+	sudo aptitude -y clean;
 
 	# Update Composer
 	sudo -H composer self-update;
@@ -569,22 +571,22 @@ fi
 # cat ~/.ssh/id_rsa.pub | xclip -sel clip
 
 #### ----- To mount Smba shares #####.
-# sudo aptitude install cifs-utils -y;
+# sudo aptitude install -y cifs-utils;
 
 # All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
-# sudo aptitude install task-print-server -y;
+# sudo aptitude install -y task-print-server;
 
-# aptitude install bum -y; # bootup manager
+# aptitude install -y bum; # bootup manager
 # sudo aptitude install ttf-mscorefonts-installer;
 
 # Includes mysqldbcompare
-# sudo aptitude install mysql-utilities -y;
+# sudo aptitude install -y mysql-utilities;
 
 # Required when installing Python from source.
 # sudo aptitude install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev;
 
 # Needed for digitally signing android apps.
-# sudo aptitude install zipalign -y;
+# sudo aptitude install -y zipalign;
 
 # Record the desktop.
 # sudo aptitude install -y recordmydesktop;
