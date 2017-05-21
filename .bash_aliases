@@ -387,14 +387,13 @@ function web-images() {
 # ffmpef stuff
 function ffmpeg-audio-extract() {
     # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
-    if [[ "$1" && "$2" ]]
+    if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
         outputFile="${2}";
         ffmpeg -i "${inputFile}" -vn -c:a copy "${outputFile}";
     else
         echo "Usage: ffmpeg-audio-extract <inputFile> <outputFile>";
     fi
-
 }
 
 function ffmpeg-concat-files() {
@@ -403,7 +402,7 @@ function ffmpeg-concat-files() {
     # file 'file1'
     # file 'file2'
     # file 'file3'
-    if [[ "$1" && "$2" ]]
+    if [[ "$1" && "$2" ]]; then
         filesList="${1}";
         outputFile="${2}";
         ffmpeg -f concat -i "${filesList}" -c copy "${outputFile}";
