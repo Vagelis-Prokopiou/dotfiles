@@ -383,3 +383,31 @@ function web-images() {
     # Resize to 1200px width and remove metadata (-strip flag).
     for image in *; do convert $image -resize 1200 -strip $image; done;
 }
+
+# ffmpef stuff
+function ffmpeg-audio-extract() {
+    # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
+    if [[ "$1" && "$2" ]]
+        inputFile="${1}";
+        outputFile="${2}";
+        ffmpeg -i "${inputFile}" -vn -c:a copy "${outputFile}";
+    else
+        echo "Usage: ffmpeg-audio-extract <inputFile> <outputFile>";
+    fi
+
+}
+
+function ffmpeg-concat-files() {
+    # See: http://stackoverflow.com/questions/7333232/concatenate-two-mp4-files-using-ffmpeg
+    # filesList.txt format:
+    # file 'file1'
+    # file 'file2'
+    # file 'file3'
+    if [[ "$1" && "$2" ]]
+        filesList="${1}";
+        outputFile="${2}";
+        ffmpeg -f concat -i "${filesList}" -c copy "${outputFile}";
+    else
+        "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
+    fi
+}
