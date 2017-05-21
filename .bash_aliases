@@ -390,7 +390,7 @@ function ffmpeg-audio-extract() {
     if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
         outputFile="${2}";
-        ffmpeg -i "${inputFile}" -vn -c:a copy "${outputFile}";
+        ffmpeg -i "${inputFile}" -vn -acodec copy "${outputFile}";
     else
         echo "Usage: ffmpeg-audio-extract <inputFile> <outputFile>";
     fi
