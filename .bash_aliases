@@ -410,3 +410,12 @@ function ffmpeg-concat-files() {
         "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
     fi
 }
+
+# youtube-dl wrapper
+function youtubeDl-BestQuality() {
+	if [[ "${1}" ]]; then
+		youtube-dl -f bestvideo+bestaudio "${1}";
+	else
+		echo "Usage: youtubeDlBestQuality <URL>";
+	fi	
+}
