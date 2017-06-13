@@ -398,7 +398,7 @@ function ffmpeg-audio-extract() {
     if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
         outputFile="${2}";
-        ffmpeg -i "${inputFile}" -vn -c:a copy "${outputFile}";
+        ffmpeg -i "${inputFile}" -vn -acodec copy "${outputFile}";
     else
         echo "Usage: ffmpeg-audio-extract <inputFile> <outputFile>";
     fi
@@ -417,4 +417,13 @@ function ffmpeg-concat-files() {
     else
         "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
     fi
+}
+
+# youtube-dl wrapper
+function youtubeDl-BestQuality() {
+	if [[ "${1}" ]]; then
+		youtube-dl -f bestvideo+bestaudio "${1}";
+	else
+		echo "Usage: youtubeDlBestQuality <URL>";
+	fi	
 }
