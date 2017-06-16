@@ -22,16 +22,6 @@ alias storm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/Php
 alias pycharm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PyCharm/bin/pycharm.sh';
 alias localhost='cd /var/www/html';
 
-function setPermissions-ToApacheUser() {
-    sudo chown -R www-data:www-data ../public_html;
-    sudo chmod -R 777 sites/default/files;
-}
-
-function setPermissions-ForFilesFolders() {
-    find ./ -type d -exec chmod 775 {} \;
-    find ./ -type f -exec chmod 644 {} \;
-}
-
 alias tsini='cd /var/www/html/vhosts/tsinikopoulos/public_html/';
 alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
@@ -427,3 +417,24 @@ function youtubeDl-BestQuality() {
 		echo "Usage: youtubeDlBestQuality <URL>";
 	fi	
 }
+
+function drush-siteInstall() 
+{
+	# See: https://drushcommands.com/drush-8x/core/site-install/
+	if [[ "$1" ]]; then
+		drush si standard --site-name="$1" --account-pass=admin  --db-url=mysql://root:root@localhost:3306/"$1";
+	else
+		echo "Usage: drush-siteInstall <databaseName>";l
+	fi
+}
+
+function setPermissions-ToApacheUser() {
+    sudo chown -R www-data:www-data ../public_html;
+    sudo chmod -R 777 sites/default/files;
+}
+
+function setPermissions-ForFilesFolders() {
+    find ./ -type d -exec chmod 775 {} \;
+    find ./ -type f -exec chmod 644 {} \;
+}
+
