@@ -438,3 +438,13 @@ function setPermissions-ForFilesFolders() {
     find ./ -type f -exec chmod 644 {} \;
 }
 
+# Test it
+function sed-substitute() 
+{
+    if [[ "$3" ]]; then
+        find . -type f -name "$1" -exec sed -i "s/$2/$3/g" "{}" \;
+    else
+        echo "Usage: sed-substitute <fileType> <sourceString> <targetString>";l
+    fi
+}
+
