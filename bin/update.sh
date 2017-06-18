@@ -230,7 +230,19 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	##############################################
 	# ----- LAMP on Debian.
 	##############################################
-	sudo aptitude -y install apache2 mysql-server mysql-client mysql-workbench php5 php5-mysql libapache2-mod-php5 php5-curl php-pear phpmyadmin php5-xdebug && sudo a2enmod rewrite && sudo service apache2 restart;
+	sudo aptitude -y install apache2;
+	sudo aptitude -y install mysql-server;
+	sudo aptitude -y install mysql-client;
+	sudo aptitude -y install php7.0;
+	sudo aptitude -y install php7.0-mysql;
+	sudo aptitude -y install libapache2-mod-php7.0;
+	sudo aptitude -y install phpmyadmin;
+	sudo aptitude -y install php7.0-xdebug;
+	sudo a2enmod rewrite;
+	sudo service apache2 restart;
+	# sudo aptitude -y install mysql-workbench;
+	# sudo aptitude -y install php-pear;
+	# sudo aptitude -y install php7.0-curl;
 
 	#See: https://www.digitalocean.com/community/tutorials/how-to-set-up-mod_rewrite-for-apache-on-ubuntu-14-04
 	if [ ! -f /etc/apache2/apache2.conf.bak ]; then
