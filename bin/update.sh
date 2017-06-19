@@ -98,25 +98,25 @@ if  $is_initial_install; then
 	############################################
 	# ----- Edit the Debian sources list.
 	############################################
-	echo "deb http://security.debian.org/ jessie/updates main contrib non-free
-	deb-src http://security.debian.org/ jessie/updates main contrib non-free
+	echo "deb http://security.debian.org/ stretch/updates main contrib non-free
+	deb-src http://security.debian.org/ stretch/updates main contrib non-free
 
-	deb http://http.debian.net/debian jessie-backports main
+	deb http://http.debian.net/debian stretch-backports main
 
-	# deb https://apt.dockerproject.org/repo/ debian-jessie main
-	# deb-src https://apt.dockerproject.org/repo/ debian-jessie main
+	# deb https://apt.dockerproject.org/repo/ debian-stretch main
+	# deb-src https://apt.dockerproject.org/repo/ debian-stretch main
 
-	# deb ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
-	# deb-src ftp://ftp.gr.debian.org/debian/ jessie main contrib non-free
+	# deb ftp://ftp.gr.debian.org/debian/ stretch main contrib non-free
+	# deb-src ftp://ftp.gr.debian.org/debian/ stretch main contrib non-free
 
-	# deb ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
-	# deb-src ftp://ftp.gr.debian.org/debian/ jessie-updates main contrib non-free
+	# deb ftp://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
+	# deb-src ftp://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
 
 	# Germany
-	 deb ftp://ftp.de.debian.org/debian/ jessie main contrib non-free
-	 deb-src ftp://ftp.de.debian.org/debian/ jessie main contrib non-free
-	 deb ftp://ftp.de.debian.org/debian/ jessie-updates main contrib non-free
-	 deb-src ftp://ftp.de.debian.org/debian/ jessie-updates main contrib non-free
+	 deb ftp://ftp.de.debian.org/debian/ stretch main contrib non-free
+	 deb-src ftp://ftp.de.debian.org/debian/ stretch main contrib non-free
+	 deb ftp://ftp.de.debian.org/debian/ stretch-updates main contrib non-free
+	 deb-src ftp://ftp.de.debian.org/debian/ stretch-updates main contrib non-free
     # Germany" > /etc/apt/sources.list;
 
 	# Add va to sudoers.
@@ -282,9 +282,13 @@ else
 	sudo aptitude -y update;
 	sudo aptitude -y upgrade;
 	# sudo aptitude -y dist-upgrade;
-	sudo aptitude -y autoclean;
-	sudo aptitude install -f -y;
+	sudo apt-get -y autoremove;
+	sudo apt-get -y check;
 	sudo aptitude -y clean;
+	sudo aptitude -y autoclean;
+	sudo aptitude install -y -f;
+	# Check for broken package(s).
+	sudo dpkg --audit;
 
 	# Update Composer
 	sudo -H composer self-update;
