@@ -367,14 +367,20 @@ function bitbucket-clone-dev-sites() {
     done
 }
 
-function LAMP() {
-    sudo aptitude -y install apache2;
-    sudo aptitude -y install mysql-server mysql-client;
-    # sudo aptitude -y install mysql-workbench
-    sudo aptitude -y install php5 php5-mysql libapache2-mod-php5 php5-curl php5-xdebug php-pear;
-    sudo aptitude -y install phpmyadmin
-    sudo a2enmod rewrite;
-    sudo service apache2 restart;
+function hard-reset-LAMP()
+{
+	# Purge the prvious installation.
+	sudo apt-get -y purge apache2*;
+	sudo apt-get -y purge php*;
+	sudo rm -r /etc/apache2/;
+	sudo rm -r /etc/php/;
+	sudo rm -r /var/lib/php/;
+	sudo apt-get -y autoremove;
+
+	# Install.
+	sudo apt-get install -y php7.0 php7.0-mysql;
+	sudo apt-get install -y apache2 apache2-mod-php7.0;
+	sudo apt-get install -y phpmyadmin;
 }
 
 function web-images() {
@@ -415,10 +421,10 @@ function youtubeDl-BestQuality() {
 		youtube-dl -f bestvideo+bestaudio "${1}";
 	else
 		echo "Usage: youtubeDlBestQuality <URL>";
-	fi	
+	fi
 }
 
-function drush-siteInstall() 
+function drush-siteInstall()
 {
 	# See: https://drushcommands.com/drush-8x/core/site-install/
 	if [[ "$1" ]]; then
@@ -439,7 +445,7 @@ function setPermissions-ForFilesFolders() {
 }
 
 # Test it
-function sed-substitute() 
+function sed-substitute()
 {
     if [[ "$3" ]]; then
         find . -type f -name "$1" -exec sed -i "s/$2/$3/g" "{}" \;
