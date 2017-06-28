@@ -101,17 +101,6 @@ if  $is_initial_install; then
 	echo "deb http://security.debian.org/ stretch/updates main contrib non-free
 	deb-src http://security.debian.org/ stretch/updates main contrib non-free
 
-	deb http://http.debian.net/debian stretch-backports main
-
-	# deb https://apt.dockerproject.org/repo/ debian-stretch main
-	# deb-src https://apt.dockerproject.org/repo/ debian-stretch main
-
-	# deb ftp://ftp.gr.debian.org/debian/ stretch main contrib non-free
-	# deb-src ftp://ftp.gr.debian.org/debian/ stretch main contrib non-free
-
-	# deb ftp://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
-	# deb-src ftp://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
-
 	# Germany
 	 deb ftp://ftp.de.debian.org/debian/ stretch main contrib non-free
 	 deb-src ftp://ftp.de.debian.org/debian/ stretch main contrib non-free
@@ -231,8 +220,8 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	# ----- LAMP on Debian.
 	##############################################
 	sudo aptitude -y install apache2;
-	sudo aptitude -y install mysql-server;
-	sudo aptitude -y install mysql-client;
+	sudo aptitude -y install mariadb-server;
+	sudo aptitude -y install mariadb-client;
 	sudo aptitude -y install php7.0;
 	sudo aptitude -y install php7.0-mysql;
 	sudo aptitude -y install libapache2-mod-php7.0;
@@ -240,6 +229,9 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	sudo aptitude -y install php7.0-xdebug;
 	sudo a2enmod rewrite;
 	sudo service apache2 restart;
+	sudo apt --fix-broken install;
+	# sudo aptitude -y install mysql-server;
+	# sudo aptitude -y install mysql-client;
 	# sudo aptitude -y install mysql-workbench;
 	# sudo aptitude -y install php-pear;
 	# sudo aptitude -y install php7.0-curl;
