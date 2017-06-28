@@ -2,6 +2,7 @@ user="va";
 user_home="/home/${user}";
 
 # GO stuff.
+mkdir ${user_home}/go/ 2> /dev/null;
 export PATH=$PATH:/usr/local/go/bin;
 export GOPATH=$user_home/go;
 export PATH=$PATH:$GOPATH/bin;
@@ -445,12 +446,13 @@ function setPermissions-ForFilesFolders() {
 }
 
 # Test it
-function sed-substitute()
+function string-substitute()
 {
-    if [[ "$3" ]]; then
-        find . -type f -name "$1" -exec sed -i "s/$2/$3/g" "{}" \;
+    if [[ -n "${3}" ]]; then
+        find . -type f -name "${1}" -exec sed -i "s/${2}/${3}/g" "{}" \;;
     else
-        echo "Usage: sed-substitute <fileType> <sourceString> <targetString>";l
+        echo "Usage: sed-substitute <fileType> <sourceString> <targetString>";
+        clear && ls -F --color=auto --show-control-chars --color=auto -lAh;
     fi
 }
 
