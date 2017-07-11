@@ -98,15 +98,14 @@ if  $is_initial_install; then
 	############################################
 	# ----- Edit the Debian sources list.
 	############################################
-	echo "deb http://security.debian.org/ stretch/updates main contrib non-free
-	deb-src http://security.debian.org/ stretch/updates main contrib non-free
+	echo "deb http://ftp.gr.debian.org/debian/ stretch main contrib non-free
+deb-src http://ftp.gr.debian.org/debian/ stretch main contrib non-free
 
-	# Germany
-	 deb ftp://ftp.de.debian.org/debian/ stretch main contrib non-free
-	 deb-src ftp://ftp.de.debian.org/debian/ stretch main contrib non-free
-	 deb ftp://ftp.de.debian.org/debian/ stretch-updates main contrib non-free
-	 deb-src ftp://ftp.de.debian.org/debian/ stretch-updates main contrib non-free
-    # Germany" > /etc/apt/sources.list;
+deb http://security.debian.org/debian-security stretch/updates main contrib non-free
+deb-src http://security.debian.org/debian-security stretch/updates main contrib non-free
+
+deb http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
+deb-src http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free" > /etc/apt/sources.list;
 
 	# Add va to sudoers.
 	echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
@@ -153,6 +152,7 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	# aptitude install -y git git-flow;
 	aptitude install -y qalculate;
 	aptitude install -y qbittorrent;
+	aptitude install -y apt-transport-https;
 	# Delete all Gnome games.
 	sudo aptitude purge -y gnome-nibbles aisleriot gnome-mahjongg gnome-mines gnome-sudoku gnome-chess gnome-robots gnome-tetravex inkscape;
 
