@@ -85,3 +85,4 @@ workspace/
 VirtualBox VMs/
 go
 projects
+.vscode/
