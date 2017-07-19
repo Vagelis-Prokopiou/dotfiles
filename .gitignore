@@ -86,3 +86,4 @@ VirtualBox VMs/
 go
 projects
 .vscode/
+.openshot/

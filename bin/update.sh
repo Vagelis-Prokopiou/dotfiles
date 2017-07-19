@@ -12,6 +12,7 @@ user_home="/home/${user}";
 downloads_dir="/home/${user}/Downloads";
 root_home='/root';
 is_initial_install=false;
+# is_initial_install=true;
 
 # Drush.
 function installDrush() {
@@ -98,17 +99,17 @@ if  $is_initial_install; then
 	############################################
 	# ----- Edit the Debian sources list.
 	############################################
-	echo "deb http://ftp.gr.debian.org/debian/ stretch main contrib non-free
-deb-src http://ftp.gr.debian.org/debian/ stretch main contrib non-free
+# 	echo "deb http://ftp.gr.debian.org/debian/ stretch main contrib non-free
+# deb-src http://ftp.gr.debian.org/debian/ stretch main contrib non-free
 
-deb http://security.debian.org/debian-security stretch/updates main contrib non-free
-deb-src http://security.debian.org/debian-security stretch/updates main contrib non-free
+# deb http://security.debian.org/debian-security stretch/updates main contrib non-free
+# deb-src http://security.debian.org/debian-security stretch/updates main contrib non-free
 
-deb http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
-deb-src http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free" > /etc/apt/sources.list;
+# deb http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
+# deb-src http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free" > /etc/apt/sources.list;
 
 	# Add va to sudoers.
-	echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
+	# echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
 
 	cp /etc/fstab /etc/fstab.bak;
 	echo "
@@ -122,15 +123,15 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	# Instructions for Greek spell checking:
 	# https://www.sublimetext.com/docs/3/spell_checking.html
 	# https://github.com/titoBouzout/Dictionaries/blob/master/Greek.dic
-	# Sublime 3 (3126)
-	wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb && dpkg -i sublime*.deb -y;
-	# Install Monokai-Midnight as theme: http://colorsublime.com/theme/Monokai-Midnight
-    wget 'http://colorsublime.com/theme/download/61775';
-    sudo mkdir -p /root/.config/sublime-text-3/Packages/Themes;
-    sudo mkdir -p ${user_home}/.config/sublime-text-3/Packages/Themes;
-    sudo cp 61775 /root/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
-    sudo cp 61775 ${user_home}/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
-    sudo rm 61775;
+	# # Sublime 3 (3126)
+	# wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb && dpkg -i sublime*.deb -y;
+	# # Install Monokai-Midnight as theme: http://colorsublime.com/theme/Monokai-Midnight
+ #    wget 'http://colorsublime.com/theme/download/61775';
+ #    sudo mkdir -p /root/.config/sublime-text-3/Packages/Themes;
+ #    sudo mkdir -p ${user_home}/.config/sublime-text-3/Packages/Themes;
+ #    sudo cp 61775 /root/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
+ #    sudo cp 61775 ${user_home}/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
+ #    sudo rm 61775;
 
 
 	############################################
@@ -154,10 +155,11 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	aptitude install -y qbittorrent;
 	aptitude install -y apt-transport-https;
 	# Delete all Gnome games.
-	sudo aptitude purge -y gnome-nibbles aisleriot gnome-mahjongg gnome-mines gnome-sudoku gnome-chess gnome-robots gnome-tetravex inkscape;
+	sudo aptitude purge gnome-games;
+	sudo aptitude purge -y inkscape;
 
 	# Google Chrome
-	# wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
 	sudo dpkg -i --force-depends ${downloads_dir}/google-chrome-stable_current_amd64.deb;
 	sudo apt-get install -y -f;
 	sudo rm ${downloads_dir}/google-chrome-stable_current_amd64.deb;
@@ -199,19 +201,19 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	# sudo aptitude install -y libreoffice-pdfimport;
 
 	# Nautilus plugin for opening terminals in arbitrary paths.
-	sudo aptitude install -y nautilus-open-terminal;
+	# sudo aptitude install -y nautilus-open-terminal;
 
 	# This is needed for Dropbox.
 	sudo aptitude install -y python-gpgme;
 
 	# This fixes the error when using Sublime for git commits && needed for PhpStorm.
-	# sudo apt-get install -y libcanberra-gtk-module;
+	sudo apt-get install -y libcanberra-gtk-module;
 
 	# Purges.
 	# sudo aptitude purge -y postgresql*;
 
 	# Drivers for AMD GPU.
-	sudo aptitude install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
+	# sudo aptitude install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
 
 	# Create a template txt, for use in right click context.
 	touch ${user_home}/Templates/new_file.txt;
@@ -230,20 +232,20 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	sudo a2enmod rewrite;
 	sudo service apache2 restart;
 	sudo apt --fix-broken install;
-	# sudo aptitude -y install mysql-server;
-	# sudo aptitude -y install mysql-client;
-	# sudo aptitude -y install mysql-workbench;
-	# sudo aptitude -y install php-pear;
-	# sudo aptitude -y install php7.0-curl;
 
-	#See: https://www.digitalocean.com/community/tutorials/how-to-set-up-mod_rewrite-for-apache-on-ubuntu-14-04
+	# If not able to login to phpmyadmin with root, run the following query:
+	# use mysql;
+	# update user set password=PASSWORD("NEWPASSWORD") where User='root';
+	# GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root';
+	# FLUSH PRIVILEGES;
+
 	if [ ! -f /etc/apache2/apache2.conf.bak ]; then
     	sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak;
 		sudo sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf;
 	fi
 
 	# For right-click archive extraction.
-	sudo aptitude install -y nemo-fileroller;
+	# sudo aptitude install -y nemo-fileroller;
 
 	# For Keepass2 auto-typing.
 	# command -v > /dev/null 2>&1 xdotool || sudo aptitude install -y xdotool;
@@ -251,9 +253,9 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	sudo aptitude install -y linux-headers-$(uname -r);
 
 	# Tool to manipulate images for the web!!!.
-	sudo aptitude install -y imagemagick;
+	# sudo aptitude install -y imagemagick;
 
-	sudo aptitude install -y mesa-vdpau-drivers;
+	# sudo aptitude install -y mesa-vdpau-drivers;
 
 	# Hardware info and sensors.
 	# sudo aptitude install -y hardinfo;
@@ -263,14 +265,19 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 
 	# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
 
-	sudo installDrush;
-	sudo installComposer;
-	sudo installDrupalConsole;
-	sudo installNodeJS;
-	installNodeModules;
+	installDrush;
+	installComposer;
+	installDrupalConsole;
+	installNodeJS;
+	# installNodeModules;
 
 # Non initial setup.
 else
+	# installDrush;
+	# installComposer;
+	# installDrupalConsole;
+	# installNodeJS;
+
 	sudo aptitude -y update;
 	sudo aptitude -y upgrade;
 	# sudo aptitude -y dist-upgrade;
@@ -294,185 +301,6 @@ fi
 
 sudo service bluetooth stop;
 
-# All the packages for installation from source.
-function software-update() {
-	# Install the latest Vim from source.
-	function vim-update() {
-		# Make sure Vim is installed.
-		command -v vim > /dev/null || sudo aptitude install -y vim vim-runtime;
-
-		# curl GitHub for the latest version.
-		echo -e "\nGetting the latest Vim...\n";
-		vim_latest=$(curl https://github.com/vim/vim/releases | \
-		grep '<span class="tag-name">' | \
-		sed 's|<span class="tag-name">v||;' | \
-		sed 's|</span>||' | \
-		head -n 1 | \
-		sed 's|[[:space:]]||g');
-
-		# Get the installed version.
-		vim_installed_version=$(vim --version | head -n 1 | awk '{ print $5 }');
-		vim_installed_tag=$(vim --version | head -n 2 | tail -n 1 | awk '{ print $3 }' | sed 's|^[0-9]-|0|g');
-
-		if [[ "$vim_latest" == "${vim_installed_version}.${vim_installed_tag}" ]]; then
-			echo "-------------------------------------------------";
-			echo "     Latest Vim (${vim_installed_version}.${vim_installed_tag}) already installed.";
-			echo "-------------------------------------------------";
-		else
-			# Build latest Vim.
-			# Needed for compiling Vim from source.
-			sudo aptitude install -y libncurses5-dev;
-
-			cd "/media/va/52AF7EBE182A63E2/src" 2> /dev/null || mkdir "/media/va/52AF7EBE182A63E2/src";
-
-			# Download latest Vim.
-			(git clone https://github.com/vim/vim.git && cd "/media/va/52AF7EBE182A63E2/src/vim/src") || cd "/media/va/52AF7EBE182A63E2/src/vim/src" && git reset --hard && git pull;
-
-			# Configure and install.
-			./configure > /dev/null;
-			make > /dev/null;
-			# make distclean > /dev/null;
-			sudo make install > /dev/null;
-			# sudo checkinstall > /dev/null;
-
-			# Get the installed version again.
-			vim_installed_version=$(vim --version | head -n 1 | awk '{ print $5 }');
-			vim_installed_tag=$(vim --version | head -n 2 | tail -n 1 | awk '{ print $3 }' | sed 's|^[0-9]-|0|g');
-			echo "--------------------------------------------------------------------------------";
-			echo "     Latest Vim (${vim_installed_version}.${vim_installed_tag}) successfully installed. ";
-			echo "--------------------------------------------------------------------------------";
-
-			# Cleanup.
-			# cd "/media/va/52AF7EBE182A63E2/src";
-			# sudo rm -rf vim/;
-		fi
-	}
-
-	# Install the latest Git from source.
-	function git-update() {
-		# Make sure Git is installed.
-		command -v git > /dev/null || sudo aptitude install -y git;
-
-		echo -e "\nGetting the latest Git...\n";
-		git_latest=$(curl 'https://github.com/git/git/releases' | \
-		grep '<span class="tag-name">' | \
-		sed 's|<span class="tag-name">v||' | \
-		sed 's|</span>||' | \
-		head -n 1 | \
-		sed 's|[[:space:]]||g');
-
-		git_installed=$(git --version | awk '{print $3}' | sed 's|\(.*\)\([.a-z0-9]\{13\}\)|\1|; s/\.rc/-rc/');
-
-		if [[ "$git_latest" = "$git_installed" ]]; then
-			echo "-------------------------------------------------";
-			echo "     Latest Git ($git_installed) already installed.";
-			echo "-------------------------------------------------";
-		else
-			# Build the latest Git.
-			# Needed for compiling Git from source.
-			sudo aptitude install -y zlib1g-dev > /dev/null;
-			sudo aptitude install -y libcurl4-openssl-dev > /dev/null;
-			sudo aptitude install -y libssl-dev > /dev/null;
-			sudo aptitude install libexpat1-dev > /dev/null;
-			# fatal error: expat.h: No such file or directory
-
-			cd "/media/va/52AF7EBE182A63E2/src" 2> /dev/null || mkdir "/media/va/52AF7EBE182A63E2/src";
-
-			# Download the latest Git.
-			(git clone git://git.kernel.org/pub/scm/git/git.git 2> /dev/null && cd "/media/va/52AF7EBE182A63E2/src/git/") || cd "/media/va/52AF7EBE182A63E2/src/git/" && git reset --hard && git pull;
-
-			# Configure and install.
-			make prefix=/usr > /dev/null;
-			sudo make prefix=/usr install > /dev/null;
-
-			# Get the installed version again.
-			git_installed=$(git  --version | \
-			awk '{print $3}' | \
-			sed 's|\(.*\)\([.a-z0-9]\{13\}\)|\1|');
-			echo "--------------------------------------------------------------------------------";
-			echo "     Latest Git (${git_installed}) successfully installed. ";
-			echo "--------------------------------------------------------------------------------";
-
-			# Cleanup.
-			# cd "/media/va/52AF7EBE182A63E2/src";
-			# sudo rm -rf git/;
-
-
-			# Continue with Git Flow since the Git binary gets overridden.
-			cd "/media/va/52AF7EBE182A63E2/src";
-			curl -OL https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh;
-			sudo bash ./gitflow-installer.sh;
-			rm -rf ./gitflow*;
-		fi
-	}
-
-	function sed-update() {
-		# Necessary for ACL support.
-		sudo aptitude install -y libacl1-dev;
-
-		sed_newest_version=`curl 'https://ftp.gnu.org/gnu/sed/?C=M;O=D' | \
-		grep 'a href="sed-' | \
-		head -n 1 | \
-		sed 's|\(.*\)\(sed\)|\2|g; s|xz\.sig.*|xz|g'`;
-
-		sed_newest_version_number=$( echo "${sed_newest_version}" | sed 's/sed-//g; s/\.tar.*//g' );
-
-		sed_url="https://ftp.gnu.org/gnu/sed/${sed_newest_version}";
-
-		sed_installed_version=$(sed --version | head -n 1 | awk '{ print $4 }');
-
-		echo "sed_newest_version: $sed_newest_version";
-		echo "sed_newest_version_number: $sed_newest_version_number";
-		echo "sed_installed_version: $sed_installed_version";
-
-		if [[ "$sed_newest_version_number" == "$sed_installed_version" ]]; then
-			echo -e "\nThe newest sed is already installed.\n";
-		else
-			echo -e "Installing latest sed... Please, wait...";
-			cd "/media/va/52AF7EBE182A63E2/src" 2> /dev/null || mkdir "/media/va/52AF7EBE182A63E2/src" && cd "/media/va/52AF7EBE182A63E2/src";
-			curl -O $sed_url;
-			tar -xf sed-*.tar.xz;
-			cd sed-*/;
-			./configure > /dev/null;
-			make > /dev/null;
-			sudo make install > /dev/null;
-			cd ../;
-			rm -rf sed*;
-			echo -e "\nThe newest sed has been installed.\n";
-		fi
-	}
-
-	function findutils-update() {
-		findutils_newest_version=`curl 'https://ftp.gnu.org/pub/gnu/findutils/?C=M;O=D' | \
-		grep 'a href="findutils-' | \
-		head -n 1 | \
-		sed 's|\(.*\)\(findutils\)|\2|g; s|gz\.sig.*|gz|g'`;
-
-		findutils_newest_version_number=$( echo "${findutils_newest_version}" | sed 's/findutils-//g; s/\.tar.gz//g' );
-
-		findutils_url="https://ftp.gnu.org/pub/gnu/findutils/${findutils_newest_version}";
-
-		findutils_installed_version=$(find --version | head -n 1 | awk '{ print $4 }');
-
-		echo "findutils_newest_version: $findutils_newest_version";
-		echo "findutils_newest_version_number: $findutils_newest_version_number";
-		echo "findutils_installed_version: $findutils_installed_version";
-
-		if [[ "$findutils_newest_version_number" == "$findutils_installed_version" ]]; then
-			echo -e "\nThe newest findutils are already installed.\n";
-		else
-			echo "Installing";
-		fi
-	}
-
-	# Start the updates.
-	vim-update;
-	git-update;
-	sed-update;
-	# findutils-update;
-}
-# software-update;
-
 # Remove all the caches.
 function clear-caches() {
 	sudo rm -rf ${user_home}/drush-backups/*;
@@ -488,11 +316,6 @@ function clear-caches() {
 }
 clear-caches;
 
-#### Remove all unused kernels with 1 command in debian based systems #####.
-# sudo aptitude remove $(dpkg -l|egrep '^ii  linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`);
-
-# To list all installed Linux kernel images, type the following dpkg command:
-# dpkg --list | egrep -i --color 'linux-image|linux-headers'
 
 # http://ubuntuhandbook.org/index.php/2016/05/remove-old-kernels-ubuntu-16-04/
 # List all kernels excluding the current booted:
@@ -502,17 +325,6 @@ if [[ $old_kernels == '' ]]; then
 else
 	echo -e "\nThere are old kernels that need to be taken care of!!!\n";
 fi
-
-
-
-# How To Record and Share Linux Terminal Activity
-# See: http://linoxide.com/tools/record-share-linux-terminal/
-# sudo aptitude install asciinema;
-
-
-# ----- Check all services -----
-# service --status-all;
-# service --status-all | grep '+';
 
 
 # ----- Install Java 8 for PhpStorm -----
