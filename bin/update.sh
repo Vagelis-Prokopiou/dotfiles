@@ -477,12 +477,12 @@ function software-update() {
 function clear-caches() {
 	sudo rm -rf ${user_home}/drush-backups/*;
 	sudo rm -rf /root/drush-backups/*;
-	sudo find /var -iname "*.gz" | grep -v "*.sql.gz" | xargs sudo rm -r;
+	sudo find /var/www -iname "*.gz" | grep -v "*.sql.gz" | xargs sudo rm -r;
 	sudo find /var/www/html -iname ".com.google.Chrome*" | xargs sudo rm -r;
 	sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
-	sudo find /root /home /var "$dir" -ipath "*/.cache/*" -type f -delete;
-	sudo find /root /home /var "$dir" -ipath "*/cache/*" -type f -delete;
-	sudo find /root /home /var "$dir" -ipath "*/tmp/*" -type f -delete;
+	sudo find /root /home /var/www "$dir" -ipath "*/.cache/*" -type f -delete;
+	sudo find /root /home /var/www "$dir" -ipath "*/cache/*" -type f -delete;
+	sudo find /root /home /var/www "$dir" -ipath "*/tmp/*" -type f -delete;
 	sudo find /var/www/ -path "*/devel_themer/*" -delete;
 	sudo find /root /home -name "*.log"  -delete;
 }

@@ -19,6 +19,7 @@ if [[ -f ~/git-completion.bash ]]; then
 fi
 
 # Aliases
+alias code='code --user-data-dir=/tmp';
 alias storm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
 alias pycharm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PyCharm/bin/pycharm.sh';
 alias localhost='cd /var/www/html';
