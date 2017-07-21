@@ -222,12 +222,7 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	# ----- LAMP on Debian.
 	##############################################
 	sudo aptitude -y install apache2;
-	sudo aptitude -y install mariadb-server;
-	sudo aptitude -y install mariadb-client;
-	sudo aptitude -y install php7.0;
-	sudo aptitude -y install php7.0-mysql;
-	sudo aptitude -y install libapache2-mod-php7.0;
-	sudo aptitude -y install phpmyadmin;
+	sudo apt install -y mariadb-server phpmyadmin;
 	sudo aptitude -y install php7.0-xdebug;
 	sudo a2enmod rewrite;
 	sudo service apache2 restart;
@@ -238,6 +233,8 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	# update user set password=PASSWORD("NEWPASSWORD") where User='root';
 	# GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root';
 	# FLUSH PRIVILEGES;
+
+	# sudo apt remove --purge -y mariadb* php* && sudo apt autoremove -y && sudo apt install -y mariadb-server phpmyadmin;
 
 	if [ ! -f /etc/apache2/apache2.conf.bak ]; then
     	sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak;
@@ -307,14 +304,14 @@ function clear-caches() {
 	sudo rm -rf /root/drush-backups/*;
 	sudo find /var/www -iname "*.gz" | grep -v "*.sql.gz" | xargs sudo rm -r;
 	sudo find /var/www/html -iname ".com.google.Chrome*" | xargs sudo rm -r;
-	sudo find /var -type f -name '*log' | while read file; do echo -n > "$file"; done;
+	sudo find /var/www/ -type f -name '*log' | while read file; do echo -n > "$file"; done;
 	sudo find /root /home /var/www "$dir" -ipath "*/.cache/*" -type f -delete;
 	sudo find /root /home /var/www "$dir" -ipath "*/cache/*" -type f -delete;
 	sudo find /root /home /var/www "$dir" -ipath "*/tmp/*" -type f -delete;
 	sudo find /var/www/ -path "*/devel_themer/*" -delete;
 	sudo find /root /home -name "*.log"  -delete;
 }
-clear-caches;
+# clear-caches;
 
 
 # http://ubuntuhandbook.org/index.php/2016/05/remove-old-kernels-ubuntu-16-04/
