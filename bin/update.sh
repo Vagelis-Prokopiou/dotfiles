@@ -14,7 +14,22 @@ root_home='/root';
 is_initial_install=false;
 # is_initial_install=true;
 
-# Drush.
+function installTeamviewer()
+{
+	sudo dpkg -i --force-depends ${downloads_dir}/teamviewer*.deb;
+	sudo apt-get install -y -f;
+	teamviewer --daemon start;
+	sudo rm ${downloads_dir}/teamviewer*.deb;
+}
+
+function installViber()
+{
+	sudo aptitude install -y libqt5gui5;
+	sudo dpkg -i ${downloads_dir}/viber.deb;
+	apt --fix-broken install -y;
+	sudo rm ${downloads_dir}/viber.deb;
+}
+
 function installDrush() {
 	# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
 	php -r "readfile('http://files.drush.org/drush.phar');" > drush
@@ -27,7 +42,6 @@ function installDrush() {
 	drush init;
 }
 
-# Composer
 function installComposer() {
 	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 	php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
@@ -36,7 +50,6 @@ function installComposer() {
 	mv composer.phar /usr/local/bin/composer;
 }
 
-# Drupal Console
 function installDrupalConsole() {
 	# php -r "readfile('https://drupalconsole.com/installer');" > drupal.phar;
 	curl -O https://drupalconsole.com/installer;
@@ -45,14 +58,12 @@ function installDrupalConsole() {
 	sudo drupal init;
 }
 
-# NodeJS
 function installNodeJS() {
 	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -;
 	sudo aptitude install -y nodejs;
 }
 
-# Node modules
-function installNodeModules {
+function installNodeModules() {
 	sudo npm install -g \
 	yarn \
 	webpack \
@@ -67,23 +78,6 @@ function installNodeModules {
 	jshint \
 	breakpoint-sass;
 
-	# The latest node-sass that is inside gulp-sass cretates a problem with the compass-mixins.
-	# Install globally the node-sass@3.4.2, and copy it in gulp-sass/node_modules.
-	# sudo npm install -g node-sass@3.4.2;
-	# sudo cp -r /usr/lib/node_modules/node-sass/ /usr/lib/node_modules/gulp-sass/node_modules/;
-	# Remove all the info files of the node modules.
-	# sudo find /usr/lib/node_modules -type f -name '*.info' | xargs sudo rm;
-
-	# ----- Extra node modules -----
-	# gulp-postcss \
-	# lost \
-	# gulp-uncss \
-	# gulp.spritesmith \
-	# gulp-uglify \
-	# gulp-image-optimization \
-	# compass-mixins \
-	# gulp-group-css-media-queries \
-
 	# Delete the .info files.
 	sudo find /usr/lib/node_modules/ -iname "*.info" -exec sudo rm "{}" \+;
 	echo "All *.info files were successfully deleted.";
@@ -92,24 +86,19 @@ function installNodeModules {
 # If it is initlia setup after a fresh install.
 if  $is_initial_install; then
 	############################################
-	# Debian testing repository!!!
-	# deb ftp://ftp.gr.debian.org/debian/ testing main contrib  non-free
-	############################################
-
-	############################################
 	# ----- Edit the Debian sources list.
 	############################################
-# 	echo "deb http://ftp.gr.debian.org/debian/ stretch main contrib non-free
-# deb-src http://ftp.gr.debian.org/debian/ stretch main contrib non-free
+	echo "deb http://ftp.gr.debian.org/debian/ stretch main contrib non-free
+	# deb-src http://ftp.gr.debian.org/debian/ stretch main contrib non-free
 
-# deb http://security.debian.org/debian-security stretch/updates main contrib non-free
-# deb-src http://security.debian.org/debian-security stretch/updates main contrib non-free
+	# deb http://security.debian.org/debian-security stretch/updates main contrib non-free
+	# deb-src http://security.debian.org/debian-security stretch/updates main contrib non-free
 
-# deb http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
-# deb-src http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free" > /etc/apt/sources.list;
+	# deb http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
+	# deb-src http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free" > /etc/apt/sources.list;
 
 	# Add va to sudoers.
-	# echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
+	echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
 
 	cp /etc/fstab /etc/fstab.bak;
 	echo "
@@ -126,18 +115,13 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	# # Sublime 3 (3126)
 	# wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb && dpkg -i sublime*.deb -y;
 	# # Install Monokai-Midnight as theme: http://colorsublime.com/theme/Monokai-Midnight
- #    wget 'http://colorsublime.com/theme/download/61775';
- #    sudo mkdir -p /root/.config/sublime-text-3/Packages/Themes;
- #    sudo mkdir -p ${user_home}/.config/sublime-text-3/Packages/Themes;
- #    sudo cp 61775 /root/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
- #    sudo cp 61775 ${user_home}/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
- #    sudo rm 61775;
+	#    wget 'http://colorsublime.com/theme/download/61775';
+	#    sudo mkdir -p /root/.config/sublime-text-3/Packages/Themes;
+	#    sudo mkdir -p ${user_home}/.config/sublime-text-3/Packages/Themes;
+	#    sudo cp 61775 /root/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
+	#    sudo cp 61775 ${user_home}/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
+	#    sudo rm 61775;
 
-
-	############################################
-	# ----- Install Sublime Text 3 package manager
-	############################################
-	# Visit this url: https://packagecontrol.io/installation
 
 	############################################
 	# ----- Various maintenance tasks.
@@ -176,22 +160,6 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	sudo sudo dpkg -i --force-depends ${downloads_dir}/*dropbox*.deb;
 	sudo apt-get install -y -f;
 	sudo rm ${downloads_dir}/*dropbox*.deb;
-
-	# Viber
-	sudo aptitude install -y libqt5gui5;
-	# wget 'http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb';
-	sudo dpkg -i ${downloads_dir}/viber.deb;
-	sudo rm ${downloads_dir}/viber.deb;
-
-	# Teamviewer
-	# See: https://www.teamviewer.com/en/help/363-how-do-i-install-teamviewer-on-my-linux-distribution
-	# See: https://www.linuxbabe.com/desktop-linux/install-teamviewer-debian-8
-	# wget 'https://downloadus2.teamviewer.com/download/version_12x/teamviewer_12.0.71510_i386.deb';
-	sudo dpkg -i ${downloads_dir}/teamviewer*.deb;
-	# sudo dpkg -i --force-depends "teamviewer*.deb";
-	sudo apt-get install -y -f;
-	# teamviewer --daemon start;
-	sudo rm ${downloads_dir}/teamviewer*.deb;
 
 	# Youtube-dl.
 	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
@@ -245,7 +213,7 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	# sudo aptitude install -y nemo-fileroller;
 
 	# For Keepass2 auto-typing.
-	# command -v > /dev/null 2>&1 xdotool || sudo aptitude install -y xdotool;
+	command -v > /dev/null 2>&1 xdotool || sudo aptitude install -y xdotool;
 
 	sudo aptitude install -y linux-headers-$(uname -r);
 
@@ -265,8 +233,10 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	installDrush;
 	installComposer;
 	installDrupalConsole;
-	installNodeJS;
+	# installNodeJS;
 	# installNodeModules;
+	# installViber;
+	# installTeamviewer;
 
 # Non initial setup.
 else
@@ -274,6 +244,9 @@ else
 	# installComposer;
 	# installDrupalConsole;
 	# installNodeJS;
+	# installNodeModules;
+	# installViber;
+	# installTeamviewer;
 
 	sudo aptitude -y update;
 	sudo aptitude -y upgrade;
@@ -334,12 +307,6 @@ fi
 # aptitude install openjdk-8-jdk
 # sudo update-alternatives --config java
 
-
-# ----- Enable mssql in PHP. -----
-# See: https://coderwall.com/p/21uxeq/connecting-to-a-mssql-server-database-with-php-on-ubuntu-debian
-# sudo aptitude install freetds-common freetds-bin unixodbc php5-sybase;
-# sudo service apache2 restart;
-
 # ----- Install these before installing Virtualbox -----
 # sudo aptitude install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
 
@@ -357,11 +324,6 @@ fi
  #sudo aptitude update && aptitude install firmware-iwlwifi;
  #modprobe -r iwlwifi ; modprobe iwlwifi;
 
-############################################
-# ----- Install Keepass && Keefox
-############################################
-# sudo aptitude install keepass2;
-# Install the 'CKP' extension for the Chrome.
 
 ##############################################
 # ----- Mount a LAN location to my filesystem.
@@ -369,15 +331,6 @@ fi
 # mount -t cifs //target_ip_address/name_of_folder_in_samba.conf /local_mount_location -o user=root
 # mount -t cifs //server/www /mnt/smb -o user=root
 # mount -t cifs //192.168.1.75/www /mnt/smb -o user=root
-
-##############################################
-# ----- Various.
-##############################################
-# Kill xserver.
-# CTRL+ALT+F2 login as root
-# /etc/init.d/gdm stop; install the drivers
-# /etc/init.d/gdm start; and I'm back in business.
-
 
 ##############################################
 # ----- Create ssh key pair
@@ -396,25 +349,9 @@ fi
 # aptitude install -y bum; # bootup manager
 # sudo aptitude install ttf-mscorefonts-installer;
 
-# Includes mysqldbcompare
-# sudo aptitude install -y mysql-utilities;
-
-# Required when installing Python from source.
-# sudo aptitude install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev;
-
 # Needed for digitally signing android apps.
 # sudo aptitude install -y zipalign;
 
 # Record the desktop.
 # sudo aptitude install -y recordmydesktop;
 # To record the sound see https://ubuntuforums.org/showthread.php?t=1118019
-
-# ----- Database error after updating to 5.7 from the MySQL repo. -----
-# Error
-# SQL query: Edit Edit
-# SHOW VARIABLES LIKE 'character_set_results'
-# MySQL said: Documentation
-#1146 - Table 'performance_schema.session_variables' doesn't exist
-#1682 - Native table 'performance_schema'.'session_variables' has the wrong structure
-# Solution: Run "sudo mysql_upgrade -u root -p --force && sudo service mysql restart";
-# ----- Database error after updating to 5.7 from the MySQL repo (end). -----
