@@ -148,13 +148,6 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	sudo apt-get install -y -f;
 	sudo rm ${downloads_dir}/google-chrome-stable_current_amd64.deb;
 
-	# Skype
-	sudo dpkg --add-architecture i386 && sudo aptitude update;
-	sudo aptitude install -y libc6:i386 libqt4-dbus:i386 libqt4-network:i386 libqt4-xml:i386 libqtcore4:i386 libqtgui4:i386 libqtwebkit4:i386 libstdc++6:i386 libx11-6:i386 libxext6:i386 libxss1:i386 libxv1:i386 libssl1.0.0:i386 libpulse0:i386 libasound2-plugins:i386;
-	# wget http://www.skype.com/go/getskype-linux-deb;
-	sudo dpkg -i ${downloads_dir}/skype*.deb;
-	sudo rm ${downloads_dir}/skype*.deb;
-
 	# Dropbox
 	# wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
 	sudo sudo dpkg -i --force-depends ${downloads_dir}/*dropbox*.deb;
