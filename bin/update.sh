@@ -102,9 +102,9 @@ if  $is_initial_install; then
 
 	cp /etc/fstab /etc/fstab.bak;
 	echo "
-# The following is the disk that has the torrents folder.
-UUID=1A52BBE952BBC7B1   /media/va/local_disk   ntfs    auto,user,exec,rw,suid,noatime,relatime   0   0
-UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,suid,noatime,relatime    0   0" 	>> /etc/fstab;
+	# The following is the disk that has the torrents folder.
+	UUID=1A52BBE952BBC7B1   /media/va/local_disk   ntfs    auto,user,exec,rw,suid,noatime,relatime   0   0
+	UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,suid,noatime,relatime    0   0" 	>> /etc/fstab;
 
 	############################################
 	# ----- Install Sublime Text 3
@@ -138,6 +138,7 @@ UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,s
 	aptitude install -y qalculate;
 	aptitude install -y qbittorrent;
 	aptitude install -y apt-transport-https;
+	aptitude install -y vim;
 	# Delete all Gnome games.
 	sudo aptitude purge gnome-games;
 	sudo aptitude purge -y inkscape;
