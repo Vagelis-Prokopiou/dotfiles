@@ -396,9 +396,33 @@ function ffmpeg-audio-extract() {
     if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
         outputFile="${2}";
-        ffmpeg -i "${inputFile}" -vn -acodec copy "${outputFile}";
+        ffmpeg -i ${inputFile} -vn -acodec copy ${outputFile};
     else
         echo "Usage: ffmpeg-audio-extract <inputFile> <outputFile>";
+    fi
+}
+
+function ffmpeg-audio-replace() {
+    # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
+    if [[ "$1" && "$2" && "$3" ]]; then
+        videoFile="${1}";
+        audioFile="${2}";
+        outputFile="${3}";
+        ffmpeg -i ${videoFile} -i ${audioFile} -c:v copy -map 0:v:0 -map 1:a:0 ${outputFile};
+    else
+        echo "Usage: ffmpeg-audio-replace <videoFile> <audioFile> <outputFile>";
+    fi
+}
+
+function ffmpeg-video-resize() {
+    # https://trac.ffmpeg.org/wiki/Scaling%20(resizing)%20with%20ffmpeg
+    if [[ "$1" && "$2" && "$3" ]]; then
+        inputFile="${1}";
+        scaleSize="${2}";
+        outputFile="${3}";
+        ffmpeg -i ${inputFile} -vf scale=${scaleSize}:-1 ${outputFile};
+    else
+        echo "Usage: ffmpeg-video-resize <inputFile> <scaleSize> <outputFile>";
     fi
 }
 
@@ -411,7 +435,7 @@ function ffmpeg-concat-files() {
     if [[ "$1" && "$2" ]]; then
         filesList="${1}";
         outputFile="${2}";
-        ffmpeg -f concat -i "${filesList}" -c copy "${outputFile}";
+        ffmpeg -f concat -i ${filesList} -c copy ${outputFile};
     else
         "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
     fi
