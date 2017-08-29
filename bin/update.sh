@@ -14,6 +14,14 @@ root_home='/root';
 is_initial_install=false;
 # is_initial_install=true;
 
+function installPHPUnit()
+{
+	wget https://phar.phpunit.de/phpunit.phar;
+	chmod +x phpunit.phar;
+	sudo mv phpunit.phar /usr/local/bin/phpunit;
+	echo "PHPUNit installed.";
+}
+
 function installTeamviewer()
 {
 	sudo dpkg -i --force-depends ${downloads_dir}/teamviewer*.deb;
@@ -231,6 +239,7 @@ if  $is_initial_install; then
 	# installNodeModules;
 	# installViber;
 	# installTeamviewer;
+	installPHPUnit;
 
 # Non initial setup.
 else
@@ -241,6 +250,7 @@ else
 	# installNodeModules;
 	# installViber;
 	# installTeamviewer;
+	# installPHPUnit;
 
 	sudo aptitude -y update;
 	sudo aptitude -y upgrade;
