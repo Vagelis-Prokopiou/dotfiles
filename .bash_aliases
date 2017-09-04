@@ -481,3 +481,10 @@ function string-substitute()
     fi
 }
 
+# DotNet
+function fix-corrupted-new-dotnet-command()
+{
+    dotnet new --debug:reinit;
+    echo -e '\nTry the fix: "dotnet new console -lang c# appName"';
+}
+
