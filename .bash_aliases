@@ -24,6 +24,8 @@ alias storm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/Php
 alias pycharm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PyCharm/bin/pycharm.sh';
 alias localhost='cd /var/www/html';
 
+alias 'test-site'='cd /var/www/html/vhosts/test/public_html/';
+
 alias tsini='cd /var/www/html/vhosts/tsinikopoulos/public_html/';
 alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
