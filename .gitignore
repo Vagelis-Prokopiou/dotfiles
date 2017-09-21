@@ -87,3 +87,6 @@ go
 projects
 .vscode/
 .openshot/
+.DataGrip2017.2/
+.cups/
+.quokka/
