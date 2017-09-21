@@ -490,3 +490,8 @@ function fix-corrupted-new-dotnet-command()
     echo -e '\nTry the fix: "dotnet new console -lang c# appName"';
 }
 
+# apt
+function apt-fix()
+{
+	sudo apt --fix-broken install -y;
+}
