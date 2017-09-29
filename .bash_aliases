@@ -197,10 +197,15 @@ function disk-usage() {
     fi
 }
 
-function docker-clean() {
-    docker stop *;
+function docker-rm-all()
+{
     docker rm -f $(docker ps -a -q);
     docker rmi -f $(docker images --quiet); # -q, --quiet Only show numeric ID
+}
+
+function docker-rm-containers()
+{
+    docker rm -f $(docker ps -a -q);
 }
 
 
