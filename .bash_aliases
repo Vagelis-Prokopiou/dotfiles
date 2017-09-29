@@ -376,20 +376,39 @@ function bitbucket-clone-dev-sites() {
     done
 }
 
-function hard-reset-LAMP()
+function LAMP-hard-reset()
 {
-	# Purge the prvious installation.
-	sudo apt-get -y purge apache2*;
-	sudo apt-get -y purge php*;
-	sudo rm -r /etc/apache2/;
+	# Purge the previous installation.
+
+
+    sudo service apache2 stop;
+    sudo service mysql stop;
+
+    sudo apt-get purge -y mysql-server mariadb-server apache2 php5;
+
+    sudo apt --fix-broken;
+    sudo apt-get -y purge apache2*;
+	sudo apt-get -y purge mariadb*;
+    sudo apt-get -y purge php*;
+	sudo apt-get -y purge phpmyadmin;
+    sudo rm -r /etc/apache2/;
+	sudo rm -r /etc/phpmyadmin;
 	sudo rm -r /etc/php/;
 	sudo rm -r /var/lib/php/;
 	sudo apt-get -y autoremove;
 
 	# Install.
-	sudo apt-get install -y php7.0 php7.0-mysql;
-	sudo apt-get install -y apache2 apache2-mod-php7.0;
-	sudo apt-get install -y phpmyadmin;
+    echo "Installing...";
+    sudo apt install -y mariadb-server mariadb-client;
+    sudo apt-get install -y php7.0 php7.0-mysql php7.0-xdebug;
+    sudo apt-get install -y apache2 apache2-mod-php7.0;
+    sudo apt-get install -y phpmyadmin;
+    sudo aptitude -y install php7.0-xdebug;
+    sudo a2enmod rewrite;
+    sudo service apache2 restart;
+    sudo apt --fix-broken install;
+    dpkg-reconfigure phpmyadmin;
+    mysql -u root -e "use mysql;update user set password=PASSWORD('root') where User='root';GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root';FLUSH PRIVILEGES;";
 }
 
 function web-images() {
