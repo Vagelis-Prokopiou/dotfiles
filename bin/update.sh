@@ -148,8 +148,13 @@ if  $is_initial_install; then
 	aptitude install -y apt-transport-https;
 	aptitude install -y vim;
 	# Delete all Gnome games.
-	sudo aptitude purge gnome-games;
 	sudo aptitude purge -y inkscape;
+	sudo aptitude purge -y evolution;
+	sudo aptitude purge -y seahorse;
+	sudo aptitude purge -y gnome-maps;
+	sudo aptitude purge -y gnome-games;
+	sudo aptitude purge -y gnome-contacts;
+	sudo aptitude purge -y gnome-documents;
 
 	# Google Chrome
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
