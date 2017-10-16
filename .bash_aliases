@@ -7,7 +7,6 @@ export PATH=$PATH:/usr/local/go/bin;
 export GOPATH=$user_home/go;
 export PATH=$PATH:$GOPATH/bin;
 
-
 # Drupal Console
 if [[ -f ~/.console/console.rc ]]; then
     . ~/.console/console.rc 2>/dev/null;
@@ -518,4 +517,22 @@ function fix-corrupted-new-dotnet-command()
 function apt-fix()
 {
 	sudo apt --fix-broken install -y;
+}
+
+function show-non-printing-characters() 
+{
+	if [[ "$1" ]]; then
+		cat -A "$1";
+	else
+		echo 'Usage: show-non-printing-characters <file>';
+	fi
+}
+
+function convert-to-unix-line-endings() 
+{
+	if [[ "$1" ]]; then
+		dos2unix "$1";
+	else
+		echo 'Usage: convert-to-unix-line-endings <file>';
+	fi
 }
