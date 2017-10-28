@@ -25,14 +25,14 @@ function installPHPUnit()
 function installTeamviewer()
 {
 	sudo dpkg -i --force-depends ${downloads_dir}/teamviewer*.deb;
-	sudo apt-get install -y -f;
+	sudo apt install -y -f;
 	teamviewer --daemon start;
 	sudo rm ${downloads_dir}/teamviewer*.deb;
 }
 
 function installViber()
 {
-	sudo aptitude install -y libqt5gui5;
+	sudo apt install -y libqt5gui5;
 	sudo dpkg -i ${downloads_dir}/viber.deb;
 	apt --fix-broken install -y;
 	sudo rm ${downloads_dir}/viber.deb;
@@ -68,7 +68,7 @@ function installDrupalConsole() {
 
 function installNodeJS() {
 	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -;
-	sudo aptitude install -y nodejs;
+	sudo apt install -y nodejs;
 }
 
 function installNodeModules() {
@@ -134,33 +134,32 @@ if  $is_initial_install; then
 	############################################
 	# ----- Various maintenance tasks.
 	############################################
-	apt-get install -y sudo;
-	apt-get install -y aptitude;
-	aptitude update -y;
-	aptitude upgrade -y;
-	aptitude install -y curl;
-	aptitude install -y build-essential;
-	aptitude install -y p7zip-full;
-	aptitude install -y keepass2;
-	# aptitude install -y git git-flow;
-	aptitude install -y qalculate;
-	aptitude install -y qbittorrent;
-	aptitude install -y apt-transport-https;
-	aptitude install -y vim;
+	apt install -y sudo;
+	apt update -y;
+	apt upgrade -y;
+	apt install -y curl;
+	apt install -y build-essential;
+	apt install -y p7zip-full;
+	apt install -y keepass2;
+	# apt install -y git git-flow;
+	apt install -y qalculate;
+	apt install -y qbittorrent;
+	apt install -y apt-transport-https;
+	apt install -y vim;
 	# Delete all Gnome games.
-	sudo aptitude purge gnome-games;
-	sudo aptitude purge -y inkscape;
+	sudo apt purge gnome-games;
+	sudo apt purge -y inkscape;
 
 	# Google Chrome
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
 	sudo dpkg -i --force-depends ${downloads_dir}/google-chrome-stable_current_amd64.deb;
-	sudo apt-get install -y -f;
+	sudo apt install -y -f;
 	sudo rm ${downloads_dir}/google-chrome-stable_current_amd64.deb;
 
 	# Dropbox
 	# wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
 	sudo sudo dpkg -i --force-depends ${downloads_dir}/*dropbox*.deb;
-	sudo apt-get install -y -f;
+	sudo apt install -y -f;
 	sudo rm ${downloads_dir}/*dropbox*.deb;
 
 	# Youtube-dl.
@@ -168,22 +167,22 @@ if  $is_initial_install; then
 	sudo chmod a+rx /usr/local/bin/youtube-dl;
 
 	# Import and edit pdfs in Libreoffice Draw.
-	# sudo aptitude install -y libreoffice-pdfimport;
+	# sudo apt install -y libreoffice-pdfimport;
 
 	# Nautilus plugin for opening terminals in arbitrary paths.
-	# sudo aptitude install -y nautilus-open-terminal;
+	# sudo apt install -y nautilus-open-terminal;
 
 	# This is needed for Dropbox.
-	sudo aptitude install -y python-gpgme;
+	sudo apt install -y python-gpgme;
 
 	# This fixes the error when using Sublime for git commits && needed for PhpStorm.
-	sudo apt-get install -y libcanberra-gtk-module;
+	sudo apt install -y libcanberra-gtk-module;
 
 	# Purges.
-	# sudo aptitude purge -y postgresql*;
+	# sudo apt purge -y postgresql*;
 
 	# Drivers for AMD GPU.
-	# sudo aptitude install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
+	# sudo apt install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
 
 	# Create a template txt, for use in right click context.
 	touch ${user_home}/Templates/new_file.txt;
@@ -191,9 +190,9 @@ if  $is_initial_install; then
 	##############################################
 	# ----- LAMP on Debian.
 	##############################################
-	sudo aptitude -y install apache2;
+	sudo apt -y install apache2;
 	sudo apt install -y mariadb-server phpmyadmin;
-	sudo aptitude -y install php7.0-xdebug;
+	sudo apt -y install php7.0-xdebug;
 	sudo a2enmod rewrite;
 	sudo service apache2 restart;
 	sudo apt --fix-broken install;
@@ -212,23 +211,23 @@ if  $is_initial_install; then
 	fi
 
 	# For right-click archive extraction.
-	# sudo aptitude install -y nemo-fileroller;
+	# sudo apt install -y nemo-fileroller;
 
 	# For Keepass2 auto-typing.
-	command -v > /dev/null 2>&1 xdotool || sudo aptitude install -y xdotool;
+	command -v > /dev/null 2>&1 xdotool || sudo apt install -y xdotool;
 
-	sudo aptitude install -y linux-headers-$(uname -r);
+	sudo apt install -y linux-headers-$(uname -r);
 
 	# Tool to manipulate images for the web!!!.
-	# sudo aptitude install -y imagemagick;
+	# sudo apt install -y imagemagick;
 
-	# sudo aptitude install -y mesa-vdpau-drivers;
+	# sudo apt install -y mesa-vdpau-drivers;
 
 	# Hardware info and sensors.
-	# sudo aptitude install -y hardinfo;
+	# sudo apt install -y hardinfo;
 
 	# See: https://www.cyberciti.biz/faq/howto-linux-get-sensors-information/
-	# sudo aptitude install -y lm-sensors;
+	# sudo apt install -y lm-sensors;
 
 	# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
 
@@ -252,14 +251,14 @@ else
 	# installTeamviewer;
 	# installPHPUnit;
 
-	sudo aptitude -y update;
-	sudo aptitude -y upgrade;
-	# sudo aptitude -y dist-upgrade;
-	sudo apt-get -y autoremove;
-	sudo apt-get -y check;
-	sudo aptitude -y clean;
-	sudo aptitude -y autoclean;
-	sudo aptitude install -y -f;
+	sudo apt -y update;
+	sudo apt -y upgrade;
+	# sudo apt -y dist-upgrade;
+	sudo apt -y autoremove;
+	sudo apt -y check;
+	sudo apt -y clean;
+	sudo apt -y autoclean;
+	sudo apt install -y -f;
 	# Check for broken package(s).
 	sudo dpkg --audit;
 
@@ -307,12 +306,12 @@ fi
 # JDK 8
 # sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak;
 # echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list;
-# aptitude update
-# aptitude install openjdk-8-jdk
+# apt update
+# apt install openjdk-8-jdk
 # sudo update-alternatives --config java
 
 # ----- Install these before installing Virtualbox -----
-# sudo aptitude install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
+# sudo apt install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
 
 ##############################################
 # ----- Guest additions on Virtualbox.
@@ -325,7 +324,7 @@ fi
 ############################################
 # ----- Wifi on laptop Debian!!! Source: #https://wiki.debian.org/iwlwifi#Intel_Wireless_WiFi_Link.2C_Wireless-N.2C_Advanced-N.2C_Ultimate-N_devices
 ############################################
- #sudo aptitude update && aptitude install firmware-iwlwifi;
+ #sudo apt update && apt install firmware-iwlwifi;
  #modprobe -r iwlwifi ; modprobe iwlwifi;
 
 
@@ -345,17 +344,17 @@ fi
 # cat ~/.ssh/id_rsa.pub | xclip -sel clip
 
 #### ----- To mount Smba shares #####.
-# sudo aptitude install -y cifs-utils;
+# sudo apt install -y cifs-utils;
 
 # All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
-# sudo aptitude install -y task-print-server;
+# sudo apt install -y task-print-server;
 
-# aptitude install -y bum; # bootup manager
-# sudo aptitude install ttf-mscorefonts-installer;
+# apt install -y bum; # bootup manager
+# sudo apt install ttf-mscorefonts-installer;
 
 # Needed for digitally signing android apps.
-# sudo aptitude install -y zipalign;
+# sudo apt install -y zipalign;
 
 # Record the desktop.
-# sudo aptitude install -y recordmydesktop;
+# sudo apt install -y recordmydesktop;
 # To record the sound see https://ubuntuforums.org/showthread.php?t=1118019
