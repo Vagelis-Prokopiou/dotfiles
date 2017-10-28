@@ -71,26 +71,6 @@ function installNodeJS() {
 	sudo apt install -y nodejs;
 }
 
-function installNodeModules() {
-	sudo npm install -g \
-	yarn \
-	webpack \
-	gulp \
-	gulp-sass \
-	gulp-sourcemaps \
-	gulp-autoprefixer \
-	node-sass-globbing \
-	gulp-plumber \
-	browser-sync \
-	gulp-sass-glob \
-	jshint \
-	breakpoint-sass;
-
-	# Delete the .info files.
-	sudo find /usr/lib/node_modules/ -iname "*.info" -exec sudo rm "{}" \+;
-	echo "All *.info files were successfully deleted.";
-}
-
 # If it is initlia setup after a fresh install.
 if  $is_initial_install; then
 	############################################
@@ -114,41 +94,31 @@ if  $is_initial_install; then
 	UUID=1A52BBE952BBC7B1   /media/va/local_disk   ntfs    auto,user,exec,rw,suid,noatime,relatime   0   0
 	UUID=52AF7EBE182A63E2   /media/va/52AF7EBE182A63E2   ntfs    auto,user,exec,rw,suid,noatime,relatime    0   0" 	>> /etc/fstab;
 
-	############################################
-	# ----- Install Sublime Text 3
-	############################################
-	# Instructions for Greek spell checking:
-	# https://www.sublimetext.com/docs/3/spell_checking.html
-	# https://github.com/titoBouzout/Dictionaries/blob/master/Greek.dic
-	# # Sublime 3 (3126)
-	# wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb && dpkg -i sublime*.deb -y;
-	# # Install Monokai-Midnight as theme: http://colorsublime.com/theme/Monokai-Midnight
-	#    wget 'http://colorsublime.com/theme/download/61775';
-	#    sudo mkdir -p /root/.config/sublime-text-3/Packages/Themes;
-	#    sudo mkdir -p ${user_home}/.config/sublime-text-3/Packages/Themes;
-	#    sudo cp 61775 /root/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
-	#    sudo cp 61775 ${user_home}/.config/sublime-text-3/Packages/Themes/Monokai-Midnight.tmTheme;
-	#    sudo rm 61775;
-
 
 	############################################
 	# ----- Various maintenance tasks.
 	############################################
 	apt install -y sudo;
-	apt update -y;
-	apt upgrade -y;
-	apt install -y curl;
-	apt install -y build-essential;
-	apt install -y p7zip-full;
-	apt install -y keepass2;
-	# apt install -y git git-flow;
-	apt install -y qalculate;
-	apt install -y qbittorrent;
-	apt install -y apt-transport-https;
-	apt install -y vim;
-	# Delete all Gnome games.
-	sudo apt purge gnome-games;
+	sudo apt update -y;
+	sudo apt upgrade -y;
+	sudo apt install -y curl;
+	sudo apt install -y build-essential;
+	sudo apt install -y p7zip-full;
+	sudo apt install -y keepass2;
+	sudo apt install -y qalculate;
+	sudo apt install -y qbittorrent;
+	sudo apt install -y apt-transport-https;
+	sudo apt install -y vim;
+
+	sudo apt purge -y gnome-games;
 	sudo apt purge -y inkscape;
+	sudo apt purge -y inkscape;
+	sudo apt purge -y evolution;
+	sudo apt purge -y seahorse;
+	sudo apt purge -y gnome-maps;
+	sudo apt purge -y gnome-games;
+	sudo apt purge -y gnome-contacts;
+	sudo apt purge -y gnome-documents;
 
 	# Google Chrome
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
@@ -235,7 +205,6 @@ if  $is_initial_install; then
 	installComposer;
 	installDrupalConsole;
 	# installNodeJS;
-	# installNodeModules;
 	# installViber;
 	# installTeamviewer;
 	installPHPUnit;
@@ -246,7 +215,6 @@ else
 	# installComposer;
 	# installDrupalConsole;
 	# installNodeJS;
-	# installNodeModules;
 	# installViber;
 	# installTeamviewer;
 	# installPHPUnit;
@@ -298,63 +266,3 @@ if [[ $old_kernels == '' ]]; then
 else
 	echo -e "\nThere are old kernels that need to be taken care of!!!\n";
 fi
-
-
-# ----- Install Java 8 for PhpStorm -----
-# Edit /etc/apt/sources.list and add these lines (you may ignore line with #)
-# Backport Testing on stable
-# JDK 8
-# sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak;
-# echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list;
-# apt update
-# apt install openjdk-8-jdk
-# sudo update-alternatives --config java
-
-# ----- Install these before installing Virtualbox -----
-# sudo apt install -y libqt5opengl5 libqt5printsupport5 libqt5widgets5 libqt5x11extras5;
-
-##############################################
-# ----- Guest additions on Virtualbox.
-##############################################
-# First install headers and build essential.
-#sh /media/cdrom/VBoxLinuxAdditions.run;
-#sudo reboot;
-
-# ----- Various -----
-############################################
-# ----- Wifi on laptop Debian!!! Source: #https://wiki.debian.org/iwlwifi#Intel_Wireless_WiFi_Link.2C_Wireless-N.2C_Advanced-N.2C_Ultimate-N_devices
-############################################
- #sudo apt update && apt install firmware-iwlwifi;
- #modprobe -r iwlwifi ; modprobe iwlwifi;
-
-
-##############################################
-# ----- Mount a LAN location to my filesystem.
-##############################################
-# mount -t cifs //target_ip_address/name_of_folder_in_samba.conf /local_mount_location -o user=root
-# mount -t cifs //server/www /mnt/smb -o user=root
-# mount -t cifs //192.168.1.75/www /mnt/smb -o user=root
-
-##############################################
-# ----- Create ssh key pair
-##############################################
-# ssh-keygen -t rsa -b 4096 -C "drz4007@gmail.com"
-
-# Copy ssh key to clipboard
-# cat ~/.ssh/id_rsa.pub | xclip -sel clip
-
-#### ----- To mount Smba shares #####.
-# sudo apt install -y cifs-utils;
-
-# All about printing. See: https://wiki.debian.org/PrintQueuesCUPS#Print_Queues_and_Printers
-# sudo apt install -y task-print-server;
-
-# apt install -y bum; # bootup manager
-# sudo apt install ttf-mscorefonts-installer;
-
-# Needed for digitally signing android apps.
-# sudo apt install -y zipalign;
-
-# Record the desktop.
-# sudo apt install -y recordmydesktop;
-# To record the sound see https://ubuntuforums.org/showthread.php?t=1118019

@@ -5,4 +5,3 @@
 	default = simple
 [core]
     editor = 'vi'
-    # editor = 'subl' --wait
