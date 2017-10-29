@@ -32,6 +32,7 @@ function installTeamviewer()
 
 function installViber()
 {
+	# See http://drupaland.eu/article/installing-viber-debian-9
 	sudo apt install -y libqt5gui5;\
 	sudo dpkg -i ./viber.deb;\
 	sudo apt --fix-broken install -y;\
@@ -202,13 +203,13 @@ if  $is_initial_install; then
 
 # Non initial setup.
 else
-	# installDrush;
-	# installComposer;
-	# installDrupalConsole;
-	# installNodeJS;
+	installDrush;
+	installComposer;
+	installDrupalConsole;
+	installNodeJS;
 	# installViber;
 	# installTeamviewer;
-	# installPHPUnit;
+	installPHPUnit;
 
 	sudo apt -y update;
 	sudo apt -y upgrade;
