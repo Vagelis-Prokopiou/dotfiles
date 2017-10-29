@@ -9,8 +9,6 @@
 # Variables:
 user='va';
 user_home="/home/${user}";
-downloads_dir="/home/${user}/Downloads";
-root_home='/root';
 is_initial_install=false;
 # is_initial_install=true;
 
@@ -24,18 +22,20 @@ function installPHPUnit()
 
 function installTeamviewer()
 {
-	sudo dpkg -i --force-depends ${downloads_dir}/teamviewer*.deb;
-	sudo apt install -y -f;
-	teamviewer --daemon start;
-	sudo rm ${downloads_dir}/teamviewer*.deb;
+	sudo dpkg --add-architecture i386;\
+	sudo apt-get update;\
+	sudo dpkg -i --force-depends ./teamviewer*.deb;\
+	sudo apt install -y -f;\
+	teamviewer --daemon start;\
+	sudo rm ./teamviewer*.deb;
 }
 
 function installViber()
 {
-	sudo apt install -y libqt5gui5;
-	sudo dpkg -i ${downloads_dir}/viber.deb;
-	apt --fix-broken install -y;
-	sudo rm ${downloads_dir}/viber.deb;
+	sudo apt install -y libqt5gui5;\
+	sudo dpkg -i ./viber.deb;\
+	sudo apt --fix-broken install -y;\
+	sudo rm ./viber.deb;
 }
 
 function installDrush() {
@@ -109,6 +109,7 @@ if  $is_initial_install; then
 	sudo apt install -y qbittorrent;
 	sudo apt install -y apt-transport-https;
 	sudo apt install -y vim;
+	sudo apt install -y git;
 
 	sudo apt purge -y gnome-games;
 	sudo apt purge -y inkscape;
@@ -122,15 +123,15 @@ if  $is_initial_install; then
 
 	# Google Chrome
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
-	sudo dpkg -i --force-depends ${downloads_dir}/google-chrome-stable_current_amd64.deb;
+	sudo dpkg -i --force-depends ./google-chrome-stable_current_amd64.deb;
 	sudo apt install -y -f;
-	sudo rm ${downloads_dir}/google-chrome-stable_current_amd64.deb;
+	sudo rm ./google-chrome-stable_current_amd64.deb;
 
 	# Dropbox
-	# wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
-	sudo sudo dpkg -i --force-depends ${downloads_dir}/*dropbox*.deb;
-	sudo apt install -y -f;
-	sudo rm ${downloads_dir}/*dropbox*.deb;
+	wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
+	sudo sudo dpkg -i --force-depends ./*dropbox*.deb;\
+	sudo apt install -y -f;\
+	sudo rm ./*dropbox*.deb;
 
 	# Youtube-dl.
 	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
@@ -152,7 +153,7 @@ if  $is_initial_install; then
 	# sudo apt purge -y postgresql*;
 
 	# Drivers for AMD GPU.
-	# sudo apt install firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
+	sudo apt install -y firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati;
 
 	# Create a template txt, for use in right click context.
 	touch ${user_home}/Templates/new_file.txt;
@@ -190,16 +191,6 @@ if  $is_initial_install; then
 
 	# Tool to manipulate images for the web!!!.
 	# sudo apt install -y imagemagick;
-
-	# sudo apt install -y mesa-vdpau-drivers;
-
-	# Hardware info and sensors.
-	# sudo apt install -y hardinfo;
-
-	# See: https://www.cyberciti.biz/faq/howto-linux-get-sensors-information/
-	# sudo apt install -y lm-sensors;
-
-	# See also psensor and sensors-applet here: http://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature.
 
 	installDrush;
 	installComposer;
@@ -240,8 +231,6 @@ else
 	rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 fi
 
-sudo service bluetooth stop;
-
 # Remove all the caches.
 function clear-caches() {
 	sudo rm -rf ${user_home}/drush-backups/*;
@@ -266,3 +255,6 @@ if [[ $old_kernels == '' ]]; then
 else
 	echo -e "\nThere are old kernels that need to be taken care of!!!\n";
 fi
+
+# Manipulate services.
+sudo service bluetooth stop;
