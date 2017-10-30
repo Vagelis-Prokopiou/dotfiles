@@ -168,11 +168,8 @@ if  $is_initial_install; then
 	sudo service apache2 restart;
 	sudo apt --fix-broken install;
 
-	# If not able to login to phpmyadmin with root, run the following query:
-	# use mysql;
-	# update user set password=PASSWORD("NEWPASSWORD") where User='root';
-	# GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root';
-	# FLUSH PRIVILEGES;
+	# Grant all privileges to root user.
+	mysql -u root -proot -e "use mysql; update user set password=PASSWORD(\"root\") where User='root'; GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; FLUSH PRIVILEGES;";
 
 	# sudo apt remove --purge -y mariadb* php* && sudo apt autoremove -y && sudo apt install -y mariadb-server phpmyadmin;
 
