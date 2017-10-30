@@ -115,7 +115,6 @@ if  $is_initial_install; then
 
 	sudo apt purge -y gnome-games \
 					  inkscape \
-					  inkscape \
 					  evolution \
 					  seahorse \
 					  gnome-maps \
@@ -201,13 +200,13 @@ if  $is_initial_install; then
 
 # Non initial setup.
 else
-	installDrush;
-	installComposer;
-	installDrupalConsole;
-	installNodeJS;
+	# installDrush;
+	# installComposer;
+	# installDrupalConsole;
+	# installNodeJS;
 	# installViber;
 	# installTeamviewer;
-	installPHPUnit;
+	# installPHPUnit;
 
 	sudo apt -y update;
 	sudo apt -y upgrade;
