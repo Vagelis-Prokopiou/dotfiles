@@ -491,8 +491,8 @@ function setPermissions-ToApacheUser() {
 }
 
 function setPermissions-ForFilesFolders() {
-    find ./ -type d -exec chmod 775 {} \;
-    find ./ -type f -exec chmod 644 {} \;
+    find ./ -type d -exec chmod 775 "{}" \;
+    find ./ -type f -exec chmod 644 "{}" \;
 }
 
 # Test it
@@ -536,3 +536,8 @@ function convert-to-unix-line-endings()
 		echo 'Usage: convert-to-unix-line-endings <file>';
 	fi
 }
+
+function teamviewer-start()
+{
+    service teamviewerd restart;
+} 
