@@ -32,6 +32,7 @@ function installTeamviewer()
 
 function installViber()
 {
+	# See http://drupaland.eu/article/installing-viber-debian-9
 	sudo apt install -y libqt5gui5;\
 	sudo dpkg -i ./viber.deb;\
 	sudo apt --fix-broken install -y;\
@@ -101,25 +102,26 @@ if  $is_initial_install; then
 	apt install -y sudo;
 	sudo apt update -y;
 	sudo apt upgrade -y;
-	sudo apt install -y curl;
-	sudo apt install -y build-essential;
-	sudo apt install -y p7zip-full;
-	sudo apt install -y keepass2;
-	sudo apt install -y qalculate;
-	sudo apt install -y qbittorrent;
-	sudo apt install -y apt-transport-https;
-	sudo apt install -y vim;
-	sudo apt install -y git;
+	sudo apt install -y curl \
+						build-essential \
+						p7zip-full \
+						keepass2 \
+						qalculate \
+						qbittorrent \
+						apt-transport-https \
+						vim \
+						git \
+						smplayer;
 
-	sudo apt purge -y gnome-games;
-	sudo apt purge -y inkscape;
-	sudo apt purge -y inkscape;
-	sudo apt purge -y evolution;
-	sudo apt purge -y seahorse;
-	sudo apt purge -y gnome-maps;
-	sudo apt purge -y gnome-games;
-	sudo apt purge -y gnome-contacts;
-	sudo apt purge -y gnome-documents;
+	sudo apt purge -y gnome-games \
+					  inkscape \
+					  inkscape \
+					  evolution \
+					  seahorse \
+					  gnome-maps \
+					  gnome-games \
+					  gnome-contacts \
+					  gnome-documents;
 
 	# Google Chrome
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
@@ -199,13 +201,13 @@ if  $is_initial_install; then
 
 # Non initial setup.
 else
-	# installDrush;
-	# installComposer;
-	# installDrupalConsole;
-	# installNodeJS;
+	installDrush;
+	installComposer;
+	installDrupalConsole;
+	installNodeJS;
 	# installViber;
 	# installTeamviewer;
-	# installPHPUnit;
+	installPHPUnit;
 
 	sudo apt -y update;
 	sudo apt -y upgrade;
