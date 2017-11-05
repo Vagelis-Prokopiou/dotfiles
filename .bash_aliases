@@ -23,30 +23,25 @@ alias storm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/Php
 alias pycharm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PyCharm/bin/pycharm.sh';
 alias localhost='cd /var/www/html';
 
-alias 'test-site'='cd /var/www/html/vhosts/test/public_html/';
+alias 'test-site'='cd /var/www/html/test/public_html/';
 
-alias tsini='cd /var/www/html/vhosts/tsinikopoulos/public_html/';
-alias tsinigulp='cd /var/www/html/vhosts/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
+alias tsini='cd /var/www/html/tsinikopoulos/public_html/';
+alias tsinigulp='cd /var/www/html/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
-alias drupaland='cd /var/www/html/vhosts/drupaland/public_html/';
-alias drupalandgulp='cd /var/www/html/vhosts/drupaland/public_html/themes/drupaland && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
+alias drupaland='cd /var/www/html/drupaland/public_html/';
+alias drupalandgulp='cd /var/www/html/drupaland/public_html/themes/drupaland && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
-alias rs='cd /var/www/html/vhosts/riggingservices/public_html/';
-alias rsgulp='cd /var/www/html/vhosts/riggingservices/public_html/sites/all/themes/skeletontheme_testing && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
+alias rs='cd /var/www/html/riggingservices/public_html/';
+alias rsgulp='cd /var/www/html/riggingservices/public_html/sites/all/themes/skeletontheme_testing && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
-alias bnspro='cd /var/www/html/vhosts/bnspro/public_html/';
-alias bnsprogulp='cd /var/www/html/vhosts/bnspro/public_html/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
-
-alias enalia='cd /var/www/html/vhosts/enalia/public_html/';
-# alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/custom/enalia_classy/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
-alias enaliagulp='cd /var/www/html/vhosts/enalia/public_html/themes/enalia/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
+alias bnspro='cd /var/www/html/bnspro/public_html/';
+alias bnsprogulp='cd /var/www/html/bnspro/public_html/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
 alias karma='su va -c "npm run test:karma"';
 
 # Git stuff:
 alias gc='git commit --signoff -m ';
-# alias gl='git log --pretty=format:"%h, %ar: %s"'
 alias gl='clear && git log --oneline';
 alias gcf='git checkout -- ';
 alias gs='clear && git status';
@@ -272,12 +267,8 @@ function dbs-export() {
 
 # Vhosts
 function vhost-create() {
-    if [[ ! -d '/var/www/html/vhosts/' ]]; then
-        sudo mkdir /var/www/html/vhosts/;
-    fi
-
     if [[ "$1" ]]; then
-      base_path='/var/www/html/vhosts';
+      base_path='/var/www/html';
       domain="$1";
 
       if [[ ! -d "${base_path}/${domain}" ]]; then
@@ -294,33 +285,25 @@ function vhost-create() {
     ServerName ${domain}.local
     ServerAlias www.${domain}.local
     ServerAdmin ${domain}@localhost
-    DocumentRoot /var/www/html/vhosts/${domain}/public_html
-    <Directory /var/www/html/vhosts/${domain}/public_html/>
+    DocumentRoot /var/www/html/${domain}/public_html
+    <Directory /var/www/html/${domain}/public_html/>
       Options Indexes FollowSymLinks
       AllowOverride All
       Require all granted
     </Directory>
     LogLevel info warn
-    ErrorLog /var/www/html/vhosts/${domain}/logs/error.log
-    CustomLog /var/www/html/vhosts/${domain}/logs/access.log combined
+    ErrorLog /var/www/html/${domain}/logs/error.log
+    CustomLog /var/www/html/${domain}/logs/access.log combined
 </VirtualHost>" | sudo tee "/etc/apache2/sites-available/${domain}.local.conf";
 
-
-        # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
-        # See: http://stackoverflow.com/questions/84882/sudo-echo-something-etc-privilegedfile-doesnt-work-is-there-an-alterna
-        # echo 'hello' | sudo tee /etc/apache2/sites-available/hello.txt
-
-
-          # Enable the site.
-          sudo a2ensite "${domain}.local";
-
-          echo "127.0.0.1   ${domain}.local" | sudo tee --append /etc/hosts;
-
-          # Restart Apache.
-          sudo service apache2 restart;
-
-          echo "Done.";
-          echo "You can access the site at http://${domain}.local/";
+        # Enable the site.
+        sudo a2ensite "${domain}.local";
+        # Add the vhost to the vhosts file.   
+        echo "127.0.0.1   ${domain}.local" | sudo tee --append /etc/hosts;
+        # Restart Apache.
+        sudo service apache2 restart;
+        echo "Done.";
+        echo "You can access the site at http://${domain}.local/";
       else
         echo "${domain} already exists. Skipping...";
       fi
@@ -334,12 +317,12 @@ function vhost-delete() {
     if [[ "$1" ]]; then
         domain="$1";
 
-        if [[ -d "/var/www/html/vhosts/${domain}" ]]; then
+        if [[ -d "/var/www/html/${domain}" ]]; then
 	        # Disable the vhost.
 	        sudo a2dissite "${domain}.local";
 
             # Delete all files associated with this site.
-            sudo rm -r /var/www/html/vhosts/${domain};
+            sudo rm -r /var/www/html/${domain};
             sudo rm "/etc/apache2/sites-available/${domain}.local.conf";
 
             # Clean the /etc/hosts
