@@ -5,3 +5,6 @@
 	default = simple
 [core]
     editor = 'vi'
+    eol = lf
+    autocrlf = false
+    whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
