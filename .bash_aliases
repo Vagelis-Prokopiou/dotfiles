@@ -214,7 +214,7 @@ function drupal-fix-missing-module() {
 }
 
 function dbs-import() {
-    cd  /home/va/Dropbox/dbs/*/;
+    cd  /media/va/local_disk/Dropbox/dbs/*/;
     for db in *; do
         new_db=$( echo "$db" | sed "s|/home/va/Dropbox/dbs/.*/||g; s|\.sql\.gz||g");
         mysql -u root -p'root' -e "CREATE DATABASE IF NOT EXISTS $new_db;";
@@ -225,14 +225,14 @@ function dbs-import() {
 
 function dbs-export() {
     # If Dropbox exits.
-    if [[ -d ${user_home}/Dropbox/ ]]; then
+    basePath="/media/va/local_disk";
+    if [[ -d ${basePath}/Dropbox/ ]]; then
         # If folder for today does not exits, do the backup.
-        if [[ ! -d ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d)/ ]]; then
+        if [[ ! -d ${basePath}/Dropbox/dbs/$(date +%Y-%m-%d)/ ]]; then
             # ----- Backup all databases -----
             echo ''; \
-            echo "----- Exporting the databases to ${user_home}/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
+            echo "----- Exporting the databases to ${basePath}/Dropbox/dbs/$(echo $(date +%Y-%m-%d))/ -----"; \
             echo ''; \
-            # mysqldump -uroot -proot --all-databases | gzip > ${user_home}/Dropbox/all_databases.sql.gz;
             dbs=$(echo $( mysql -uroot -proot -e 'show databases;') | \
             sed "s/Database//g; s/information_schema//g; \
             s/performance_schema//g; \
@@ -242,22 +242,21 @@ function dbs-export() {
             s/mysql//g; \
             s/phpmyadmin//g"; \
             ); \
-            mkdir ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null; \
+            mkdir ${basePath}/Dropbox/dbs/$(date +%Y-%m-%d) 2>/dev/null; \
             IFS=' ' read -ra dbs_array <<< "$dbs"; \
             for db in "${dbs_array[@]}"; do \
-                # echo "$db"_$(date +%Y-%m-%dT%H:%M).sql.gz; \
                 mysql -uroot -proot -e "TRUNCATE TABLE $db.watchdog"; \
-                mysqldump -uroot -proot "$db" | gzip > ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
+                mysqldump -uroot -proot "$db" | gzip > ${basePath}/Dropbox/dbs/$(date +%Y-%m-%d)/"$db".sql.gz;
             done;
             echo '';
             echo '----- Databases exported successfully -----';
             echo '';
 
             # Remove the previous folders.
-            find ${user_home}/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
+            find ${basePath}/Dropbox/dbs/* -type d ! -name "$(date +%Y-%m-%d)" -exec rm -r "{}" \+ 2>/dev/null;
         else
             # Refactor the 'if else'.
-            sudo rm -rf ${user_home}/Dropbox/dbs/$(date +%Y-%m-%d)/;
+            sudo rm -rf ${basePath}/Dropbox/dbs/$(date +%Y-%m-%d)/;
             dbs-export;
         fi
     fi
