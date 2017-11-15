@@ -433,18 +433,23 @@ function ffmpeg-video-resize() {
     fi
 }
 
-function ffmpeg-concat-files() {
+function ffmpeg-concat-files() 
+{
     # See: http://stackoverflow.com/questions/7333232/concatenate-two-mp4-files-using-ffmpeg
-    # filesList.txt format:
-    # file 'file1'
-    # file 'file2'
-    # file 'file3'
+    # The "-safe 0" disables the safe mode due to "unsafe files" error.
     if [[ "$1" && "$2" ]]; then
         filesList="${1}";
         outputFile="${2}";
-        ffmpeg -f concat -i ${filesList} -c copy ${outputFile};
+        ffmpeg -f concat -safe 0 -i ${filesList} -c copy ${outputFile};
     else
-        "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
+        echo "";
+        echo "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
+        echo "";
+        echo "The filesList.txt must have the following format:";
+        echo "file 'file1'";
+        echo "file 'file2'";
+        echo "file 'file3'";
+        echo "";
     fi
 }
 
