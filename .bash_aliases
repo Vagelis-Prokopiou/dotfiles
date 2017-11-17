@@ -550,3 +550,30 @@ function firefox-install-latest()
     sudo ln -s /opt/firefox/firefox/firefox /usr/lib/firefox-esr/firefox-esr;
     rm -r ./FirefoxSetup.tar.bz2;
 }
+
+function ripgrep-install-latest()
+{
+    system="$(uname)";
+    ripGrepUrl="https://github.com/BurntSushi/ripgrep/releases";
+    latestVersion=$(curl ${ripGrepUrl} | grep '<a href="/BurntSushi/ripgrep/tree/' | head -1 | sed 's/" class="css-truncate">//ig;s/<a href="\/BurntSushi\/ripgrep\/tree\///ig;s/ \+//g');
+    installedVersion=$(rg --version | HEAD -1 | sed 's/ripgrep //ig');
+    windowsDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-pc-windows-gnu.zip";
+    linuxDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-unknown-linux-musl.tar.gz";
+
+    if [[ "${latestVersion}" != "${installedVersion}" ]]; then
+        echo -e "\nDownloading the latest version...\n";
+
+        if [[ ${system} == MINGW* ]]; then
+            curl -L -o latestRipGrep.zip "${windowsDownloadUrl}";
+            unzip latestRipGrep.zip -d latestRipGrep;
+            cp latestRipGrep/rg.exe /C/Users/Vangelisp/bin;
+        else
+            tar xvzf latestRipGrep.tar.gz;
+            cp ripgrep-*/rg /usr/local/bin;
+        fi
+
+        rm -rf latestRipGrep* ripgrep-*;
+    else
+        echo -e "\nYou are using the latest version (${latestVersion}).\n";
+    fi
+}
