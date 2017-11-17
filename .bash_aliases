@@ -556,7 +556,7 @@ function ripgrep-install-latest()
     system="$(uname)";
     ripGrepUrl="https://github.com/BurntSushi/ripgrep/releases";
     latestVersion=$(curl ${ripGrepUrl} | grep '<a href="/BurntSushi/ripgrep/tree/' | head -1 | sed 's/" class="css-truncate">//ig;s/<a href="\/BurntSushi\/ripgrep\/tree\///ig;s/ \+//g');
-    installedVersion=$(rg --version | HEAD -1 | sed 's/ripgrep //ig');
+    installedVersion=$(rg --version | head -1 | sed 's/ripgrep //ig');
     windowsDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-pc-windows-gnu.zip";
     linuxDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-unknown-linux-musl.tar.gz";
 
@@ -568,8 +568,10 @@ function ripgrep-install-latest()
             unzip latestRipGrep.zip -d latestRipGrep;
             cp latestRipGrep/rg.exe /C/Users/Vangelisp/bin;
         else
-            tar xvzf latestRipGrep.tar.gz;
+            curl -L -o latestRipGrep.zip.gz "${linuxDownloadUrl}";
+            tar xvzf latestRipGrep.zip.gz;
             cp ripgrep-*/rg /usr/local/bin;
+            cp ripgrep-*/complete/rg.bash-completion /etc/bash_completion.d;
         fi
 
         rm -rf latestRipGrep* ripgrep-*;
