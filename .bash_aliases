@@ -433,6 +433,17 @@ function ffmpeg-video-resize() {
     fi
 }
 
+function ffmpeg-video-resize-for-youtube() {
+    # https://trac.ffmpeg.org/wiki/Scaling%20(resizing)%20with%20ffmpeg
+    if [[ "$1" && "$2" ]]; then
+        inputFile="${1}";
+        outputFile="${2}";
+        ffmpeg -i ${inputFile} -vf scale=854:480 ${outputFile};
+    else
+        echo "Usage: ffmpeg-video-resize <inputFile> <outputFile>";
+    fi
+}
+
 function ffmpeg-concat-files() {
     # See: http://stackoverflow.com/questions/7333232/concatenate-two-mp4-files-using-ffmpeg
     # filesList.txt format:
