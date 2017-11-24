@@ -440,22 +440,27 @@ function ffmpeg-video-resize-for-youtube() {
         outputFile="${2}";
         ffmpeg -i ${inputFile} -vf scale=854:480 ${outputFile};
     else
-        echo "Usage: ffmpeg-video-resize <inputFile> <outputFile>";
+        echo "Usage: ffmpeg-video-resize-for-youtube <inputFile> <outputFile>";
     fi
 }
 
-function ffmpeg-concat-files() {
+function ffmpeg-concat-files() 
+{
     # See: http://stackoverflow.com/questions/7333232/concatenate-two-mp4-files-using-ffmpeg
-    # filesList.txt format:
-    # file 'file1'
-    # file 'file2'
-    # file 'file3'
+    # The "-safe 0" disables the safe mode due to "unsafe files" error.
     if [[ "$1" && "$2" ]]; then
         filesList="${1}";
         outputFile="${2}";
-        ffmpeg -f concat -i ${filesList} -c copy ${outputFile};
+        ffmpeg -f concat -safe 0 -i ${filesList} -c copy ${outputFile};
     else
-        "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
+        echo "";
+        echo "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
+        echo "";
+        echo "The filesList.txt must have the following format:";
+        echo "file 'file1'";
+        echo "file 'file2'";
+        echo "file 'file3'";
+        echo "";
     fi
 }
 
@@ -533,4 +538,76 @@ function convert-to-unix-line-endings()
 function teamviewer-start()
 {
     service teamviewerd restart;
-} 
+}
+
+function firefox-install-latest()
+{
+    wget -O FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US";
+    
+    if [ ! -d "/opt/firefox" ]; then
+        sudo mkdir /opt/firefox;
+    else    
+        sudo rm -r /opt/firefox/*;
+    fi
+    
+    tar xjf FirefoxSetup.tar.bz2 -C /opt/firefox/;
+
+    if [ ! -f "/usr/lib/firefox-esr/firefox-esr_orig" ]; then
+        mv /usr/lib/firefox-esr/firefox-esr /usr/lib/firefox-esr/firefox-esr_orig;
+    else
+        sudo rm /usr/lib/firefox-esr/firefox-esr;
+    fi
+
+    sudo ln -s /opt/firefox/firefox/firefox /usr/lib/firefox-esr/firefox-esr;
+    rm -r ./FirefoxSetup.tar.bz2;
+}
+
+function ripgrep-install-latest()
+{
+    system="$(uname)";
+    ripGrepUrl="https://github.com/BurntSushi/ripgrep/releases";
+    latestVersion=$(curl ${ripGrepUrl} | grep '<a href="/BurntSushi/ripgrep/tree/' | head -1 | sed 's/" class="css-truncate">//ig;s/<a href="\/BurntSushi\/ripgrep\/tree\///ig;s/ \+//g');
+    installedVersion=$(rg --version | head -1 | sed 's/ripgrep //ig');
+    windowsDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-pc-windows-gnu.zip";
+    linuxDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-unknown-linux-musl.tar.gz";
+
+    if [[ "${latestVersion}" != "${installedVersion}" ]]; then
+        echo -e "\nDownloading the latest version...\n";
+
+        if [[ ${system} == MINGW* ]]; then
+            curl -L -o latestRipGrep.zip "${windowsDownloadUrl}";
+            unzip latestRipGrep.zip -d latestRipGrep;
+            cp latestRipGrep/rg.exe /C/Users/Vangelisp/bin;
+        else
+            curl -L -o latestRipGrep.zip.gz "${linuxDownloadUrl}";
+            tar xvzf latestRipGrep.zip.gz;
+            cp ripgrep-*/rg /usr/local/bin;
+            cp ripgrep-*/complete/rg.bash-completion /etc/bash_completion.d;
+        fi
+
+        rm -rf latestRipGrep* ripgrep-*;
+    else
+        echo -e "\nYou are using the latest version (${latestVersion}).\n";
+    fi
+}
+
+function drush-install-latest()
+{
+    application="Drush";
+    githubUrl="https://github.com/drush-ops/drush/releases";
+    latestVersion=$(curl ${githubUrl} | grep '<a href="/drush-ops/drush/releases/download/' | head -1 | sed 's/<a href="\/drush-ops\/drush\/releases\/download\///g; s/\/drush.phar" rel="nofollow">//g; s/ \+//g');
+    installedVersion=$(drush --version | sed 's/ Drush Version   :  //i; s/ \+//g');
+    downloadUrl="https://github.com/drush-ops/drush/releases/download/${latestVersion}/drush.phar";
+
+    if [[ "${latestVersion}" != "${installedVersion}" ]]; then
+        echo -e "\nDownloading the latest ${application} version...\n";
+
+        curl -L -O "${downloadUrl}";
+        php drush.phar core-status;
+        chmod +x drush.phar;
+        sudo mv drush.phar /usr/local/bin/drush;
+        drush init;
+    else
+        echo -e "\nYou are using the latest ${application} version (${latestVersion}).\n";
+    fi
+}
