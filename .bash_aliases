@@ -139,6 +139,15 @@ function git-delete-branch() {
     fi
 }
 
+function git-patch-apply-fromUrl()
+{
+    if [[ "$1" ]]; then
+        curl "${1}" | git apply -v
+    else
+        echo "Usage: git-patch-apply-fromUrl <url>"
+    fi
+}
+
 # Site audit stuff:
 alias siteaudit7='rm -r ~/.drush/commands/site_audit && unzip ~/.drush/commands/site_audit-7*.zip -d ~/.drush/commands/';
 alias siteaudit8='rm -r ~/.drush/commands/site_audit && unzip ~/.drush/commands/site_audit-8*.zip -d ~/.drush/commands/';
