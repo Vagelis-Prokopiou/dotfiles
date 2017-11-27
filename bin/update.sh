@@ -58,16 +58,23 @@ function installViber()
 	sudo rm ./viber.deb;
 }
 
-function installDrush() {
-	# Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
-	php -r "readfile('http://files.drush.org/drush.phar');" > drush
-	# Test your install.
-	php drush core-status;
-	# Make `drush` executable as a command from anywhere. Destination can be anywhere on $PATH.
-	sudo chmod +x drush;
-	sudo mv drush /usr/local/bin;
-	#### ----- Enrich the bash startup file with completion and aliases #####.
-	drush init;
+function drush-install-latest() 
+{ 
+    application="Drush";
+    githubUrl="https://github.com/drush-ops/drush/releases";
+    latestVersion=$(curl ${githubUrl} | grep '<a href="/drush-ops/drush/releases/download/' | head -1 | sed 's/<a href="\/drush-ops\/drush\/releases\/download\///g; s/\/drush.phar" rel="nofollow">//g; s/ \+//g');
+    installedVersion=$(drush --version | sed 's/ Drush Version   :  //i; s/ \+//g');
+    downloadUrl="https://github.com/drush-ops/drush/releases/download/${latestVersion}/drush.phar";
+    if [[ "${latestVersion}" != "${installedVersion}" ]]; then
+        echo -e "\nDownloading the latest ${application} version...\n";
+        curl -L -O "${downloadUrl}";
+        php drush.phar core-status;
+        chmod +x drush.phar;
+        sudo mv drush.phar /usr/local/bin/drush;
+        drush init;
+    else
+        echo -e "\nYou are using the latest ${application} version (${latestVersion}).\n";
+    fi
 }
 
 function installComposer() 
@@ -127,6 +134,7 @@ if  $is_initial_install; then
 	sudo apt install -y curl \
 						build-essential \
 						p7zip-full \
+						p7zip-rar \
 						keepass2 \
 						qalculate \
 						qbittorrent \
@@ -213,7 +221,7 @@ if  $is_initial_install; then
 	# sudo apt install -y imagemagick;
 
 	installDocker;
-	installDrush;
+	drush-install-latest;
 	installComposer;
 	installDrupalConsole;
 	# installNodeJS;
@@ -223,7 +231,7 @@ if  $is_initial_install; then
 
 # Non initial setup.
 else
-	# installDrush;
+	# drush-install-latest;;
 	# installComposer;
 	# installDrupalConsole;
 	# installNodeJS;
