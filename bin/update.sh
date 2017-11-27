@@ -135,6 +135,7 @@ if  $is_initial_install; then
 						build-essential \
 						p7zip-full \
 						p7zip-rar \
+						unrar \
 						keepass2 \
 						qalculate \
 						qbittorrent \
