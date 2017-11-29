@@ -493,7 +493,7 @@ function drush-siteInstall()
 }
 
 function setPermissions-ToApacheUser() {
-    sudo chown -R www-data:www-data ../public_html;
+    sudo chown -R www-data:www-data /var/www/html;
     sudo chmod -R 777 sites/default/files;
 }
 
