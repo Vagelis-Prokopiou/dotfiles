@@ -37,6 +37,8 @@ alias rsgulp='cd /var/www/html/riggingservices/public_html/sites/all/themes/skel
 alias bnspro='cd /var/www/html/bnspro/public_html/';
 alias bnsprogulp='cd /var/www/html/bnspro/public_html/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
+alias om='cd /var/www/html/olympus-marathon/public_html && git status';
+
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
 alias karma='su va -c "npm run test:karma"';
 
