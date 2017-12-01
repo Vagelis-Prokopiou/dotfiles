@@ -620,3 +620,22 @@ function drush-install-latest()
         echo -e "\nYou are using the latest ${application} version (${latestVersion}).\n";
     fi
 }
+
+function drupal-rename-module() 
+{
+	if [[ "$3" ]]; then
+		path="$1";
+        old_name="$2";
+        new_name="$3";
+        new_path=$(echo "${path}" | sed "s/${old_name}/${new_name}/g")
+        old_name_upper="$(tr '[:lower:]' '[:upper:]' <<< ${old_name:0:1})${old_name:1}";
+        new_name_upper="$(tr '[:lower:]' '[:upper:]' <<< ${new_name:0:1})${new_name:1}";
+        find "${path}" -name "*${old_name}*" -print0 | sort -rz |  while read -d $'\0' f;
+        do mv -v "${f}" "$(dirname "${f}")/$(basename "${f//${old_name}/${new_name}}")";
+        done;
+        find "${new_path}" -type f -exec sed -i "s/${old_name}/${new_name}/g;
+        s/${old_name_upper}/${new_name_upper}/g" "{}" \+;
+	else
+		echo 'Usage: drupal-rename-module <modulePath> <oldName> <newName>';
+	fi
+}
