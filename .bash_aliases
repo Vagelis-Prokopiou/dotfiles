@@ -60,7 +60,9 @@ function git-show-todays-commits()
 {
 	reset;
 	if [[ "$1" ]]; then
-		git log | grep -A2 "${1}" | grep -v Date | grep -v -- '--' | grep -v '^$';
+		echo "${1} commits:";
+		echo "";
+		git log | grep -A2 "${1}" | grep -v Date | grep -v -- '--' | grep -v '^$' | sed 's/^ \+//g';
 	else
 		echo "Usage: git-show-todays-commits <date> (in \"Dec 5\" format)";
 	fi
