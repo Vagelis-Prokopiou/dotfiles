@@ -56,6 +56,16 @@ alias gstf='git-show-tracked-files';
 # Postgresql
 alias 'psql'='sudo -u postgres psql';
 
+function git-show-todays-commits()
+{
+	reset;
+	if [[ "$1" ]]; then
+		git log | grep -A2 "${1}" | grep -v Date | grep -v -- '--' | grep -v '^$';
+	else
+		echo "Usage: git-show-todays-commits <date> (in \"Dec 5\" format)";
+	fi
+}
+
 # Fix the '^M' in git diffs. See: http://stackoverflow.com/questions/1889559/git-diff-to-ignore-m
 function git-fix-line-endings() {
 	clear;
