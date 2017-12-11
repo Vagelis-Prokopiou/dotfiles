@@ -653,3 +653,14 @@ function drupal-rename-module()
 		echo 'Usage: drupal-rename-module <modulePath> <oldName> <newName>';
 	fi
 }
+
+function vscode-black-bg()
+{
+	fileName='monokai-color-theme.json';
+	if [[ $(uname -a) == "MINGW"* ]]; then
+		find /c/Users/Vangelisp/Downloads -type f -name ${fileName} -exec sed -i 's/"editor\.background":.\+/"editor\.background": "#000000",/g' "{}" \;
+	else
+		find /root -type f -name ${fileName} -exec sed -i 's/"editor\.background":.\+/"editor\.background": "#000000",/g' "{}" \;
+		find /home -type f -name ${fileName} -exec sed -i 's/"editor\.background":.\+/"editor\.background": "#000000",/g' "{}" \;
+	fi
+}
