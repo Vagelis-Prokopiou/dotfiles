@@ -664,3 +664,20 @@ function vscode-black-bg()
 		find /home -type f -name ${fileName} -exec sed -i 's/"editor\.background":.\+/"editor\.background": "#000000",/g' "{}" \;
 	fi
 }
+
+function motogp-download-race()
+{
+    if [[ "$1" ]]; then
+    counter=1;
+    while read line; do
+        if [[ "$line" == "http"*  ]]; then
+            curl -o ${counter}.mp4 "$line";
+            ((counter++));
+        fi
+    done < "$1";
+
+    # Todo: Merge with ffmpeg.
+    else
+        echo 'Usage: motogp-download-race <file.m3u8>'
+    fi
+}
