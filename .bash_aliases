@@ -657,7 +657,7 @@ function drupal-rename-module()
 function vscode-black-bg()
 {
 	fileName='monokai-color-theme.json';
-	if [[ $(uname -a) == "MINGW"* ]]; then
+	if [[ $(uname -s) == "MINGW"* ]]; then
 		find /c/Users/Vangelisp/Downloads -type f -name ${fileName} -exec sed -i 's/"editor\.background":.\+/"editor\.background": "#000000",/g' "{}" \;
 	else
 		find /root -type f -name ${fileName} -exec sed -i 's/"editor\.background":.\+/"editor\.background": "#000000",/g' "{}" \;
