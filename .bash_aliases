@@ -37,6 +37,8 @@ alias rsgulp='cd /var/www/html/riggingservices/public_html/sites/all/themes/skel
 alias bnspro='cd /var/www/html/bnspro/public_html/';
 alias bnsprogulp='cd /var/www/html/bnspro/public_html/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
+alias om='cd /var/www/html/olympus-marathon/public_html && git status';
+
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
 alias karma='su va -c "npm run test:karma"';
 
@@ -53,6 +55,18 @@ alias gstf='git-show-tracked-files';
 
 # Postgresql
 alias 'psql'='sudo -u postgres psql';
+
+function git-show-todays-commits()
+{
+	reset;
+	if [[ "$1" ]]; then
+		echo "${1} commits:";
+		echo "";
+		git log | grep -A2 "${1}" | grep -v Date | grep -v -- '--' | grep -v '^$' | sed 's/^ \+//g';
+	else
+		echo "Usage: git-show-todays-commits <date> (in \"Dec 5\" format)";
+	fi
+}
 
 # Fix the '^M' in git diffs. See: http://stackoverflow.com/questions/1889559/git-diff-to-ignore-m
 function git-fix-line-endings() {
@@ -493,7 +507,7 @@ function drush-siteInstall()
 }
 
 function setPermissions-ToApacheUser() {
-    sudo chown -R www-data:www-data ../public_html;
+    sudo chown -R www-data:www-data /var/www/html;
     sudo chmod -R 777 sites/default/files;
 }
 
@@ -618,5 +632,52 @@ function drush-install-latest()
         drush init;
     else
         echo -e "\nYou are using the latest ${application} version (${latestVersion}).\n";
+    fi
+}
+
+function drupal-rename-module() 
+{
+	if [[ "$3" ]]; then
+		path="$1";
+        old_name="$2";
+        new_name="$3";
+        new_path=$(echo "${path}" | sed "s/${old_name}/${new_name}/g")
+        old_name_upper="$(tr '[:lower:]' '[:upper:]' <<< ${old_name:0:1})${old_name:1}";
+        new_name_upper="$(tr '[:lower:]' '[:upper:]' <<< ${new_name:0:1})${new_name:1}";
+        find "${path}" -name "*${old_name}*" -print0 | sort -rz |  while read -d $'\0' f;
+        do mv -v "${f}" "$(dirname "${f}")/$(basename "${f//${old_name}/${new_name}}")";
+        done;
+        find "${new_path}" -type f -exec sed -i "s/${old_name}/${new_name}/g;
+        s/${old_name_upper}/${new_name_upper}/g" "{}" \+;
+	else
+		echo 'Usage: drupal-rename-module <modulePath> <oldName> <newName>';
+	fi
+}
+
+function vscode-black-bg()
+{
+	fileName='monokai-color-theme.json';
+	if [[ $(uname -s) == "MINGW"* ]]; then
+		find /c/Users/Vangelisp/Downloads -type f -name ${fileName} -exec sed -i 's/"editor\.background":.\+/"editor\.background": "#000000",/g' "{}" \;
+	else
+		find /root -type f -name ${fileName} -exec sed -i 's/"editor\.background":.\+/"editor\.background": "#000000",/g' "{}" \;
+		find /home -type f -name ${fileName} -exec sed -i 's/"editor\.background":.\+/"editor\.background": "#000000",/g' "{}" \;
+	fi
+}
+
+function motogp-download-race()
+{
+    if [[ "$1" ]]; then
+    counter=1;
+    while read line; do
+        if [[ "$line" == "http"*  ]]; then
+            curl -o ${counter}.mp4 "$line";
+            ((counter++));
+        fi
+    done < "$1";
+
+    # Todo: Merge with ffmpeg.
+    else
+        echo 'Usage: motogp-download-race <file.m3u8>'
     fi
 }
