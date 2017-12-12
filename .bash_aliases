@@ -668,15 +668,17 @@ function vscode-black-bg()
 function motogp-download-race()
 {
     if [[ "$1" ]]; then
+	touch ./motogpFiles.txt;
     counter=1;
     while read line; do
         if [[ "$line" == "http"*  ]]; then
             curl -o ${counter}.mp4 "$line";
+			echo "file ${counter}.mp4" >> ./motogpFiles.txt;
             ((counter++));
         fi
     done < "$1";
 
-    # Todo: Merge with ffmpeg.
+	ffmpeg-concat-files ./motogpFiles.txt race.mp4;
     else
         echo 'Usage: motogp-download-race <file.m3u8>'
     fi
