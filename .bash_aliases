@@ -474,7 +474,7 @@ function ffmpeg-concat-files()
     if [[ "$1" && "$2" ]]; then
         filesList="${1}";
         outputFile="${2}";
-        ffmpeg -f concat -safe 0 -i ${filesList} -c copy ${outputFile};
+        ffmpeg -f concat -safe 0 -i ${filesList} -codec copy ${outputFile};
     else
         echo "";
         echo "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
