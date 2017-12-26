@@ -20,7 +20,7 @@ fi
 # Aliases
 alias code='code --user-data-dir=/tmp';
 alias storm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
-alias pycharm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PyCharm/bin/pycharm.sh';
+alias datagrip='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/datagrip/bin/datagrip.sh';
 alias localhost='cd /var/www/html';
 
 alias 'test-site'='cd /var/www/html/test/public_html/';
@@ -488,11 +488,19 @@ function ffmpeg-concat-files()
 }
 
 # youtube-dl wrapper
-function youtubeDl-BestQuality() {
+function youtube-dl-best-quality() {
 	if [[ "${1}" ]]; then
 		youtube-dl -f bestvideo+bestaudio "${1}";
 	else
-		echo "Usage: youtubeDlBestQuality <URL>";
+		echo "Usage: youtube-dl-best-quality <URL>";
+	fi
+}
+
+function youtube-dl-best-quality-audio() {
+	if [[ "${1}" ]]; then
+		youtube-dl -f 251 "${1}";
+	else
+		echo "Usage: youtube-dl-best-quality-audio <URL>";
 	fi
 }
 
