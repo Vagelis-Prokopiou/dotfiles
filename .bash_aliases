@@ -416,6 +416,7 @@ function LAMP-hard-reset()
 }
 
 function web-images() {
+    # Uses ImageMagick.
     # Resize to 1200px width and remove metadata (-strip flag).
     for image in *; do convert $image -resize 1200 -strip $image; done;
 }
