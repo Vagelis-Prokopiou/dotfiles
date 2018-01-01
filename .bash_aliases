@@ -692,3 +692,9 @@ function motogp-download-race()
         echo 'Usage: motogp-download-race <file.m3u8>'
     fi
 }
+
+function gpu-get-specs()
+{
+    reset;
+    lspci -v | grep -A19 'VGA compatible controller';
+}
