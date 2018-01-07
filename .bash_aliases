@@ -56,6 +56,11 @@ alias gstf='git-show-tracked-files';
 # Postgresql
 alias 'psql'='sudo -u postgres psql';
 
+function clear-screen()
+{
+    reset;
+}
+
 function git-show-todays-commits()
 {
 	reset;
@@ -693,8 +698,14 @@ function motogp-download-race()
     fi
 }
 
-function gpu-get-specs()
+function get-gpu-specs()
 {
-    reset;
+    clear-screen;
     lspci -v | grep -A19 'VGA compatible controller';
+}
+
+function get-release-info()
+{
+    clear-screen;
+    lsb_release -a 2>/dev/null | grep Description
 }
