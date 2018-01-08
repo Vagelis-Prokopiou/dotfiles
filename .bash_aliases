@@ -219,18 +219,25 @@ function disk-usage() {
     fi
 }
 
-function docker-rm-all()
+# Docker
+function docker-stop-containers()
 {
-    docker rm -f $(docker ps -a -q);
-    docker rmi -f $(docker images --quiet); # -q, --quiet Only show numeric ID
+    docker stop $(docker ps -a -q);
 }
 
 function docker-rm-containers()
 {
+    docker stop $(docker ps -a -q);
     docker rm -f $(docker ps -a -q);
 }
 
+function docker-rm-containers-and-images()
+{
+    docker-rm-containers;
+    docker rmi -f $(docker images --quiet); # -q, --quiet Only show numeric ID
+}
 
+# Drupal functions.
 # Fix "The following module is missing from the file system..."
 # See: https://www.drupal.org/node/2487215
 function drupal-fix-missing-module() {
