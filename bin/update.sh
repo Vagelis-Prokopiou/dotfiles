@@ -58,8 +58,8 @@ function installViber()
 	sudo rm ./viber.deb;
 }
 
-function drush-install-latest() 
-{ 
+function drush-install-latest()
+{
     application="Drush";
     githubUrl="https://github.com/drush-ops/drush/releases";
     latestVersion=$(curl ${githubUrl} | grep '<a href="/drush-ops/drush/releases/download/' | head -1 | sed 's/<a href="\/drush-ops\/drush\/releases\/download\///g; s/\/drush.phar" rel="nofollow">//g; s/ \+//g');
@@ -77,7 +77,7 @@ function drush-install-latest()
     fi
 }
 
-function installComposer() 
+function installComposer()
 {
 	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');";
 	php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;";
@@ -86,14 +86,14 @@ function installComposer()
 	mv composer.phar /usr/local/bin/composer;
 }
 
-function installDrupalConsole() 
+function installDrupalConsole()
 {
 	curl https://drupalconsole.com/installer -L -o drupal.phar;
 	mv drupal.phar /usr/local/bin/drupal;
 	chmod +x /usr/local/bin/drupal;
 }
 
-function installNodeJS() 
+function installNodeJS()
 {
 	curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -;
 	sudo apt install -y nodejs;
@@ -197,6 +197,8 @@ if  $is_initial_install; then
 	sudo a2enmod rewrite;
 	sudo service apache2 restart;
 	sudo apt --fix-broken install;
+	# Fix the upload file size.
+	find /etc -name php.ini -exec sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/g' "{}" \;
 
 	# Grant all privileges to root user.
 	mysql -u root -proot -e "use mysql; update user set password=PASSWORD(\"root\") where User='root'; GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; FLUSH PRIVILEGES;";
