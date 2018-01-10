@@ -219,18 +219,38 @@ function disk-usage() {
     fi
 }
 
-function docker-rm-all()
+# Docker
+function docker-stop-containers()
 {
+    clear-screen;
+    docker stop --time 0 $(docker ps -a -q);
+}
+
+function docker-remove-containers()
+{
+    docker-stop-containers;
     docker rm -f $(docker ps -a -q);
+}
+
+function docker-remove-containers-and-images()
+{
+    docker-remove-containers;
     docker rmi -f $(docker images --quiet); # -q, --quiet Only show numeric ID
 }
 
-function docker-rm-containers()
+function docker-get-container-network-settings()
 {
-    docker rm -f $(docker ps -a -q);
+    if [[ "$1" ]]; then
+        containerID=$(docker ps | grep -i "$1" | awk '{ print $1 }');
+        docker inspect "$containerID" | grep -A50 -i 'networksettings';
+    else
+        echo "Usage: docker-get-container-network-settings <containerName>";
+        echo "The avaiable containers are the following:";
+        docker ps -a;
+    fi
 }
 
-
+# Drupal functions.
 # Fix "The following module is missing from the file system..."
 # See: https://www.drupal.org/node/2487215
 function drupal-fix-missing-module() {
