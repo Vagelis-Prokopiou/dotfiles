@@ -729,3 +729,16 @@ function get-release-info()
     clear-screen;
     lsb_release -a 2>/dev/null | grep Description
 }
+
+function perl-example()
+{
+    echo '';
+    echo "Example 1: curl https://google.com 2>/dev/null | perl -ne 'if (/(302)/) { print \"\$1\\n\" }';";
+    echo "Example 2: perl -ne 'if (/(302)/) { print \"\$1\\n\" }' <file>;";
+    echo "The -e flag provides an inline program to Perl.";
+    echo "The -n flag runs the -e on every input line, without printing the current line. Use -p if you want to print it.";
+    echo "Quantifiers:";
+    echo "  * matching 0 or more occurrence.";
+    echo "  + matching 1 or more occurrence.";
+    echo "  ? matching 0 or 1 occurrence (used for non greedy matches).";
+}
