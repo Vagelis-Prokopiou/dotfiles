@@ -733,8 +733,8 @@ function get-release-info()
 function perl-example()
 {
     echo '';
-    echo "Example 1: curl https://google.com 2>/dev/null | perl -ne 'if (/(302)/) { print \"\$1\\n\" }';";
-    echo "Example 2: perl -ne 'if (/(302)/) { print \"\$1\\n\" }' <file>;";
+    echo "Example 1: curl https://google.com 2> /dev/null | perl -ne 'if (/(302)/) { print \"\$1\\n\" }';";
+    echo "Example 2: perl -ne 'if (/(regexExpression)/) { print \"\$1\\n\" }' <file>;";
     echo "The -e flag provides an inline program to Perl.";
     echo "The -n flag runs the -e on every input line, without printing the current line. Use -p if you want to print it.";
     echo "Quantifiers:";
