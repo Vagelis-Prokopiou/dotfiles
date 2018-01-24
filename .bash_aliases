@@ -19,11 +19,10 @@ fi
 
 # Aliases
 alias code='code --user-data-dir=/tmp';
+alias jetbrains-server='/media/va/local_disk/Dropbox/JetBrains/LicenceServer.v1.3/*amd64';
 alias storm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
 alias datagrip='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/datagrip/bin/datagrip.sh';
 alias localhost='cd /var/www/html';
-
-alias 'test-site'='cd /var/www/html/test/public_html/';
 
 alias tsini='cd /var/www/html/tsinikopoulos/public_html/';
 alias tsinigulp='cd /var/www/html/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
@@ -33,9 +32,6 @@ alias drupalandgulp='cd /var/www/html/drupaland/public_html/themes/drupaland && 
 
 alias rs='cd /var/www/html/riggingservices/public_html/';
 alias rsgulp='cd /var/www/html/riggingservices/public_html/sites/all/themes/skeletontheme_testing && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
-
-alias bnspro='cd /var/www/html/bnspro/public_html/';
-alias bnsprogulp='cd /var/www/html/bnspro/public_html/ && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
 alias om='cd /var/www/html/olympus-marathon/public_html && git status';
 
