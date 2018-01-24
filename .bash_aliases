@@ -52,11 +52,6 @@ alias gstf='git-show-tracked-files';
 # Postgresql
 alias 'psql'='sudo -u postgres psql';
 
-function clear-screen()
-{
-    reset;
-}
-
 function git-show-todays-commits()
 {
 	reset;
@@ -218,7 +213,7 @@ function disk-usage() {
 # Docker
 function docker-stop-containers()
 {
-    clear-screen;
+    reset;
     docker stop --time 0 $(docker ps -a -q);
 }
 
@@ -716,13 +711,13 @@ function motogp-download-race()
 
 function get-gpu-specs()
 {
-    clear-screen;
+    reset;
     lspci -v | grep -A19 'VGA compatible controller';
 }
 
 function get-release-info()
 {
-    clear-screen;
+    reset;
     lsb_release -a 2>/dev/null | grep Description
 }
 
