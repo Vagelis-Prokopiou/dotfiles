@@ -34,6 +34,7 @@ alias rs='cd /var/www/html/riggingservices/public_html/';
 alias rsgulp='cd /var/www/html/riggingservices/public_html/sites/all/themes/skeletontheme_testing && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
 alias om='cd /var/www/html/olympus-marathon/public_html && git status';
+alias contentimport='cd /var/www/html/contentimport && git status';
 
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
 alias karma='su va -c "npm run test:karma"';
