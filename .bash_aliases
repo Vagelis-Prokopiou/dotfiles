@@ -719,7 +719,13 @@ function get-gpu-specs()
 function get-release-info()
 {
     reset;
-    lsb_release -a 2>/dev/null | grep Description
+    lsb_release -a 2>/dev/null | grep Description;
+    mysql --version | awk '{print $5}' | sed 's/,//g';
+}
+
+function get-database-server-info()
+{
+    mysql --version | awk '{print $5}' | sed 's/,//g';
 }
 
 function perl-example()
