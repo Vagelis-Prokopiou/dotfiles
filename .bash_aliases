@@ -616,7 +616,7 @@ function ripgrep-install-latest()
     system="$(uname)";
     ripGrepUrl="https://github.com/BurntSushi/ripgrep/releases";
     latestVersion=$(curl ${ripGrepUrl} 2> /dev/null | grep '<a href="/BurntSushi/ripgrep/tree/' | head -1 | sed 's/" class="css-truncate">//ig;s/<a href="\/BurntSushi\/ripgrep\/tree\///ig;s/ \+//g');
-    installedVersion=$(rg --version | head -1 | sed 's/ripgrep //ig');
+    installedVersion=$(rg --version | head -1 | awk '{print $2}');
     windowsDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-pc-windows-gnu.zip";
     linuxDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-unknown-linux-musl.tar.gz";
 
