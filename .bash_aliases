@@ -631,7 +631,7 @@ function ripgrep-install-latest()
             curl -L -o latestRipGrep.zip.gz "${linuxDownloadUrl}";
             tar xvzf latestRipGrep.zip.gz;
             cp ripgrep-*/rg /usr/local/bin;
-            cp ripgrep-*/complete/rg.bash-completion /etc/bash_completion.d;
+            cp ripgrep-*/complete/rg.bash /etc/bash_completion.d;
         fi
 
         rm -rf latestRipGrep* ripgrep-*;
