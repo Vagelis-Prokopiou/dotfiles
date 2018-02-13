@@ -710,7 +710,7 @@ function motogp-download-race()
     fi
 }
 
-function get-gpu-specs()
+function get-gpu-info()
 {
     reset;
     lspci -v | grep -A19 'VGA compatible controller';
