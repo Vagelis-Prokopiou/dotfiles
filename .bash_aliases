@@ -439,7 +439,19 @@ function web-images() {
 }
 
 # ffmpef stuff
-function ffmpeg-audio-extract() {
+function ffmpeg-subtitles-add() 
+{
+    if [[ "$1" && "$2" ]]; then
+        inputFile="${1}";
+        subtitlesFile="${2}";
+        ffmpeg -i ${inputFile} -i ${subtitlesFile} -c copy -c:s mov_text outfile-with-subs.mp4;
+    else
+        echo "Usage: ffmpeg-subtitles-add <inputFile> <subtitlesFile>";
+    fi
+}
+
+function ffmpeg-audio-extract() 
+{
     # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
     if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
@@ -450,7 +462,8 @@ function ffmpeg-audio-extract() {
     fi
 }
 
-function ffmpeg-audio-replace() {
+function ffmpeg-audio-replace() 
+{
     # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
     if [[ "$1" && "$2" && "$3" ]]; then
         videoFile="${1}";
