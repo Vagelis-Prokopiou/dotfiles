@@ -337,7 +337,7 @@ function vhost-create() {
 
         # Enable the site.
         sudo a2ensite "${domain}.local";
-        # Add the vhost to the vhosts file.   
+        # Add the vhost to the vhosts file.
         echo "127.0.0.1   ${domain}.local" | sudo tee --append /etc/hosts;
         # Restart Apache.
         sudo service apache2 restart;
@@ -439,18 +439,30 @@ function web-images() {
 }
 
 # ffmpef stuff
-function ffmpeg-subtitles-add() 
+function ffmpeg-subtitles-add-soft()
 {
     if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
         subtitlesFile="${2}";
         ffmpeg -i ${inputFile} -i ${subtitlesFile} -c copy -c:s mov_text outfile-with-subs.mp4;
     else
-        echo "Usage: ffmpeg-subtitles-add <inputFile> <subtitlesFile>";
+        echo "Usage: ffmpeg-subtitles-add-soft <inputFile> <subtitlesFile>";
     fi
 }
 
-function ffmpeg-audio-extract() 
+function ffmpeg-subtitles-add-hard()
+{
+    if [[ "$1" && "$2" ]]; then
+        inputFile="${1}";
+        subtitlesFile="${2}";
+        ffmpeg -i ${inputFile} -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
+
+    else
+        echo "Usage: ffmpeg-subtitles-add-hard <inputFile> <subtitlesFile>";
+    fi
+}
+
+function ffmpeg-audio-extract()
 {
     # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
     if [[ "$1" && "$2" ]]; then
@@ -462,7 +474,7 @@ function ffmpeg-audio-extract()
     fi
 }
 
-function ffmpeg-audio-replace() 
+function ffmpeg-audio-replace()
 {
     # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
     if [[ "$1" && "$2" && "$3" ]]; then
@@ -498,7 +510,7 @@ function ffmpeg-video-resize-for-youtube() {
     fi
 }
 
-function ffmpeg-concat-files() 
+function ffmpeg-concat-files()
 {
     # See: http://stackoverflow.com/questions/7333232/concatenate-two-mp4-files-using-ffmpeg
     # The "-safe 0" disables the safe mode due to "unsafe files" error.
@@ -579,7 +591,7 @@ function apt-fix()
 	sudo apt --fix-broken install -y;
 }
 
-function show-non-printing-characters() 
+function show-non-printing-characters()
 {
 	if [[ "$1" ]]; then
 		cat -A "$1";
@@ -588,7 +600,7 @@ function show-non-printing-characters()
 	fi
 }
 
-function convert-to-unix-line-endings() 
+function convert-to-unix-line-endings()
 {
 	if [[ "$1" ]]; then
 		dos2unix "$1";
@@ -605,13 +617,13 @@ function teamviewer-start()
 function firefox-install-latest()
 {
     wget -O FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US";
-    
+
     if [ ! -d "/opt/firefox" ]; then
         sudo mkdir /opt/firefox;
-    else    
+    else
         sudo rm -r /opt/firefox/*;
     fi
-    
+
     tar xjf FirefoxSetup.tar.bz2 -C /opt/firefox/;
 
     if [ ! -f "/usr/lib/firefox-esr/firefox-esr_orig" ]; then
@@ -674,7 +686,7 @@ function drush-install-latest()
     fi
 }
 
-function drupal-rename-module() 
+function drupal-rename-module()
 {
 	if [[ "$3" ]]; then
 		path="$1";
