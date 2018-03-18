@@ -719,6 +719,10 @@ function vscode-black-bg()
 
 function motogp-download-race()
 {
+	# 1. Download the first json file (filter by XHR).
+	# 2. From this json, get the first m3u8, delete the "\" slashes, and go to the url. A new file (master.m3u8) will be downloaded.
+	# 3. Copy the last URL from the master.m3u8 and paste in the browser. Tha final file (index_4_av.m3u8) with get downloaded.
+
     if [[ "$1" ]]; then
 	touch ./motogpFiles.txt;
     counter=1;
