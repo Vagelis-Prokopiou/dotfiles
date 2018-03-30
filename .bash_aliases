@@ -457,9 +457,20 @@ function ffmpeg-subtitles-add-hard()
         inputFile="${1}";
         subtitlesFile="${2}";
         ffmpeg -i ${inputFile} -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
-
     else
         echo "Usage: ffmpeg-subtitles-add-hard <inputFile> <subtitlesFile>";
+    fi
+}
+
+function ffmpeg-video-audio-from-multiple-streams() 
+{
+    if [[ "$1" && "$2" && "$3" ]]; then
+        videoStream="${2}";
+        audioStream="${3}";
+        ffmpeg -i ${inputFile} -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
+        ffmpeg -i ${inputFile} -map 0:$videoStream -map 0:$audioStream -c copy output.mp4
+    else
+        echo "Usage: ffmpeg-video-audio-from-multiple-streams <inputFile> <videoStream> <audioStream>";
     fi
 }
 
