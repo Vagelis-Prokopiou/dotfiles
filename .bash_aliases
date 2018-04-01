@@ -25,6 +25,7 @@ alias datagrip='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/
 alias localhost='cd /var/www/html';
 
 alias bow='cd /var/www/html/bowoodtie.com/public_html/';
+alias peribiblicum='cd /var/www/html/peribiblicum/public_html/';
 alias tsini='cd /var/www/html/tsinikopoulos/public_html/';
 alias tsinigulp='cd /var/www/html/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
 
