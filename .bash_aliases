@@ -20,7 +20,7 @@ fi
 # Aliases
 alias code='code --user-data-dir=/tmp';
 alias phpstorm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
-alias webstorm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/WebStorm/bin/webstorm.sh';
+alias webstorm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/webstorm/bin/webstorm.sh';
 alias datagrip='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/datagrip/bin/datagrip.sh';
 alias 'jetbrains-goland'='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/goland/bin/goland.sh';
 alias 'jetbrains-rider'='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/rider/bin/rider.sh';
