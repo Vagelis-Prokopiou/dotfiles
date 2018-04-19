@@ -6,6 +6,7 @@ mkdir ${user_home}/go/ 2> /dev/null;
 export PATH=$PATH:/usr/local/go/bin;
 export GOPATH=$user_home/go;
 export PATH=$PATH:$GOPATH/bin;
+export PATH=$PATH:~/.cargo/bin;
 
 # Drupal Console
 if [[ -f ~/.console/console.rc ]]; then
@@ -19,12 +20,12 @@ fi
 
 # Aliases
 alias code='code --user-data-dir=/tmp';
-alias phpstorm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/PhpStorm/bin/phpstorm.sh';
-alias webstorm='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/webstorm/bin/webstorm.sh';
-alias datagrip='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/datagrip/bin/datagrip.sh';
-alias clion='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/clion/bin/clion.sh';
-alias 'jetbrains-goland'='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/goland/bin/goland.sh';
-alias 'jetbrains-rider'='echo vadead | sudo -S bash /media/va/52AF7EBE182A63E2/jetbrains/rider/bin/rider.sh';
+alias phpstorm='echo vadead | sudo -S bash /home/va/jetbrains/PhpStorm/bin/phpstorm.sh';
+alias webstorm='echo vadead | sudo -S bash /home/va/jetbrains/webstorm/bin/webstorm.sh';
+alias datagrip='echo vadead | sudo -S bash /home/va/jetbrains/datagrip/bin/datagrip.sh';
+alias clion='echo vadead | sudo -S bash /home/va/jetbrains/clion/bin/clion.sh';
+alias 'jetbrains-goland'='echo vadead | sudo -S bash /home/va/jetbrains/goland/bin/goland.sh';
+alias 'jetbrains-rider'='echo vadead | sudo -S bash /home/va/jetbrains/rider/bin/rider.sh';
 alias localhost='cd /var/www/html';
 
 alias bow='cd /var/www/html/bowoodtie.com/public_html/';

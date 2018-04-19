@@ -1,3 +1,10 @@
+.GoLand*
+.WebStorm*
+.cargo/
+.multirust
+.node-gyp/
+.phpls/
+.rustup/
 .android/
 .aptitude/
 .audacity-data/
