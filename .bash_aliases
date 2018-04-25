@@ -259,6 +259,20 @@ function drupal-fix-missing-module() {
     fi
 }
 
+function drupal-install()
+{
+    git clone https://github.com/drupal-composer/drupal-project.git . ;
+    sed -i 's|"web/|"./|g' composer.json;
+    composer install;
+    chown -R www-data:www-data . ;
+    rm -rf .git;
+    git init;
+
+    if [[ "$1" ]]; then
+        mysql -u'root' -p'root' -e "DROP DATABASE IF EXISTS $1; CREATE DATABASE $1;";
+    fi
+}
+
 function dbs-import() {
     cd  /media/va/local_disk/Dropbox/dbs/*/;
     for db in *; do
