@@ -264,6 +264,7 @@ function drupal-install()
     git clone https://github.com/drupal-composer/drupal-project.git . ;
     sed -i 's|"web/|"./|g' composer.json;
     composer install;
+    sed -i 's|/web/|/|g' .gitignore;
     chown -R www-data:www-data . ;
     rm -rf .git;
     git init;
