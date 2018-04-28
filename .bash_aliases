@@ -18,6 +18,11 @@ if [[ -f ~/git-completion.bash ]]; then
     . ~/git-completion.bash;
 fi
 
+# Site aliases
+if [[ -f ~/site_aliases ]]; then
+    . ~/site_aliases;
+fi
+
 # Aliases
 alias code='code --user-data-dir=/tmp';
 alias phpstorm='echo vadead | sudo -S bash /home/va/jetbrains/PhpStorm/bin/phpstorm.sh';
@@ -26,22 +31,6 @@ alias datagrip='echo vadead | sudo -S bash /home/va/jetbrains/datagrip/bin/datag
 alias clion='echo vadead | sudo -S bash /home/va/jetbrains/clion/bin/clion.sh';
 alias 'jetbrains-goland'='echo vadead | sudo -S bash /home/va/jetbrains/goland/bin/goland.sh';
 alias 'jetbrains-rider'='echo vadead | sudo -S bash /home/va/jetbrains/rider/bin/rider.sh';
-alias localhost='cd /var/www/html';
-
-alias bow='cd /var/www/html/bowoodtie.com/public_html/';
-alias peribiblicum='cd /var/www/html/peribiblicum/public_html/';
-alias tsini='cd /var/www/html/tsinikopoulos/public_html/';
-alias tsinigulp='cd /var/www/html/tsinikopoulos/public_html/sites/all/themes/tsinikopoulos && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
-
-alias drupaland='cd /var/www/html/drupaland/public_html/';
-alias drupalandgulp='cd /var/www/html/drupaland/public_html/themes/drupaland && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
-
-alias rs='cd /var/www/html/riggingservices/public_html/';
-alias rsgulp='cd /var/www/html/riggingservices/public_html/sites/all/themes/skeletontheme_testing && sudo find /usr/lib/node_modules -type f -name "*.info" -exec sudo rm "{}" \+ && modules=$(ls /usr/lib/node_modules) && npm link $modules && gulp';
-
-alias om='cd /var/www/html/olympus-marathon/public_html && git status';
-alias contentimport='cd /var/www/html/contentimport && git status';
-
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
 alias karma='su va -c "npm run test:karma"';
 
