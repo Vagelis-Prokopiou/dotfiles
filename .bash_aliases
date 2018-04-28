@@ -19,8 +19,8 @@ if [[ -f ~/git-completion.bash ]]; then
 fi
 
 # Site aliases
-if [[ -f ~/.site_aliases ]]; then
-    . ~/.site_aliases;
+if [[ -f ~/.sites_aliases ]]; then
+    . ~/.sites_aliases;
 fi
 
 # Aliases
