@@ -250,6 +250,8 @@ function drupal-fix-missing-module() {
 
 function drupal-install()
 {
+    rm -rf ./*;
+    rm -rf ./.*;
     git clone https://github.com/drupal-composer/drupal-project.git . ;
     sed -i 's|"web/|"./|g' composer.json;
     composer install;
@@ -257,6 +259,8 @@ function drupal-install()
     chown -R www-data:www-data . ;
     rm -rf .git;
     git init;
+    git add .;
+    git commit -m 'Initial commit';
 
     if [[ "$1" ]]; then
         mysql -u'root' -p'root' -e "DROP DATABASE IF EXISTS $1; CREATE DATABASE $1;";
