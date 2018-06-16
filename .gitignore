@@ -103,3 +103,15 @@ projects
 .npmrc
 Music/
 .site_aliases
+.Rider2017.3/
+.dotnet/
+.nuget/
+.pgpass
+.sites_aliases
+.templateengine/
+.v8flags.6.2.414.54.43b1cc1db7be63d899dd4280f578691a.json
+.vsts/
+Desktop/
+RiderProjects/
+jetbrains/
+pgadmin.log
