@@ -481,6 +481,24 @@ function ffmpeg-subtitles-add-hard()
     fi
 }
 
+function ffmpeg-subtitles-extract-from-mkv() 
+{
+    if [[ $1 ]]; then
+        inputFile=$1;
+        subtitles=$(ffprobe $inputFile |& grep Subtitle | awk '{ print $2 }' | sed 's/#//; s/):/)/');
+
+        for i in $subtitles; do
+            stream=$(echo $i | sed "s|(.*||");
+            language=$(echo $i | sed "s|^.*(||; s|)||");
+            echo "Stream: $stream";
+            echo "Language: $language";
+            ffmpeg -y -i "$inputFile" -map "$stream" "$inputFile-$language.srt";
+        done;
+    else
+        echo 'Usage: ffmpeg-subtitles-extract-from-mkv <inputFile>';
+    fi
+}
+
 function ffmpeg-video-audio-from-multiple-streams() 
 {
     if [[ "$1" && "$2" && "$3" ]]; then
