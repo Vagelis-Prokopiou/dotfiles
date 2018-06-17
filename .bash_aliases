@@ -490,8 +490,6 @@ function ffmpeg-subtitles-extract-from-mkv()
         for i in $subtitles; do
             stream=$(echo $i | sed "s|(.*||");
             language=$(echo $i | sed "s|^.*(||; s|)||");
-            echo "Stream: $stream";
-            echo "Language: $language";
             ffmpeg -y -i "$inputFile" -map "$stream" "$inputFile-$language.srt";
         done;
     else
