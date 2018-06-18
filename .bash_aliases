@@ -509,6 +509,15 @@ function ffmpeg-video-audio-from-multiple-streams()
     fi
 }
 
+function ffmpeg-video-extract-from-DVD()
+{
+    echo '1. Find out which VOB files contain the movie.';
+    echo '2. Find out which streams are the video and audio (with ffprobe. E.g.: ffprobe VTS_01_1.VOB |& grep Stream).';
+    echo '3. Run the resulting command. E.g.: ffmpeg -i "concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB" -map 0:1 -map 0:4 -f mpeg -c copy concatenated.mpeg'
+    echo '';
+    echo 'For more info checkout https://newspaint.wordpress.com/2016/07/27/ripping-a-video-from-dvd-using-ffmpeg/';
+}
+
 function ffmpeg-audio-extract()
 {
     # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
