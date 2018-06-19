@@ -464,7 +464,7 @@ function ffmpeg-subtitles-add-soft()
     if [[ "$1" && "$2" ]]; then
         videoFile="${1}";
         subtitlesFile="${2}";
-        ffmpeg -i "${videoFile}" -i ${subtitlesFile} -c copy -c:s mov_text outfile-with-subs.mp4;
+        ffmpeg -i "${videoFile}" -i ${subtitlesFile} -c copy -c:s mov_text output.mp4;
     else
         echo "Usage: ffmpeg-subtitles-add-soft <videoFile> <subtitlesFile>";
     fi
@@ -475,7 +475,7 @@ function ffmpeg-subtitles-add-hard()
     if [[ "$1" && "$2" ]]; then
         videoFile="${1}";
         subtitlesFile="${2}";
-        ffmpeg -i "${videoFile}" -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
+        ffmpeg -i "${videoFile}" -vf subtitles="${subtitlesFile}" output.mp4;
     else
         echo "Usage: ffmpeg-subtitles-add-hard <videoFile> <subtitlesFile>";
     fi
@@ -504,7 +504,7 @@ function ffmpeg-video-audio-from-multiple-streams()
         videoStream="${2}";
         audioStream="${3}";
         ffmpeg -i "${videoFile}" -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
-        ffmpeg -i "${videoFile}" -map 0:$videoStream -map 0:$audioStream -c copy output.mp4
+        ffmpeg -i "${videoFile}" -map 0:$videoStream -map 0:$audioStream -c copy output.mp4;
     else
         echo "Usage: ffmpeg-video-audio-from-multiple-streams <videoFile> <videoStream> <audioStream>";
     fi
@@ -523,7 +523,10 @@ function ffmpeg-dvd-create()
 {
     if [[ "$1" ]]; then
         videoFile=$1;
-        ffmpeg -i "${videoFile}" -target pal-dvd "${videoFile}"-dvd;
+        ffmpeg -i "${videoFile}" -target pal-dvd dvd-video.mpg;
+        export VIDEO_FORMAT=PAL;
+        dvdauthor -o dvd-folder -t dvd-video.mpg;
+        dvdauthor -o dvd-folder -T;
     else
         echo "Usage: ffmpeg-dvd-create <videoFile>";
     fi
