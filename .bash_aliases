@@ -464,7 +464,7 @@ function ffmpeg-subtitles-add-soft()
     if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
         subtitlesFile="${2}";
-        ffmpeg -i ${inputFile} -i ${subtitlesFile} -c copy -c:s mov_text outfile-with-subs.mp4;
+        ffmpeg -i "${inputFile}" -i ${subtitlesFile} -c copy -c:s mov_text outfile-with-subs.mp4;
     else
         echo "Usage: ffmpeg-subtitles-add-soft <inputFile> <subtitlesFile>";
     fi
@@ -475,7 +475,7 @@ function ffmpeg-subtitles-add-hard()
     if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
         subtitlesFile="${2}";
-        ffmpeg -i ${inputFile} -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
+        ffmpeg -i "${inputFile}" -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
     else
         echo "Usage: ffmpeg-subtitles-add-hard <inputFile> <subtitlesFile>";
     fi
@@ -485,12 +485,12 @@ function ffmpeg-subtitles-extract-from-mkv()
 {
     if [[ $1 ]]; then
         inputFile=$1;
-        subtitles=$(ffprobe $inputFile |& grep Subtitle | awk '{ print $2 }' | sed 's/#//; s/):/)/');
+        subtitles=$(ffprobe "${inputFile}" |& grep Subtitle | awk '{ print $2 }' | sed 's/#//; s/):/)/');
 
         for i in $subtitles; do
             stream=$(echo $i | sed "s|(.*||");
             language=$(echo $i | sed "s|^.*(||; s|)||");
-            ffmpeg -y -i "$inputFile" -map "$stream" "$inputFile-$language.srt";
+            ffmpeg -y -i ""${inputFile}"" -map "$stream" ""${inputFile}"-$language.srt";
         done;
     else
         echo 'Usage: ffmpeg-subtitles-extract-from-mkv <inputFile>';
@@ -500,16 +500,17 @@ function ffmpeg-subtitles-extract-from-mkv()
 function ffmpeg-video-audio-from-multiple-streams() 
 {
     if [[ "$1" && "$2" && "$3" ]]; then
+        inputFile=${1};
         videoStream="${2}";
         audioStream="${3}";
-        ffmpeg -i ${inputFile} -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
-        ffmpeg -i ${inputFile} -map 0:$videoStream -map 0:$audioStream -c copy output.mp4
+        ffmpeg -i "${inputFile}" -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
+        ffmpeg -i "${inputFile}" -map 0:$videoStream -map 0:$audioStream -c copy output.mp4
     else
         echo "Usage: ffmpeg-video-audio-from-multiple-streams <inputFile> <videoStream> <audioStream>";
     fi
 }
 
-function ffmpeg-video-extract-from-DVD()
+function ffmpeg-video-extract-from-dvd()
 {
     echo '1. Find out which VOB files contain the movie.';
     echo '2. Find out which streams are the video and audio (with ffprobe. E.g.: ffprobe VTS_01_1.VOB |& grep Stream).';
@@ -518,13 +519,23 @@ function ffmpeg-video-extract-from-DVD()
     echo 'For more info checkout https://newspaint.wordpress.com/2016/07/27/ripping-a-video-from-dvd-using-ffmpeg/';
 }
 
+function ffmpeg-dvd-create()
+{
+    if [[ "$1" ]]; then
+        inputFile=$1;
+        ffmpeg -i "${inputFile}" -target pal-dvd "${inputFile}"-dvd;
+    else
+        echo "Usage: ffmpeg-dvd-create <inputFile>";
+    fi
+}
+
 function ffmpeg-audio-extract()
 {
     # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
     if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
         outputFile="${2}";
-        ffmpeg -i ${inputFile} -vn -acodec copy ${outputFile};
+        ffmpeg -i "${inputFile}" -vn -acodec copy "${outputFile}";
     else
         echo "Usage: ffmpeg-audio-extract <inputFile> <outputFile>";
     fi
@@ -537,7 +548,7 @@ function ffmpeg-audio-replace()
         videoFile="${1}";
         audioFile="${2}";
         outputFile="${3}";
-        ffmpeg -i ${videoFile} -i ${audioFile} -c:v copy -map 0:v:0 -map 1:a:0 ${outputFile};
+        ffmpeg -i ${videoFile} -i ${audioFile} -c:v copy -map 0:v:0 -map 1:a:0 "${outputFile}";
     else
         echo "Usage: ffmpeg-audio-replace <videoFile> <audioFile> <outputFile>";
     fi
@@ -549,7 +560,7 @@ function ffmpeg-video-resize() {
         inputFile="${1}";
         scaleSize="${2}";
         outputFile="${3}";
-        ffmpeg -i ${inputFile} -vf scale=${scaleSize}:-1 ${outputFile};
+        ffmpeg -i "${inputFile}" -vf scale=${scaleSize}:-1 "${outputFile}";
     else
         echo "Usage: ffmpeg-video-resize <inputFile> <scaleSize> <outputFile>";
     fi
@@ -560,7 +571,7 @@ function ffmpeg-video-resize-for-youtube() {
     if [[ "$1" && "$2" ]]; then
         inputFile="${1}";
         outputFile="${2}";
-        ffmpeg -i ${inputFile} -vf scale=854:480 ${outputFile};
+        ffmpeg -i "${inputFile}" -vf scale=854:480 "${outputFile}";
     else
         echo "Usage: ffmpeg-video-resize-for-youtube <inputFile> <outputFile>";
     fi
@@ -573,7 +584,7 @@ function ffmpeg-concat-files()
     if [[ "$1" && "$2" ]]; then
         filesList="${1}";
         outputFile="${2}";
-        ffmpeg -f concat -safe 0 -i ${filesList} -codec copy ${outputFile};
+        ffmpeg -f concat -safe 0 -i "${filesList}" -codec copy "${outputFile}";
     else
         echo "";
         echo "Usage: ffmpeg-concat-files <filesList.txt> <outputFile>";
