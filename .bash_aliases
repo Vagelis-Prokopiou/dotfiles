@@ -783,7 +783,7 @@ function motogp-download-race()
     counter=1;
     while read line; do
         if [[ "$line" == "http"*  ]]; then
-            curl -o ${counter}.mp4 "$line";
+            curl --silent -o ${counter}.mp4 "$line";
 			echo "file ${counter}.mp4" >> ./motogpFiles.txt;
             ((counter++));
         fi
