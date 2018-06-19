@@ -462,51 +462,51 @@ function ffmpeg-record-with-audio()
 function ffmpeg-subtitles-add-soft()
 {
     if [[ "$1" && "$2" ]]; then
-        inputFile="${1}";
+        videoFile="${1}";
         subtitlesFile="${2}";
-        ffmpeg -i "${inputFile}" -i ${subtitlesFile} -c copy -c:s mov_text outfile-with-subs.mp4;
+        ffmpeg -i "${videoFile}" -i ${subtitlesFile} -c copy -c:s mov_text outfile-with-subs.mp4;
     else
-        echo "Usage: ffmpeg-subtitles-add-soft <inputFile> <subtitlesFile>";
+        echo "Usage: ffmpeg-subtitles-add-soft <videoFile> <subtitlesFile>";
     fi
 }
 
 function ffmpeg-subtitles-add-hard()
 {
     if [[ "$1" && "$2" ]]; then
-        inputFile="${1}";
+        videoFile="${1}";
         subtitlesFile="${2}";
-        ffmpeg -i "${inputFile}" -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
+        ffmpeg -i "${videoFile}" -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
     else
-        echo "Usage: ffmpeg-subtitles-add-hard <inputFile> <subtitlesFile>";
+        echo "Usage: ffmpeg-subtitles-add-hard <videoFile> <subtitlesFile>";
     fi
 }
 
 function ffmpeg-subtitles-extract-from-mkv() 
 {
     if [[ $1 ]]; then
-        inputFile=$1;
-        subtitles=$(ffprobe "${inputFile}" |& grep Subtitle | awk '{ print $2 }' | sed 's/#//; s/):/)/');
+        videoFile=$1;
+        subtitles=$(ffprobe "${videoFile}" |& grep Subtitle | awk '{ print $2 }' | sed 's/#//; s/):/)/');
 
         for i in $subtitles; do
             stream=$(echo $i | sed "s|(.*||");
             language=$(echo $i | sed "s|^.*(||; s|)||");
-            ffmpeg -y -i ""${inputFile}"" -map "$stream" ""${inputFile}"-$language.srt";
+            ffmpeg -y -i ""${videoFile}"" -map "$stream" ""${videoFile}"-$language.srt";
         done;
     else
-        echo 'Usage: ffmpeg-subtitles-extract-from-mkv <inputFile>';
+        echo 'Usage: ffmpeg-subtitles-extract-from-mkv <videoFile>';
     fi
 }
 
 function ffmpeg-video-audio-from-multiple-streams() 
 {
     if [[ "$1" && "$2" && "$3" ]]; then
-        inputFile=${1};
+        videoFile=${1};
         videoStream="${2}";
         audioStream="${3}";
-        ffmpeg -i "${inputFile}" -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
-        ffmpeg -i "${inputFile}" -map 0:$videoStream -map 0:$audioStream -c copy output.mp4
+        ffmpeg -i "${videoFile}" -vf subtitles=${subtitlesFile} outfile-with-subs.mp4;
+        ffmpeg -i "${videoFile}" -map 0:$videoStream -map 0:$audioStream -c copy output.mp4
     else
-        echo "Usage: ffmpeg-video-audio-from-multiple-streams <inputFile> <videoStream> <audioStream>";
+        echo "Usage: ffmpeg-video-audio-from-multiple-streams <videoFile> <videoStream> <audioStream>";
     fi
 }
 
@@ -522,10 +522,10 @@ function ffmpeg-video-extract-from-dvd()
 function ffmpeg-dvd-create()
 {
     if [[ "$1" ]]; then
-        inputFile=$1;
-        ffmpeg -i "${inputFile}" -target pal-dvd "${inputFile}"-dvd;
+        videoFile=$1;
+        ffmpeg -i "${videoFile}" -target pal-dvd "${videoFile}"-dvd;
     else
-        echo "Usage: ffmpeg-dvd-create <inputFile>";
+        echo "Usage: ffmpeg-dvd-create <videoFile>";
     fi
 }
 
@@ -533,11 +533,11 @@ function ffmpeg-audio-extract()
 {
     # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
     if [[ "$1" && "$2" ]]; then
-        inputFile="${1}";
+        videoFile="${1}";
         outputFile="${2}";
-        ffmpeg -i "${inputFile}" -vn -acodec copy "${outputFile}";
+        ffmpeg -i "${videoFile}" -vn -acodec copy "${outputFile}";
     else
-        echo "Usage: ffmpeg-audio-extract <inputFile> <outputFile>";
+        echo "Usage: ffmpeg-audio-extract <videoFile> <outputFile>";
     fi
 }
 
@@ -557,23 +557,23 @@ function ffmpeg-audio-replace()
 function ffmpeg-video-resize() {
     # https://trac.ffmpeg.org/wiki/Scaling%20(resizing)%20with%20ffmpeg
     if [[ "$1" && "$2" && "$3" ]]; then
-        inputFile="${1}";
+        videoFile="${1}";
         scaleSize="${2}";
         outputFile="${3}";
-        ffmpeg -i "${inputFile}" -vf scale=${scaleSize}:-1 "${outputFile}";
+        ffmpeg -i "${videoFile}" -vf scale=${scaleSize}:-1 "${outputFile}";
     else
-        echo "Usage: ffmpeg-video-resize <inputFile> <scaleSize> <outputFile>";
+        echo "Usage: ffmpeg-video-resize <videoFile> <scaleSize> <outputFile>";
     fi
 }
 
 function ffmpeg-video-resize-for-youtube() {
     # https://trac.ffmpeg.org/wiki/Scaling%20(resizing)%20with%20ffmpeg
     if [[ "$1" && "$2" ]]; then
-        inputFile="${1}";
+        videoFile="${1}";
         outputFile="${2}";
-        ffmpeg -i "${inputFile}" -vf scale=854:480 "${outputFile}";
+        ffmpeg -i "${videoFile}" -vf scale=854:480 "${outputFile}";
     else
-        echo "Usage: ffmpeg-video-resize-for-youtube <inputFile> <outputFile>";
+        echo "Usage: ffmpeg-video-resize-for-youtube <videoFile> <outputFile>";
     fi
 }
 
