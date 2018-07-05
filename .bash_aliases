@@ -29,6 +29,7 @@ alias phpstorm='echo vadead | sudo -S bash /home/va/jetbrains/PhpStorm/bin/phpst
 alias webstorm='echo vadead | sudo -S bash /home/va/jetbrains/webstorm/bin/webstorm.sh';
 alias datagrip='echo vadead | sudo -S bash /home/va/jetbrains/datagrip/bin/datagrip.sh';
 alias clion='echo vadead | sudo -S bash /home/va/jetbrains/clion/bin/clion.sh';
+alias 'jetbrains-idea'='echo vadead | sudo -S bash /home/va/jetbrains/idea/bin/idea.sh';
 alias 'jetbrains-goland'='echo vadead | sudo -S bash /home/va/jetbrains/goland/bin/goland.sh';
 alias 'jetbrains-rider'='echo vadead | sudo -S bash /home/va/jetbrains/rider/bin/rider.sh';
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
