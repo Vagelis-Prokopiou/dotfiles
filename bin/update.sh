@@ -288,3 +288,5 @@ fi
 
 # Manipulate services.
 sudo service bluetooth stop;
+
+sudo /root/.cargo/bin/rustup update;
