@@ -842,7 +842,8 @@ function perl-example()
 function string-to-binary()
 {
     if [[ "$1" ]]; then
-        echo "$1" | xxd -b | sed "s/00000000:\s*//g; s/ 00001010//g; s/\.//; s/\s*$1/ -> $1/";
+        # 00001010 = 10 = new line
+        echo "$1" | xxd -b | sed "s/00000000:\s*//g; s/\s*00001010//g; s/\.//; s/\s*$1/ -> $1/";
     else
         echo 'Usage: string-to-binary <string>'
     fi
@@ -851,7 +852,8 @@ function string-to-binary()
 function string-to-hex()
 {
     if [[ "$1" ]]; then
-        echo "$1" | xxd | sed "s/00000000:\s*//g; s/\.//; s/\s*$1/ -> $1/";
+        # 0a || 0A = 10 = new line
+        echo "$1" | xxd | sed "s/00000000:\s*//g; s/\s*0[aA]//g; s/\.//; s/\s*$1/ -> $1/";
     else
         echo 'Usage: string-to-hex <string>'
     fi
