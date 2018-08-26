@@ -26,6 +26,7 @@ fi
 # Aliases
 alias code='code --user-data-dir=/tmp';
 alias phpstorm='echo vadead | sudo -S bash /home/va/jetbrains/PhpStorm/bin/phpstorm.sh';
+alias webstorm='echo vadead | sudo -S bash /home/va/jetbrains/WebStorm/bin/webstorm.sh';
 alias datagrip='echo vadead | sudo -S bash /home/va/jetbrains/datagrip/bin/datagrip.sh';
 alias clion='echo vadead | sudo -S bash /home/va/jetbrains/clion/bin/clion.sh';
 alias idea='echo vadead | sudo -S bash /home/va/jetbrains/idea/bin/idea.sh';
