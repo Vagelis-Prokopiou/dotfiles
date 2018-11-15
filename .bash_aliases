@@ -256,6 +256,7 @@ function drupal-install()
     sed -i 's|"web/|"./|g' composer.json;
     composer install;
     sed -i 's|/web/|/|g' .gitignore;
+    mkdir -p config/sync;
     chown -R www-data:www-data . ;
     rm -rf .git;
     git init;
