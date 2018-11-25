@@ -610,6 +610,40 @@ function youtube-dl-best-quality() {
 	fi
 }
 
+function youtube-dl-best-quality-multiple-files() {
+	if [[ "${1}" ]]; then
+		targetFolder='mp4Folder';
+		mkdir "${targetFolder}";
+
+	    # Download
+	    cat "$1" | while read line;
+	    do
+	        youtube-dl-best-quality "${line}";
+	    done;
+
+	    # Remove non-valid characters
+	    find . -type f | grep -v txt | while read file;
+	    do
+	        mv "${file}" $(echo "${file}" | sed -e 's/[^A-Za-z0-9._-]//g');
+	    done;
+
+	    # Unhidde them if they got hidden. Todo: Check if this is ok in conjuction with the above command.
+	    find . -type f | grep -v txt | while read file; 
+	    do 
+	    	mv "${file}" $(echo "${file}" | sed -e 's|^./._|./|');
+	    done;
+	    # find . -type f | grep -v txt | while read file; do mv "${file}" $(echo "${file}" | sed -e 's|^./...|./|'); done;
+
+	    # Convert to mp4
+	    find . -type f | grep -v txt | while read file;
+	    do
+	        ffmpeg -i "${file}" ./"${targetFolder}"/"${file%.*}.mp4";
+	    done;
+	else
+	    echo "Usage: youtube-dl-best-quality-multiple-files <filename>"
+	fi
+}
+
 function youtube-dl-best-quality-audio() {
 	if [[ "${1}" ]]; then
 		youtube-dl -f 251 "${1}";
