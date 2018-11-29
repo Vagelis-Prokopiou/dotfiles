@@ -257,6 +257,8 @@ else
 	# Update Drupal Console.
 	sudo drupal self-update;
 
+	sudo youtube-dl --update;
+
 	# Remove the torrent files from Downloads.
 	rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 fi
