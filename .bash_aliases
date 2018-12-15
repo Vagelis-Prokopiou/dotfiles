@@ -188,7 +188,7 @@ function clean-filenames()
 {
 	find ./ -type f | while read file;
 	do 
-		mv $(echo "$file" | sed 's/^.\///') $(echo "$file" | sed 's/[^A-Za-z0-9._-]/_/g; s/^._//; s/-[a-zA-Z0-9]*\././');
+		mv $(echo "$file" | sed 's/^.\///') $(echo "$file" | sed 's/[^A-Za-z0-9._-]/_/g; s/^._//; s/-*[a-zA-Z0-9]*\././');
 	done;
 }
 
@@ -462,7 +462,13 @@ function web-images() {
 }
 
 # ffmpef stuff
-function ffmpeg-record-with-audio() 
+function ffmpeg-convert-to-mp4()
+{
+	mkdir mp4Folder;
+	for file in $(find ./ -type f); do ffmpeg -i "$file" ./mp4Folder/"${file%.*}.mp4"; done;
+}
+
+function ffmpeg-record-with-audio()
 {
 	cd ~/Videos;
 	ffmpeg -video_size 1920x1080 -framerate 25 -f x11grab -i :1.0 -f pulse -ac 2 -i default recording.mp4;
