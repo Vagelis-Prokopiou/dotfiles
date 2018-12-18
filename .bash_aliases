@@ -553,9 +553,9 @@ function ffmpeg-audio-extract()
     if [[ "$1" && "$2" ]]; then
         videoFile="${1}";
         outputFile="${2}";
-        ffmpeg -i "${videoFile}" -vn -acodec copy "${outputFile}.aac";
+        ffmpeg -i "${videoFile}" -vn -acodec copy "${outputFile}.m4a";
     else
-        echo "Usage: ffmpeg-audio-extract <videoFile> <outputFile.aac>";
+        echo "Usage: ffmpeg-audio-extract <videoFile> <outputFile.m4a>";
     fi
 }
 
