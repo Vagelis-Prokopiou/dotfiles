@@ -186,10 +186,10 @@ fi
 # General functions.
 function clean-filenames()
 {
-	find ./ -type f | while read file;
-	do 
-		mv $(echo "$file" | sed 's/^.\///') $(echo "$file" | sed 's/[^A-Za-z0-9._-]/_/g; s/^._//; s/-*[a-zA-Z0-9]*\././');
-	done;
+	find . -type f | while read file;
+    do
+        mv "${file}" $(echo "${file}" | sed -e 's/[^A-Za-z0-9._-]/_/g; s/^._//; s/_\+/_/g; s/-\+/-/g; s/_-_/_/g; s/-*[a-zA-Z0-9]*\././g');
+    done;
 }
 
 # Create a report from a GA csv.
@@ -624,37 +624,16 @@ function youtube-dl-best-quality() {
 	fi
 }
 
-function youtube-dl-best-quality-multiple-files() {
+function youtube-dl-best-quality-for-sony-usb() {
 	if [[ "${1}" ]]; then
-		targetFolder='mp4Folder';
-		mkdir "${targetFolder}";
+		for video in $(cat "${1}");
+		do
+			youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 "$video";
+		done
 
-	    # Download
-	    cat "$1" | while read line;
-	    do
-	        youtube-dl-best-quality "${line}";
-	    done;
-
-	    # Remove non-valid characters
-	    find . -type f | grep -v txt | while read file;
-	    do
-	        mv "${file}" $(echo "${file}" | sed -e 's/[^A-Za-z0-9._-]//g');
-	    done;
-
-	    # Unhidde them if they got hidden. Todo: Check if this is ok in conjuction with the above command.
-	    find . -type f | grep -v txt | while read file; 
-	    do 
-	    	mv "${file}" $(echo "${file}" | sed -e 's|^./._|./|');
-	    done;
-	    # find . -type f | grep -v txt | while read file; do mv "${file}" $(echo "${file}" | sed -e 's|^./...|./|'); done;
-
-	    # Convert to mp4
-	    find . -type f | grep -v txt | while read file;
-	    do
-	        ffmpeg -i "${file}" ./"${targetFolder}"/"${file%.*}.mp4";
-	    done;
+		clean-filenames;
 	else
-	    echo "Usage: youtube-dl-best-quality-multiple-files <filename>"
+		echo "Usage: youtube-dl-best-quality-for-sony-usb <file>";
 	fi
 }
 
