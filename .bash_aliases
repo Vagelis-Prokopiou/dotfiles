@@ -329,6 +329,14 @@ function dbs-export() {
 
 # Vhosts
 function vhost-create() {
+	if [ ! -f /etc/ssl/certs/ssl-cert-snakeoil.pem ] || [ ! -f /etc/ssl/private/ssl-cert-snakeoil.key ]; then
+		echo -e 'Installing ssl-cert...\n';
+		sudo apt install ssl-cert;
+		
+		echo -e 'Generating certificate...\n';
+		sudo make-ssl-cert generate-default-snakeoil --force-overwrite;
+	fi
+
     if [[ "$1" ]]; then
       base_path='/var/www/html';
       domain="$1";
@@ -342,8 +350,13 @@ function vhost-create() {
 
         # Create the Apache config files.
         echo "
-<VirtualHost *:80>
+<VirtualHost *:443>
     # Enable the site with sudo a2ensite site_name && sudo /etc/init.d/apache2 restart
+
+    SSLEngine On
+    SSLCertificateFile  /etc/ssl/certs/ssl-cert-snakeoil.pem
+    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+
     ServerName ${domain}.local
     ServerAlias www.${domain}.local
     ServerAdmin ${domain}@localhost
