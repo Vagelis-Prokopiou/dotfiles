@@ -27,7 +27,7 @@ fi
 alias code='code --user-data-dir=/tmp';
 alias phpstorm='echo vadead | sudo -S bash /home/va/jetbrains/PhpStorm/bin/phpstorm.sh';
 alias webstorm='echo vadead | sudo -S bash /home/va/jetbrains/WebStorm/bin/webstorm.sh';
-alias datagrip='echo vadead | sudo -S bash /home/va/jetbrains/datagrip/bin/datagrip.sh';
+alias datagrip='echo vadead | sudo -S bash /home/va/jetbrains/DataGrip/bin/datagrip.sh';
 alias clion='echo vadead | sudo -S bash /home/va/jetbrains/clion/bin/clion.sh';
 alias idea='echo vadead | sudo -S bash /home/va/jetbrains/idea/bin/idea.sh';
 alias rider='echo vadead | sudo -S bash /home/va/jetbrains/rider/bin/rider.sh';
@@ -258,22 +258,24 @@ function drupal-fix-missing-module() {
 
 function drupal-install()
 {
+	user_pass='root';
     rm -rf ./*;
     rm -rf ./.*;
     git clone https://github.com/drupal-composer/drupal-project.git . ;
     sed -i 's|"web/|"./|g' composer.json;
     composer install;
     sed -i 's|/web/|/|g' .gitignore;
-    mkdir -p config/sync;
-    chown -R www-data:www-data . ;
     rm -rf .git;
     git init;
+    chown -R www-data:www-data . ;
     git add .;
     git commit -m 'Initial commit';
 
     if [[ "$1" ]]; then
-        mysql -u'root' -p'root' -e "DROP DATABASE IF EXISTS $1; CREATE DATABASE $1;";
+        mysql -u${user_pass} -p${user_pass} -e "DROP DATABASE IF EXISTS $1; CREATE DATABASE $1;";
     fi
+
+    drush si -y --db-url=mysql://root:root@localhost:3306/${1} --account-name ${user_pass} --account-pass ${user_pass};
 }
 
 function dbs-import() {
