@@ -405,8 +405,11 @@ function vhost-delete() {
             # Clean the /etc/hosts
             sudo sed -i "/${domain}/d" /etc/hosts;
 
+            # Drop the database.
+            mysql -u root -proot --execute "DROP DATABASE IF EXISTS ${1};";
+
             # Restart Apache.
-            sudo service apache2 restart;
+            sudo systemctl restart apache2;
             echo "The ${domain}.local vhost was deleted successfully.";
             echo "Apache was restarted. All set.";
         else
