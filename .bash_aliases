@@ -905,3 +905,33 @@ function string-to-hex()
         echo 'Usage: string-to-hex <string>'
     fi
 }
+
+function drupal-module-rename() {
+    if [ -z "$2" ]; then
+        echo "Usage: module-rename <old-module-name> <new-module-name>";        
+    else
+        old_name="$1";
+        path=$(find . -type d -name ${old_name});
+        new_name="$2";
+        new_path=$(echo "$path" | sed "s/$old_name/$new_name/g");
+        old_name_upper_first_char="$(tr '[:lower:]' '[:upper:]' <<< ${old_name:0:1})${old_name:1}";
+        new_name_upper_first_char="$(tr '[:lower:]' '[:upper:]' <<< ${new_name:0:1})${new_name:1}";
+        old_name_upper=$(echo "$old_name" | awk '{ print toupper($0) }');
+        new_name_upper=$(echo "$new_name" | awk '{ print toupper($0) }');
+        
+        # Move the lowercase files.
+        find "$path" -name "*$old_name*" -print0 | sort -rz |  while read -d $'\0' f;
+            do mv "$f" "$(dirname "$f")/$(basename "${f//$old_name/$new_name}")";
+        done;
+
+        # Move the upper_first_char files.
+        find "$new_path" -name "*$old_name_upper_first_char*" -print0 | sort -rz |  while read -d $'\0' f;
+            do mv "$f" "$(dirname "$f")/$(basename "$f" | sed "s|$old_name_upper_first_char|$new_name_upper_first_char|g")";
+        done;
+
+        # Replace the old strings.
+        find "$new_path" -type f -exec sed -i "s/$old_name/$new_name/g; \
+        s/$old_name_upper_first_char/$new_name_upper_first_char/g; \
+        s/$old_name_upper/$new_name_upper/g" "{}" \;    
+    fi;
+}
