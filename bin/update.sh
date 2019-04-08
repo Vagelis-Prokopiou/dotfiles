@@ -191,7 +191,7 @@ if  $is_initial_install; then
 	##############################################
 	# ----- LAMP on Debian.
 	##############################################
-	sudo apt -y install apache2;
+		sudo apt -y install apache2;
 	sudo apt install -y mariadb-server phpmyadmin;
 	sudo apt -y install php7.0-xdebug;
 	sudo a2enmod rewrite;
@@ -201,7 +201,7 @@ if  $is_initial_install; then
 	find /etc -name php.ini -exec sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/g' "{}" \;
 
 	# Grant all privileges to root user.
-	mysql -u root -proot -e "use mysql; update user set password=PASSWORD(\"root\") where User='root'; GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; FLUSH PRIVILEGES;";
+	mysql -u root -proot -e "use mysql; update user set password='root' where User='root'; GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; FLUSH PRIVILEGES;";	
 
 	# sudo apt remove --purge -y mariadb* php* && sudo apt autoremove -y && sudo apt install -y mariadb-server phpmyadmin;
 
