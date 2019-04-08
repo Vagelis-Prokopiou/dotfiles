@@ -441,36 +441,32 @@ function bitbucket-clone-dev-sites() {
 function LAMP-hard-reset()
 {
 	# Purge the previous installation.
+    sudo systemctl stop apache2;
+    sudo systemctl stop mysql;
 
+    sudo apt purge -y mariadb-server apache2 php7*;
 
-    sudo service apache2 stop;
-    sudo service mysql stop;
-
-    sudo apt-get purge -y mysql-server mariadb-server apache2 php5;
-
-    sudo apt --fix-broken;
-    sudo apt-get -y purge apache2*;
-	sudo apt-get -y purge mariadb*;
-    sudo apt-get -y purge php*;
-	sudo apt-get -y purge phpmyadmin;
-    sudo rm -r /etc/apache2/;
-	sudo rm -r /etc/phpmyadmin;
-	sudo rm -r /etc/php/;
-	sudo rm -r /var/lib/php/;
-	sudo apt-get -y autoremove;
+    sudo apt --fix-broken install;
+    sudo apt -y purge apache2*;
+	sudo apt -y purge mariadb*;
+    sudo apt -y purge php*;
+	sudo apt -y purge phpmyadmin;
+    sudo rm -rf /etc/apache2;
+	sudo rm -rr /etc/phpmyadmin;
+	sudo rm -rf /etc/php;
+	sudo rm -rf /var/lib/php/;
+	sudo apt -y autoremove;
 
 	# Install.
     echo "Installing...";
     sudo apt install -y mariadb-server mariadb-client;
-    sudo apt-get install -y php7.0 php7.0-mysql php7.0-xdebug;
-    sudo apt-get install -y apache2 apache2-mod-php7.0;
-    sudo apt-get install -y phpmyadmin;
-    sudo aptitude -y install php7.0-xdebug;
+    sudo apt install -y php7.0 php7.0-mysql php7.0-xdebug;
+    sudo apt install -y apache2 apache2-mod-php7.0;
+    sudo apt install -y phpmyadmin;    
     sudo a2enmod rewrite;
-    sudo service apache2 restart;
+    sudo systemctl restart apache2;
     sudo apt --fix-broken install;
-    dpkg-reconfigure phpmyadmin;
-    mysql -u root -e "use mysql;update user set password=PASSWORD('root') where User='root';GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root';FLUSH PRIVILEGES;";
+    mysql -u root -p'root' -e "use mysql; update user set password='root' where User='root'; GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; FLUSH PRIVILEGES;";
 }
 
 function web-images() {
