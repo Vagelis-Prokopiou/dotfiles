@@ -3,6 +3,7 @@ user_home="/home/${user}";
 
 # GO stuff.
 mkdir ${user_home}/go/ 2> /dev/null;
+export PATH=$PATH:~/bin;
 export PATH=$PATH:/usr/local/go/bin;
 export GOPATH=$user_home/go;
 export PATH=$PATH:$GOPATH/bin;
@@ -142,15 +143,6 @@ function git-delete-branch() {
         git branch -a;
     else
         echo "Usage: git-delete-branch <branch_name>"
-    fi
-}
-
-function git-patch-apply-fromUrl()
-{
-    if [[ "$1" ]]; then
-        curl "${1}" | git apply -v
-    else
-        echo "Usage: git-patch-apply-fromUrl <url>"
     fi
 }
 
