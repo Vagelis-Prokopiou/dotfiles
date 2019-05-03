@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+command -v curl > /dev/null 2>&1 || { echo "curl is required but it's not installed."; exit 1; }
+command -v git > /dev/null 2>&1 || { echo "git is required but it's not installed."; exit 1; }
+
 if [[ -n "$1" ]]; then
     curl "${1}" | git apply -v;
     exit 0;    
