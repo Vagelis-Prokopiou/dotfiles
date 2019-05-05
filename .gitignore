@@ -115,3 +115,16 @@ Desktop/
 RiderProjects/
 jetbrains/
 pgadmin.log
+.ZAP/
+.gpac/
+.lando/
+.pEp/
+.pEp_management.db
+.pEp_management.db-shm
+.pEp_management.db-wal
+.php_history
+.ssr/
+.thunderbird/
+Maildir/
+nba_games_to_see.bak/
+warranties/
