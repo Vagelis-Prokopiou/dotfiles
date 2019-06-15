@@ -1,12 +1,7 @@
 user="va";
 user_home="/home/${user}";
 
-# GO stuff.
-mkdir ${user_home}/go/ 2> /dev/null;
 export PATH=$PATH:~/bin;
-export PATH=$PATH:/usr/local/go/bin;
-export GOPATH=$user_home/go;
-export PATH=$PATH:$GOPATH/bin;
 export PATH=$PATH:~/.cargo/bin;
 
 # Drupal Console
