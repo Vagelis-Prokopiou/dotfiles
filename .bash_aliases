@@ -118,17 +118,6 @@ if [ -f "/root/.drush/drush.prompt.sh" ] ; then
   source /root/.drush/drush.prompt.sh
 fi
 
-# Display the free space remaining in the Linux partition.
-function disk-usage() {
-    disk_usage=$(df | head -n 2 | tail -n 1);
-    if [[ $(uname) == "MINGW"* ]]; then
-        echo "Disk usage ($(echo $disk_usage | awk '{ print $1 }')): $(echo $disk_usage | awk '{ print $6 }').";
-    else
-        echo "Disk usage ($(echo $disk_usage | awk '{ print $1 }')): $(echo $disk_usage | awk '{ print $5 }').";
-        # echo "Disk usage ($(df | head -n 2 | tail -n 1 | awk '{ print $1 }')): $(df | head -n 2 | tail -n 1 | awk '{ print $5 }').";
-    fi
-}
-
 # Docker
 function docker-stop-containers()
 {
