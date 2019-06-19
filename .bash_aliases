@@ -118,37 +118,6 @@ if [ -f "/root/.drush/drush.prompt.sh" ] ; then
   source /root/.drush/drush.prompt.sh
 fi
 
-# Docker
-function docker-stop-containers()
-{
-    reset;
-    docker stop --time 0 $(docker ps -a -q);
-}
-
-function docker-remove-containers()
-{
-    docker-stop-containers;
-    docker rm -f $(docker ps -a -q);
-}
-
-function docker-remove-containers-and-images()
-{
-    docker-remove-containers;
-    docker rmi -f $(docker images --quiet); # -q, --quiet Only show numeric ID
-}
-
-function docker-get-container-network-settings()
-{
-    if [[ "$1" ]]; then
-        containerID=$(docker ps | grep -i "$1" | awk '{ print $1 }');
-        docker inspect "$containerID" | grep -A50 -i 'networksettings';
-    else
-        echo "Usage: docker-get-container-network-settings <containerName>";
-        echo "The avaiable containers are the following:";
-        docker ps -a;
-    fi
-}
-
 # Drupal functions.
 # Fix "The following module is missing from the file system..."
 # See: https://www.drupal.org/node/2487215
