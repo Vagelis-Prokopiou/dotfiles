@@ -118,15 +118,6 @@ if [ -f "/root/.drush/drush.prompt.sh" ] ; then
   source /root/.drush/drush.prompt.sh
 fi
 
-# General functions.
-function clean-filenames()
-{
-	find . -type f | while read file;
-    do
-        mv "${file}" $(echo "${file}" | sed -e 's/[^A-Za-z0-9._-]/_/g; s/^._//; s/_\+/_/g; s/-\+/-/g; s/_-_/_/g; s/-*[a-zA-Z0-9]*\././g');
-    done;
-}
-
 # Create a report from a GA csv.
 function google-analytics-report() {
     if [[ $1 ]]; then
