@@ -106,55 +106,6 @@ if [ -f "/root/.drush/drush.prompt.sh" ] ; then
   source /root/.drush/drush.prompt.sh
 fi
 
-function bitbucket-clone-dev-sites() {
-    domains=(
-        tsinikopoulos
-        drupaland
-        riggingservices
-    );
-
-    domains_length=${#domains[@]};
-
-    for (( i = 0; i < ${domains_length}; i++ )); do
-        domain=${domains[$i]};
-        vhost-create "$domain";
-        sudo rm -rf "/var/www/html/vhosts/${domain}/public_html";
-        sudo git clone "git@bitbucket.org:drz4007/${domain}.git" "/var/www/html/vhosts/${domain}/public_html";
-        sudo chown -R www-data:www-data "/var/www/html/vhosts/${domain}/public_html";
-    done
-}
-
-function LAMP-hard-reset()
-{
-	# Purge the previous installation.
-    sudo systemctl stop apache2;
-    sudo systemctl stop mysql;
-
-    sudo apt purge -y mariadb-server apache2 php7*;
-
-    sudo apt --fix-broken install;
-    sudo apt -y purge apache2*;
-	sudo apt -y purge mariadb*;
-    sudo apt -y purge php*;
-	sudo apt -y purge phpmyadmin;
-    sudo rm -rf /etc/apache2;
-	sudo rm -rr /etc/phpmyadmin;
-	sudo rm -rf /etc/php;
-	sudo rm -rf /var/lib/php/;
-	sudo apt -y autoremove;
-
-	# Install.
-    echo "Installing...";
-    sudo apt install -y mariadb-server mariadb-client;
-    sudo apt install -y php7.0 php7.0-mysql php7.0-xdebug;
-    sudo apt install -y apache2 apache2-mod-php7.0;
-    sudo apt install -y phpmyadmin;    
-    sudo a2enmod rewrite;
-    sudo systemctl restart apache2;
-    sudo apt --fix-broken install;
-    mysql -u root -p'root' -e "use mysql; update user set password='root' where User='root'; GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; FLUSH PRIVILEGES;";
-}
-
 function web-images() {
     # Uses ImageMagick.
     # Resize to 1200px width and remove metadata (-strip flag).
