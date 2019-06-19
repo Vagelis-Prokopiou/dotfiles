@@ -60,17 +60,6 @@ function git-show-todays-commits()
 	fi
 }
 
-# Show only filenames with differences.
-function git-diff-files() {
-	clear;
-    if [[ "$1" ]]; then
-    	echo -e "\n*** Show only the filenames of the files with differences ***\n";
-	git diff "$1" | grep -- '--- a/' | sed 's/--- a\///g';
-    else
-	echo -e "\nUsage: git-diff-files <branch>\n"
-    fi
-}
-
 # Report from git log.
 function git-log-report() {
 	clear;
