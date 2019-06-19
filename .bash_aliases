@@ -118,17 +118,6 @@ if [ -f "/root/.drush/drush.prompt.sh" ] ; then
   source /root/.drush/drush.prompt.sh
 fi
 
-# Create a report from a GA csv.
-function google-analytics-report() {
-    if [[ $1 ]]; then
-        sourceFile="$1";
-        cat "$sourceFile" | awk -F ',' '{print $1, $2}' | sed "s|/el/άρθρα/|Άρθρο: |g;s|\(\ \)\([0-9]\{1,3\}\)|\. Θεάσεις: \2\.|g" > article_views.txt;
-        echo "The article_views.txt was created successfully.";
-    else
-        echo "Usage: google_analytics_report sourceFile";
-    fi
-}
-
 # Display the free space remaining in the Linux partition.
 function disk-usage() {
     disk_usage=$(df | head -n 2 | tail -n 1);
