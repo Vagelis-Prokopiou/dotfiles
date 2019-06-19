@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+# if [ ! -f /etc/ssl/certs/ssl-cert-snakeoil.pem ] || [ ! -f /etc/ssl/private/ssl-cert-snakeoil.key ]; then
+# 	echo -e 'Installing ssl-cert...\n';
+# 	sudo apt install ssl-cert;
+	
+# 	echo -e 'Generating certificate...\n';
+# 	sudo make-ssl-cert generate-default-snakeoil --force-overwrite;
+# fi
+
+if [[ "$1" ]]; then
+  base_path='/var/www/html';
+  domain="$1";
+
+  if [[ ! -d "${base_path}/${domain}" ]]; then
+    sudo mkdir "${base_path}/${domain}";
+    sudo mkdir "${base_path}/${domain}/public_html/";
+    sudo mkdir "${base_path}/${domain}/logs/";
+    # Create an index file.
+    echo "<h1>${domain}.local has been created successfully.</h1>" | sudo tee "${base_path}/${domain}/public_html/index.html";
+
+    # Create the Apache config files.
+    echo "
+<VirtualHost *:80>
+# Enable the site with sudo a2ensite site_name && sudo /etc/init.d/apache2 restart
+
+# SSLEngine On
+# SSLCertificateFile  /etc/ssl/certs/ssl-cert-snakeoil.pem
+# SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+
+ServerName ${domain}.local
+ServerAlias www.${domain}.local
+ServerAdmin ${domain}@localhost
+DocumentRoot /var/www/html/${domain}/public_html
+<Directory /var/www/html/${domain}/public_html/>
+  Options Indexes FollowSymLinks
+  AllowOverride All
+  Require all granted
+</Directory>
+LogLevel info warn
+ErrorLog /var/www/html/${domain}/logs/error.log
+CustomLog /var/www/html/${domain}/logs/access.log combined
+</VirtualHost>" | sudo tee "/etc/apache2/sites-available/${domain}.local.conf";
+
+    # Enable the site.
+    sudo a2ensite "${domain}.local";
+    
+    # Add the vhost to the vhosts file.
+    echo "127.0.0.1   ${domain}.local" | sudo tee --append /etc/hosts;
+    
+    # Restart Apache.
+    sudo service apache2 restart;    
+    echo "You can access the site at http://${domain}.local/";
+
+    exit 0;
+  else
+    echo "${domain} already exists. Skipping...";
+    exit 0;
+  fi
+else
+  echo "Usage: vhost-create <hostName>"
+  exit 1;
+fi

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Todo: Delete from /etc/hosts
+if [[ "$1" ]]; then
+    domain="$1";
+
+    if [[ -d "/var/www/html/${domain}" ]]; then
+        # Disable the vhost.
+        sudo a2dissite "${domain}.local";
+
+        # Delete all files associated with this site.
+        sudo rm -rf /var/www/html/${domain};
+        sudo rm "/etc/apache2/sites-available/${domain}.local.conf";
+
+        # Clean the /etc/hosts
+        sudo sed -i "/${domain}/d" /etc/hosts;
+
+        # Drop the database.
+        mysql -u root -proot --execute "DROP DATABASE IF EXISTS ${1};";
+
+        # Restart Apache.
+        sudo systemctl restart apache2;
+        echo "The ${domain}.local vhost was deleted successfully.";
+        echo "Apache was restarted. All set.";
+    else
+        echo "No such vhost found.";
+    fi
+else
+    echo "Usage: vhost-delete <hostName>"
+fi
