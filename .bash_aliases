@@ -60,16 +60,6 @@ function git-show-todays-commits()
 	fi
 }
 
-# Fix the '^M' in git diffs. See: http://stackoverflow.com/questions/1889559/git-diff-to-ignore-m
-function git-fix-line-endings() {
-	clear;
-    git config --global core.autocrlf true;
-    git rm --cached -r .;
-    git diff --cached --name-only -z | xargs -0 git add;
-    git commit -m "Fix CRLF";
-    echo -e "\n\tRun it per branch.\n";
-}
-
 # Show only filenames with differences.
 function git-diff-files() {
 	clear;
