@@ -60,19 +60,6 @@ function git-show-todays-commits()
 	fi
 }
 
-# Report from git log.
-function git-log-report() {
-	clear;
-    if [[ "$1" ]]; then
-        git log --since="$1" --no-merges --date=format:'%Y-%m-%d, %H:%M' --format='%ad: %s.' > report.txt;
-        sed -i 's|\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\)\(, \)\([0-9]\{2\}:[0-9]\{2\}\)\(: \)\(.*\)|Date: \1 on \3. Task: \5|g' report.txt;
-        echo "";
-        echo "\"report.txt\" is ready.";
-    else
-        echo 'Usage: git-create-report <date>';
-    fi
-}
-
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
 function git-diff-master() {
