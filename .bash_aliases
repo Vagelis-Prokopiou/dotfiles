@@ -106,12 +106,6 @@ if [ -f "/root/.drush/drush.prompt.sh" ] ; then
   source /root/.drush/drush.prompt.sh
 fi
 
-function web-images() {
-    # Uses ImageMagick.
-    # Resize to 1200px width and remove metadata (-strip flag).
-    for image in *; do convert $image -resize 1200 -strip $image; done;
-}
-
 # ffmpef stuff
 function ffmpeg-convert-to-mp4()
 {
