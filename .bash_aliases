@@ -48,18 +48,6 @@ alias gstf='git-show-tracked-files';
 # Postgresql
 alias 'psql'='sudo -u postgres psql';
 
-function git-show-todays-commits()
-{
-	reset;
-	if [[ "$1" ]]; then
-		echo "${1} commits:";
-		echo "";
-		git log | grep -A2 "${1}" | grep -v Date | grep -v -- '--' | grep -v '^$' | sed 's/^ \+//g';
-	else
-		echo "Usage: git-show-todays-commits <date> (in \"Dec 5\" format)";
-	fi
-}
-
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
 function git-diff-master() {
@@ -117,39 +105,6 @@ fi
 if [ -f "/root/.drush/drush.prompt.sh" ] ; then
   source /root/.drush/drush.prompt.sh
 fi
-
-# Drupal functions.
-# Fix "The following module is missing from the file system..."
-# See: https://www.drupal.org/node/2487215
-function drupal-fix-missing-module() {
-    if [[ $1 ]]; then
-        drush sql-query "DELETE from system where name = '"$1"' AND type = 'module';";
-    else
-        echo "Usage: drupal-fix-missing-module <moduleName>";
-    fi
-}
-
-function drupal-install()
-{
-	user_pass='root';
-    rm -rf ./*;
-    rm -rf ./.*;
-    git clone https://github.com/drupal-composer/drupal-project.git . ;
-    sed -i 's|"web/|"./|g' composer.json;
-    composer install;
-    sed -i 's|/web/|/|g' .gitignore;
-    rm -rf .git;
-    git init;
-    chown -R www-data:www-data . ;
-    git add .;
-    git commit -m 'Initial commit';
-
-    if [[ "$1" ]]; then
-        mysql -u${user_pass} -p${user_pass} -e "DROP DATABASE IF EXISTS $1; CREATE DATABASE $1;";
-    fi
-
-    drush si -y --db-url=mysql://root:root@localhost:3306/${1} --account-name ${user_pass} --account-pass ${user_pass};
-}
 
 function dbs-import() {
     cd  /media/va/local_disk/Dropbox/dbs/*/;
