@@ -21,15 +21,11 @@ fi
 
 # Aliases
 alias code='code --user-data-dir=/tmp';
-# alias phpstorm='echo vadead | sudo -S bash /home/va/jetbrains/PhpStorm/bin/phpstorm.sh';
-alias webstorm='echo vadead | sudo -S bash /home/va/jetbrains/WebStorm/bin/webstorm.sh';
-# alias datagrip='echo vadead | sudo -S bash /home/va/jetbrains/DataGrip/bin/datagrip.sh';
-alias idea='echo vadead | sudo -S bash /home/va/jetbrains/idea/bin/idea.sh';
-alias rider='echo vadead | sudo -S bash /home/va/jetbrains/rider/bin/rider.sh';
 
-alias clion="$(find ${user_home} -type f -iname clion.sh)";
-alias phpstorm="$(find ${user_home} -type f -iname phpstorm.sh)";
-alias datagrip="$(find ${user_home} -type f -iname datagrip.sh)";
+alias rider="$(find ${user_home}/jetbrains -type f -iname rider.sh)";
+alias clion="$(find ${user_home}/jetbrains -type f -iname clion.sh)";
+alias phpstorm="$(find ${user_home}/jetbrains -type f -iname phpstorm.sh)";
+alias datagrip="$(find ${user_home}/jetbrains -type f -iname datagrip.sh)";
 
 alias update='echo vadead | sudo -S bash ~/bin/update.sh';
 alias karma='su va -c "npm run test:karma"';
