@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
-# Uses ImageMagick.
-# Resize to 1200px width and remove metadata (-strip flag).
-# Todo: Add check for the convert binary.
+command -v convert > /dev/null 2>&1;
+
+if [[ $? -gt 0 ]]; then
+	echo 'ImageMagick is needed.'
+	echo 'Run "sudo apt install imagemagick" to install it, before continuing';
+	exit 1;
+fi 
 
 if [[ ! $1 ]]; then
 	echo "Usage: web-images <targetWidth>";
@@ -10,7 +14,8 @@ if [[ ! $1 ]]; then
 fi
 
 for image in *; do
-	convert $image -resize $1 -strip $image;
+	full_filename=$(basename -- $image);
+	filename="${full_filename%.*}";
+	extension="${full_filename##*.}";
+	convert $image -resize $1 -strip "${filename}-${1}.${extension}";
 done;
-
-exit 0;
