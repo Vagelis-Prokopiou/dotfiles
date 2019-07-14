@@ -8,14 +8,18 @@ if [[ $? -gt 0 ]]; then
 	exit 1;
 fi 
 
+# Check for provided width.
 if [[ ! $1 ]]; then
 	echo "Usage: web-images <targetWidth>";
 	exit 1;
 fi
 
-for image in *; do
+# Create the target directory.
+mkdir $1 2> /dev/null;
+
+for image in $(find -maxdepth 1 -type f); do
 	full_filename=$(basename -- $image);
 	filename="${full_filename%.*}";
 	extension="${full_filename##*.}";
-	convert $image -resize $1 -strip "${filename}-${1}.${extension}";
+	convert $image -resize $1 -strip "${1}/${filename}-${1}.${extension}";
 done;
