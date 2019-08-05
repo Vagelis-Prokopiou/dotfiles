@@ -8,11 +8,11 @@ fi
 domain="$1";
 
 # Disable the vhost.
-sudo a2dissite "${domain}.local";
+sudo a2dissite "${domain}.local" 2> /dev/null;
 
 # Delete all files associated with this site.
-sudo rm -rf /var/www/html/${domain};
-sudo rm "/etc/apache2/sites-available/${domain}.local.conf";
+sudo rm -rf /var/www/html/${domain} 2> /dev/null;
+sudo rm "/etc/apache2/sites-available/${domain}.local.conf" 2> /dev/null;
 
 # Clean the /etc/hosts
 sudo sed -i "/${domain}/d" /etc/hosts;
