@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Written by Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
+if [[ ! $1 ]]; then
+    echo "Usage: git-cherry-pick <commitHash>";
+    exit 1;
+fi
+
+commit="$1";
+currentBranch=$(git status | head -n 1 | awk '{print$3}');
+
+git branch --all | grep -v remote | grep -v "${currentBranch}" | while read branch; do
+    git checkout "${branch}" \
+    && git cherry-pick "${commit}" \
+    && git push;
+done;
+
+git checkout "${currentBranch}";
