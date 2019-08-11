@@ -8,11 +8,12 @@ if [[ ! $1 ]]; then
 fi
 
 commit="$1";
-currentBranch=$(git status | head -n 1 | awk '{print$3}');
+currentBranch=$(git status | head -n 1 | awk '{ print $3 }');
 
 git branch --all | grep -v remote | grep -v "${currentBranch}" | while read branch; do
-    git checkout "${branch}" \
-    && git cherry-pick "${commit}" \
+    git checkout "${branch}";
+    && git pull;
+    && git cherry-pick "${commit}";
     && git push;
 done;
 
