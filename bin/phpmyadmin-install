@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Created by Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 latest=$(curl https://www.phpmyadmin.net/ | grep href | grep files | head -n 1 | sed 's/.*href=//g; s/"//g' |  awk '{ print $1 }');
 wget $latest;
 unzip phpMyAdmin*;
@@ -16,8 +18,7 @@ sudo mysql -u root -p"root" -e "GRANT ALL ON phpmyadmin.* TO 'root'@'localhost' 
 sudo apt install -y php-imagick php-phpseclib php-php-gettext php7.3-common php7.3-gd php7.3-imap php7.3-json php7.3-curl php7.3-zip php7.3-xml php7.3-mbstring php7.3-bz2 php7.3-intl php7.3-gmp;
 
 
-sudo a2disconf phpmyadmin.conf;
-systemctl reload apache2;
+sudo a2disconf phpmyadmin.conf && systemctl reload apache2;
 echo "# phpMyAdmin default Apache configuration
 
 Alias /phpmyadmin /usr/share/phpmyadmin
@@ -65,10 +66,9 @@ Alias /phpmyadmin /usr/share/phpmyadmin
 <Directory /usr/share/phpmyadmin/setup/lib>
     Require all denied
 </Directory>" | sudo tee /etc/apache2/conf-available/phpmyadmin.conf;
-sudo a2enconf phpmyadmin.conf;
 
 # Create temp folder.
 sudo mkdir -p /var/lib/phpmyadmin/tmp;
 sudo chown www-data:www-data /var/lib/phpmyadmin/tmp;
 
-sudo systemctl reload apache2;
+sudo a2enconf phpmyadmin.conf && sudo systemctl reload apache2;
