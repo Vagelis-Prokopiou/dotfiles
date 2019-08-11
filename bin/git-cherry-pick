@@ -12,9 +12,9 @@ currentBranch=$(git status | head -n 1 | awk '{ print $3 }');
 
 git branch --all | grep -v remote | grep -v "${currentBranch}" | while read branch; do
     git checkout "${branch}";
-    && git pull;
-    && git cherry-pick "${commit}";
-    && git push;
+    git pull;
+    git cherry-pick "${commit}";
+    git push;
 done;
 
 git checkout "${currentBranch}";
