@@ -10,7 +10,7 @@ fi
 commit="$1";
 currentBranch=$(git status | head -n 1 | awk '{ print $3 }');
 
-git branch --all | grep remotes | grep -v "${currentBranch}" | sed 's|remotes/origin/||g' | while read branch; do
+git branch --all | grep remotes | grep -v "${currentBranch}" |  grep -v HEAD | sed 's|remotes/origin/||g' | while read branch; do
     git checkout "${branch}";
     git pull;
     git cherry-pick "${commit}";
