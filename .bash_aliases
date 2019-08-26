@@ -558,3 +558,7 @@ function drupal-module-rename() {
         s/$old_name_upper/$new_name_upper/g" "{}" \;    
     fi;
 }
+
+function viber-clean() {
+	find ${user_home}/.ViberPC/ ${user_home}/Documents/ViberDownloads/ \( -iname "*jpg" -or -iname "*png*" -or -iname "*jpeg" -or -iname "*gif" -or -iname "*mp4" \) -delete;
+}
