@@ -193,18 +193,6 @@ function ffmpeg-dvd-create()
     fi
 }
 
-function ffmpeg-audio-extract()
-{
-    # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
-    if [[ "$1" && "$2" ]]; then
-        videoFile="${1}";
-        outputFile="${2}";
-        ffmpeg -i "${videoFile}" -vn -acodec copy "${outputFile}.m4a";
-    else
-        echo "Usage: ffmpeg-audio-extract <videoFile> <outputFile.m4a>";
-    fi
-}
-
 function ffmpeg-audio-replace()
 {
     # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
