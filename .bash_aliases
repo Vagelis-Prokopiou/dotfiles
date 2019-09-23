@@ -193,19 +193,6 @@ function ffmpeg-dvd-create()
     fi
 }
 
-function ffmpeg-audio-replace()
-{
-    # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
-    if [[ "$1" && "$2" && "$3" ]]; then
-        videoFile="${1}";
-        audioFile="${2}";
-        outputFile="${3}";
-        ffmpeg -i ${videoFile} -i ${audioFile} -c:v copy -map 0:v:0 -map 1:a:0 "${outputFile}";
-    else
-        echo "Usage: ffmpeg-audio-replace <videoFile> <audioFile> <outputFile>";
-    fi
-}
-
 function ffmpeg-video-resize() {
     # https://trac.ffmpeg.org/wiki/Scaling%20(resizing)%20with%20ffmpeg
     if [[ "$1" && "$2" && "$3" ]]; then
