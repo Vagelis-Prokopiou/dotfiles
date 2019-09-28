@@ -5,13 +5,16 @@ if [[ ! "$1" ]]; then
     exit 1;
 fi
 
+user="va";
+base_path="/home/${user}/www";
 domain="$1";
 
 # Disable the vhost.
 sudo a2dissite "${domain}.local" 2> /dev/null;
 
 # Delete all files associated with this site.
-sudo rm -rf /var/www/html/${domain} 2> /dev/null;
+sudo rm -rf "${base_path}/${domain}" 2> /dev/null;
+sudo rm -rf /var/www/html/${domain} 2> /dev/null; # This is the old path.
 sudo rm "/etc/apache2/sites-available/${domain}.local.conf" 2> /dev/null;
 
 # Clean the /etc/hosts

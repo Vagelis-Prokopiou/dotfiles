@@ -8,19 +8,31 @@
 # 	sudo make-ssl-cert generate-default-snakeoil --force-overwrite;
 # fi
 
-if [[ "$1" ]]; then
-  base_path='/var/www/html';
-  domain="$1";
+# Check for a provided hostname argument.
+if [[ ! "$1" ]]; then
+  echo "Usage: vhost-create <hostName>";
+  exit 1;
+fi
 
-  if [[ ! -d "${base_path}/${domain}" ]]; then
-    sudo mkdir "${base_path}/${domain}";
-    sudo mkdir "${base_path}/${domain}/public_html/";
-    sudo mkdir "${base_path}/${domain}/logs/";
-    # Create an index file.
-    echo "<h1>${domain}.local has been created successfully.</h1>" | sudo tee "${base_path}/${domain}/public_html/index.html";
+user="va";
+base_path="/home/${user}/www";
+domain="$1";
+docroot="${base_path}/${domain}/public_html";
+logsdir="${base_path}/${domain}/logs";
 
-    # Create the Apache config files.
-    echo "
+if [[ -d "${base_path}/${domain}" ]]; then
+  echo "${domain} already exists. Skipping...";
+  exit 0;
+fi
+
+# sudo mkdir -p "${base_path}/${domain}";
+sudo mkdir -p "${docroot}";
+sudo mkdir -p "${logsdir}";
+# Create an index file.
+echo "<h1>${domain}.local has been created successfully.</h1>" | sudo tee "${docroot}/index.html";
+
+# Create the Apache config files.
+echo "
 <VirtualHost *:80>
 # Enable the site with sudo a2ensite site_name && sudo /etc/init.d/apache2 restart
 
@@ -31,33 +43,27 @@ if [[ "$1" ]]; then
 ServerName ${domain}.local
 ServerAlias www.${domain}.local
 ServerAdmin ${domain}@localhost
-DocumentRoot /var/www/html/${domain}/public_html
-<Directory /var/www/html/${domain}/public_html/>
-  Options Indexes FollowSymLinks
-  AllowOverride All
-  Require all granted
+DocumentRoot ${docroot}
+<Directory ${docroot}/>
+Options Indexes FollowSymLinks
+AllowOverride All
+Require all granted
 </Directory>
 LogLevel info warn
-ErrorLog /var/www/html/${domain}/logs/error.log
-CustomLog /var/www/html/${domain}/logs/access.log combined
+ErrorLog ${logsdir}/error.log
+CustomLog ${logsdir}/access.log combined
 </VirtualHost>" | sudo tee "/etc/apache2/sites-available/${domain}.local.conf";
 
-    # Enable the site.
-    sudo a2ensite "${domain}.local";
-    
-    # Add the vhost to the vhosts file.
-    echo "127.0.0.1   ${domain}.local" | sudo tee --append /etc/hosts;
-    
-    # Restart Apache.
-    sudo service apache2 restart;    
-    echo "You can access the site at http://${domain}.local/";
+# Enable the site.
+sudo a2ensite "${domain}.local";
 
-    exit 0;
-  else
-    echo "${domain} already exists. Skipping...";
-    exit 0;
-  fi
-else
-  echo "Usage: vhost-create <hostName>"
-  exit 1;
-fi
+# Add the vhost to the vhosts file.
+echo "127.0.0.1   ${domain}.local" | sudo tee --append /etc/hosts;
+
+sudo chown -R va:www-data "${base_path}/${domain}";
+
+# Restart Apache.
+sudo service apache2 restart;    
+echo "You can access the site at http://${domain}.local/";
+
+exit 0;
