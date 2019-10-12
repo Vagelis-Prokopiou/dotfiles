@@ -10,6 +10,9 @@
 user='va';
 user_home="/home/${user}";
 is_initial_install=false;
+
+
+
 # is_initial_install=true;
 
 function installDocker()
@@ -104,14 +107,19 @@ if  $is_initial_install; then
 	############################################
 	# ----- Edit the Debian sources list.
 	############################################
-	echo "deb http://ftp.gr.debian.org/debian/ stretch main contrib non-free
-	# deb-src http://ftp.gr.debian.org/debian/ stretch main contrib non-free
+	echo "
+deb http://ftp.gr.debian.org/debian/ stable main contrib non-free
+deb-src http://ftp.gr.debian.org/debian/ stable main contrib non-free
 
-	# deb http://security.debian.org/debian-security stretch/updates main contrib non-free
-	# deb-src http://security.debian.org/debian-security stretch/updates main contrib non-free
+deb http://ftp.gr.debian.org/debian/ stable-updates main contrib non-free
+deb-src http://ftp.gr.debian.org/debian/ stable-updates main contrib non-free
 
-	# deb http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free
-	# deb-src http://ftp.gr.debian.org/debian/ stretch-updates main contrib non-free" > /etc/apt/sources.list;
+deb http://security.debian.org/ stable/updates main
+deb-src http://security.debian.org/ stable/updates main
+
+deb http://ftp.debian.org/debian buster-backports main
+deb-src http://ftp.debian.org/debian buster-backports main
+" > /etc/apt/sources.list;
 
 	# Add va to sudoers.
 	echo 'va	ALL=(ALL:ALL) ALL' >> /etc/sudoers;
@@ -191,7 +199,7 @@ if  $is_initial_install; then
 	##############################################
 	# ----- LAMP on Debian.
 	##############################################
-		sudo apt -y install apache2;
+	sudo apt -y install apache2;
 	sudo apt install -y mariadb-server phpmyadmin;
 	sudo apt -y install php7.0-xdebug;
 	sudo a2enmod rewrite;
