@@ -4,19 +4,6 @@
 # Use `drush init` to copy this file to your home directory, rename and
 # customize it to suit, and source it from your ~/.bashrc file.
 #
-# Example - rename this to drush.bashrc, and in your
-# ~/.bashrc add:
-#
-#
-#    if [ -f ~/.drush/drush.bashrc ] ; then
-#        . ~/.drush/drush.bashrc
-#    fi
-#
-# Features:
-#
-# Finds and sources drush.complete.sh from your drush directory,
-# enabling autocompletion for Drush commands.
-#
 # Creates aliases to common Drush commands that work in a global context:
 #
 #       dr               - drush
@@ -109,34 +96,6 @@ alias q='drush sql-query'
 # alias cp='cpd'
 # alias ssh='dssh'
 # alias git='gitd'
-
-# Find the Drush executable and test it.
-d=$(which drush)
-# If no program is found try an alias.
-if [ -z "$d" ]; then
-  d=$(alias drush | cut -f 2 -d '=' | sed "s/'//g")
-fi
-# Test that drush is an executable.
-[ -x "$d" ] || return
-
-# If the file found is a symlink, resolve to the actual file.
-if [ -h "$d" ] ; then
-  # Change `readlink` to `readlink -f` if your drush is a symlink to a symlink. -f is unavailable on OSX's readlink.
-  d2="$(readlink "$d")"
-  # If 'readlink' comes back as a relative path, then we need to fix it up.
-  if [[ "$d2" =~ ^"/" ]] ; then
-    d="$d2"
-  else
-    d="$(dirname $d)/$d2"
-  fi
-fi
-
-# Get the directory that Drush is stored in.
-d="$(dirname "$d")"
-# If we have found drush.complete.sh, then source it.
-if [ -f "$d/drush.complete.sh" ] ; then
-  . "$d/drush.complete.sh"
-fi
 
 # We extend the cd command to allow convenient
 # shorthand notations, such as:

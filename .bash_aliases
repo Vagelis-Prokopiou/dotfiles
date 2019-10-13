@@ -78,10 +78,6 @@ function git-patch-formatted() {
     fi
 }
 
-# Site audit stuff:
-alias siteaudit7='rm -r ~/.drush/commands/site_audit && unzip ~/.drush/commands/site_audit-7*.zip -d ~/.drush/commands/';
-alias siteaudit8='rm -r ~/.drush/commands/site_audit && unzip ~/.drush/commands/site_audit-8*.zip -d ~/.drush/commands/';
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -92,20 +88,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-# Include Drush bash customizations.
-if [ -f "/root/.drush/drush.bashrc" ] ; then
-  source /root/.drush/drush.bashrc
-fi
 
-# Include Drush completion.
-if [ -f "/root/.drush/drush.complete.sh" ] ; then
-  source /root/.drush/drush.complete.sh
-fi
-
-# Include Drush prompt customizations.
-if [ -f "/root/.drush/drush.prompt.sh" ] ; then
-  source /root/.drush/drush.prompt.sh
-fi
 
 # ffmpef stuff
 function ffmpeg-convert-to-mp4()

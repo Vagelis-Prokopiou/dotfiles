@@ -1,3 +1,5 @@
+
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # Note: PS1 and umask are already set in /etc/profile. You should not
@@ -101,3 +103,23 @@ fi
 if [[ -f ~/.bash_aliases ]]; then
     . ~/.bash_aliases;
 fi
+
+# Include Drush bash customizations.
+if [ -f "/home/va/.drush/drush.bashrc" ] ; then
+  source /home/va/.drush/drush.bashrc
+fi
+
+
+# Include Drush completion.
+
+if [ -f "/home/va/.drush/drush.complete.sh" ] ; then
+  source /home/va/.drush/drush.complete.sh
+fi
+
+
+# Include Drush prompt customizations.
+
+if [ -f "/home/va/.drush/drush.prompt.sh" ] ; then
+  source /home/va/.drush/drush.prompt.sh
+fi
+
