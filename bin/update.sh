@@ -42,16 +42,6 @@ function installPHPUnit()
 	echo "PHPUNit installed.";
 }
 
-function installTeamviewer()
-{
-	sudo dpkg --add-architecture i386;\
-	sudo apt-get update;\
-	sudo dpkg -i --force-depends ./teamviewer*.deb;\
-	sudo apt install -y -f;\
-	teamviewer --daemon start;\
-	sudo rm ./teamviewer*.deb;
-}
-
 function installViber()
 {
 	# See http://drupaland.eu/article/installing-viber-debian-9
@@ -235,7 +225,7 @@ deb-src http://ftp.debian.org/debian buster-backports main
 	installDrupalConsole;
 	# installNodeJS;
 	# installViber;
-	# installTeamviewer;
+	# ~/bin/install-teamviewer;
 	installPHPUnit;
 
 # Non initial setup.
@@ -245,7 +235,7 @@ else
 	# installDrupalConsole;
 	# installNodeJS;
 	# installViber;
-	# installTeamviewer;
+	# ~/bin/install-teamviewer;
 	# installPHPUnit;
 
 	sudo apt -y update;
