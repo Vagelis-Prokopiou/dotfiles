@@ -165,6 +165,9 @@ function ffmpeg-video-extract-from-dvd()
 
 function ffmpeg-dvd-create()
 {
+    sudo apt install dvdauthor;
+    sudo apt install ffmpeg;
+    
     if [[ "$1" ]]; then
         videoFile=$1;
         ffmpeg -i "${videoFile}" -target pal-dvd dvd-video.mpg;
