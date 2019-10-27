@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+echo "";
+echo "Example usage: \Drupal::service('<the_service>')";
+echo "";
+echo "";
+
+services_file=$(find . -type f -name core.services.yml);
+services=$(grep -B1 class ${services_file} | grep -v class | grep -vF -- -- | sed 's|\s*||g');
+
+if [[ $1 ]]; then
+	echo $services | sed 's| |\n|g' | grep $1;	
+else 
+	echo $services | sed 's| |\n|g';
+fi
+
