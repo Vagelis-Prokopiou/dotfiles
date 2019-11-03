@@ -131,3 +131,8 @@ warranties/
 DB_Main.kdbx
 programs/
 VirtualBoxVMs/
+.Rider*
+.aspnet/
+.ngrok/
+.yarnrc
+www/
