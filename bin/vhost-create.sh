@@ -10,7 +10,7 @@
 
 # Check for a provided hostname argument.
 if [[ ! "$1" ]]; then
-  echo "Usage: vhost-create <hostName>";
+  echo "Usage: $0 <hostName>";
   exit 1;
 fi
 
