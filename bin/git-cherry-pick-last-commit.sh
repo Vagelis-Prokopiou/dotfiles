@@ -8,7 +8,7 @@ if [[ $1 ]]; then
     target_branch="$1";
 fi
 
-commit=$(git log | head -n 1 | awk '{ print $2 }'); \
+commit=$(git rev-parse HEAD); \
 current_branch=$(git status | head -n 1 | awk '{ print $3 }'); \
 git checkout "${target_branch}" \
 && git pull \
