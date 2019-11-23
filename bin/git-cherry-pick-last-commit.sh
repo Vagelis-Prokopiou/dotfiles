@@ -10,7 +10,7 @@ fi
 
 commit=$(git rev-parse HEAD);
 commit_short=$(git rev-parse --short HEAD);
-current_branch=$(git status | head -n 1 | awk '{ print $3 }');
+current_branch=$(git rev-parse --abbrev-ref HEAD);
 
 git checkout "${target_branch}";
 git pull 2> /dev/null;
