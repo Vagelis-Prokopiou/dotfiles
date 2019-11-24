@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 command -v curl > /dev/null 2>&1 || { echo "curl is required but it's not installed."; exit 1; }
 command -v git > /dev/null 2>&1 || { echo "git is required but it's not installed."; exit 1; }
 

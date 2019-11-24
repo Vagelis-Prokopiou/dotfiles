@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 if [[ ! "$1" ]]; then
     echo "Usage: vhost-delete <hostName>";
     exit 1;

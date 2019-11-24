@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 command -v convert > /dev/null 2>&1;
 
 if [[ $? -gt 0 ]]; then

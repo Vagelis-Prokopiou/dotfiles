@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 youtube_video="youtube.mp4";
 youtube_audio="youtube.mp3";
 

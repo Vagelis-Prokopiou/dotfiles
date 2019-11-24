@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 # Report from git log.
 if [[ "$1" ]]; then
     git log --since="$1" --no-merges --date=format:'%Y-%m-%d, %H:%M' --format='%ad: %s.' > report.txt;

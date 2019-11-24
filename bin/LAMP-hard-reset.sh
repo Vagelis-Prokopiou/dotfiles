@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 # Purge the previous installation.
 sudo systemctl stop apache2;
 sudo systemctl stop mysql;

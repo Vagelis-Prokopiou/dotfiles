@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 # See: http://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
 
 echo "Recomended lossless codec: m4a";

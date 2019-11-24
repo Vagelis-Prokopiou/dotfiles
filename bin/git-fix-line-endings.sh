@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 # Fix the '^M' in git diffs. See: http://stackoverflow.com/questions/1889559/git-diff-to-ignore-m
 git config --global core.autocrlf true;
 git rm --cached -r .;

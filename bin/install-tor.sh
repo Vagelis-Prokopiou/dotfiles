@@ -1,4 +1,6 @@
-#! /bin/bash
+#!/usr/bin/env bash
+
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
 
 cd ~/Downloads;
 

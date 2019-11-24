@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 if [[ "$1" ]]; then
     containerID=$(docker ps | grep -i "$1" | awk '{ print $1 }');
     docker inspect "$containerID" | grep -A50 -i 'networksettings';

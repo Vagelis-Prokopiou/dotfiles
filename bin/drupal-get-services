@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 echo "";
 echo "Example usage: \Drupal::service('<the_service>')";
 echo "";

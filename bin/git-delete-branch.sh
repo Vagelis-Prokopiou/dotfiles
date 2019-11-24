@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
+
 # The "git branch -rd origin/<branchName>" removed the local branch reference, when all other failed.
 if [[ $1 ]]; then
     git checkout master 2> /dev/null;
