@@ -19,4 +19,4 @@ git push 2> /dev/null;
 git checkout "${current_branch}";
 
 cherry_picked_commit=$(git rev-parse --short ${target_branch});
-echo "Commit ${commit_short} was successfully cherry-picked to branch ${target_branch} as commit ${cherry_picked_commit}.";
+echo -e "\nCommit ${commit_short} was successfully cherry-picked to branch ${target_branch} as commit ${cherry_picked_commit}\n";
