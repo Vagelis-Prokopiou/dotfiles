@@ -28,6 +28,9 @@ fi
 sudo mkdir -p "${docroot}";
 sudo mkdir -p "${logsdir}";
 
+# Fix the ownership.
+sudo chown -R ${user}:${user} ${base_path};
+
 # Create the Apache config files.
 echo "
 <VirtualHost *:*>
