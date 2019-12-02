@@ -8,7 +8,8 @@ if [ ! "$1" ]; then
     exit 1;
 fi
 
-www="/home/va/www";
+user="va";
+www="/home/${user}/www";
 app_name="$1";
 distribution=$(lsb_release -a 2> /dev/null | grep --color=auto Description | sed 's/^Description:\s\+//');
 
@@ -22,8 +23,8 @@ Restart=always
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
 KillSignal=SIGINT
-SyslogIdentifier=dotnet-example
-User=va
+SyslogIdentifier=dotnet-${app_name}-app
+User=${user}
 Environment=ASPNETCORE_ENVIRONMENT=Production 
 
 [Install]
