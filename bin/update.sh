@@ -156,6 +156,7 @@ deb-src http://ftp.debian.org/debian buster-backports main
 	sudo apt -y install apache2;
 	sudo apt install -y mariadb-server phpmyadmin;
 	sudo apt -y install php7.0-xdebug;
+	sudo apt -y install php-dom; # This fixes the error "Class 'DOMDocument' not found", during Drupal tests execution.
 	sudo a2enmod rewrite;
 	sudo service apache2 restart;
 	sudo apt --fix-broken install;
