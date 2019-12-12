@@ -19,7 +19,7 @@ fi
 user="va";
 base_path="/home/${user}/www";
 domain="$1";
-docroot="${base_path}/${domain}/public_html";
+docroot="${base_path}/${domain}/public_html/web";
 logsdir="${base_path}/${domain}/logs";
 
 if [[ -d "${base_path}/${domain}" ]]; then
@@ -27,17 +27,13 @@ if [[ -d "${base_path}/${domain}" ]]; then
   exit 0;
 fi
 
-# sudo mkdir -p "${base_path}/${domain}";
 sudo mkdir -p "${docroot}";
 sudo mkdir -p "${logsdir}";
 # Create an index file.
 echo "<h1>${domain}.local has been created successfully.</h1>" | sudo tee "${docroot}/index.html";
 
 # Create the Apache config files.
-echo "
-<VirtualHost *:80>
-# Enable the site with sudo a2ensite site_name && sudo /etc/init.d/apache2 restart
-
+echo "<VirtualHost *:80>
 # SSLEngine On
 # SSLCertificateFile  /etc/ssl/certs/ssl-cert-snakeoil.pem
 # SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
@@ -60,12 +56,10 @@ CustomLog ${logsdir}/access.log combined
 sudo a2ensite "${domain}.local";
 
 # Add the vhost to the vhosts file.
-echo "127.0.0.1   ${domain}.local" | sudo tee --append /etc/hosts;
+echo "127.0.0.1 ${domain}.local" | sudo tee --append /etc/hosts;
 
 sudo chown -R va:www-data "${base_path}/${domain}";
 
 # Restart Apache.
-sudo service apache2 restart;    
+sudo systemctl restart apache2;    
 echo "You can access the site at http://${domain}.local/";
-
-exit 0;
