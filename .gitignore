@@ -136,3 +136,4 @@ VirtualBoxVMs/
 .ngrok/
 .yarnrc
 www/
+.idea
