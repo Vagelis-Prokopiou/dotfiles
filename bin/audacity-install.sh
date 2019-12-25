@@ -25,26 +25,30 @@ sudo apt install -y libjack-jackd2-dev
 # Wxwidgets
 sudo apt install -y libwxgtk3.0
 
+latest_release=$(curl -s 'https://github.com/audacity/audacity/releases' | grep 'tag/Audacity-' | head -n 1 | sed 's|">.*||; s|.*tag/||')
+
 cd /tmp
 git clone https://github.com/audacity/audacity.git
 cd audacity
+git checkout "$latest_release"
 mkdir build && cd build
 ../configure --with-lib-preference="local system" --with-ffmpeg="system" --disable-dynamic-loading --with-mod-script-pipe
 make -j8
 
 # Building Mod Script Pipe
-cd lib-src/mod-script-pipe;
-make -j8;
+cd lib-src/mod-script-pipe
+make -j8
 
 #To install the main application, from the build directory:
-cd /tmp/audacity/build;
-sudo make install;
+cd /tmp/audacity/build
+sudo make install
 
 # To install Mod Script Pipe
 # Assuming that Audacity has been installed to /usr/local/ (default)
-sudo mkdir /usr/local/share/audacity/modules;
-sudo cp lib-src/mod-script-pipe/.libs/mod-script-pipe.so /usr/local/share/audacity/modules/mod-script-pipe.so;
-sudo cp lib-src/mod-script-pipe/.libs/mod-script-pipe.so.0.0.0 /usr/local/share/audacity/modules/mod-script-pipe.so.0.0.0;
+sudo rm -rf /usr/local/share/audacity/modules
+sudo mkdir -p /usr/local/share/audacity/modules
+sudo cp lib-src/mod-script-pipe/.libs/mod-script-pipe.so /usr/local/share/audacity/modules/mod-script-pipe.so
+sudo cp lib-src/mod-script-pipe/.libs/mod-script-pipe.so.0.0.0 /usr/local/share/audacity/modules/mod-script-pipe.so.0.0.0
 # The module will now be available for enabling in Preferences (https://manual.audacityteam.org/man/modules_preferences.html)
 
-cd && rm -rf /tmp/audacity;
+cd && rm -rf /tmp/audacity
