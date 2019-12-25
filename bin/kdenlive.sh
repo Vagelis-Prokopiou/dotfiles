@@ -12,6 +12,7 @@ fi
 
 # Check for the latest version.
 if [ ! -f "$directory/$latest_appimage" ]; then
+  echo "Downloading the latest Kdenlive version..."
   cd "$directory"
   rm -rf kdenlive*
   wget "https://files.kde.org/kdenlive/release/$latest_appimage"
@@ -19,9 +20,9 @@ if [ ! -f "$directory/$latest_appimage" ]; then
 fi
 
 # Delete all old config files.
-find ~ -iname "*kdenlive*" | grep -v programs | grep -v bin | while read -r file; do
+find "/home/$USER/" -iname "*kdenlive*" | grep -v programs | grep -v bin | while read -r file; do
   rm -rf "$file"
 done
 
 # Run it.
-"$directory/$latest_appimage"
+"$directory/$latest_appimage" &
