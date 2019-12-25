@@ -17,12 +17,12 @@ if [ ! -f "$directory/$latest_appimage" ]; then
   rm -rf kdenlive*
   wget "https://files.kde.org/kdenlive/release/$latest_appimage"
   chmod +x "$latest_appimage"
-fi
 
-# Delete all old config files.
-find "/home/$USER/" -iname "*kdenlive*" | grep -v programs | grep -v bin | while read -r file; do
-  rm -rf "$file"
-done
+  # Delete all old config files.
+  find "/home/$USER/" -iname "*kdenlive*" | grep -v programs | grep -v bin | while read -r file; do
+    rm -rf "$file"
+  done
+fi
 
 # Run it.
 "$directory/$latest_appimage" &
