@@ -44,11 +44,6 @@ alias gstf='git-show-tracked-files';
 # Postgresql
 alias 'psql'='sudo -u postgres psql';
 
-function kdenlive() {
-	find ~ -iname "*kdenlive*" | grep -v programs | while read file; do rm -rf $file; done;
-	./programs/kdenlive*.appimage;
-}
-
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
 function git-diff-master() {
