@@ -140,9 +140,6 @@ deb-src http://ftp.debian.org/debian buster-backports main
 	# Create a template txt, for use in right click context.
 	touch ${user_home}/Templates/new_file.txt;
 
-  # This is needed for building ffmpeg from source
-	sudo apt install nasm;
-
 	# This is needed for running the sed tests while building
 	sudo apt install valgrind;
 
