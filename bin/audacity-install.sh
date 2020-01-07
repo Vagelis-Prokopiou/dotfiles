@@ -4,6 +4,19 @@
 
 # Instructions from https://wiki.audacityteam.org/wiki/Building_On_Linux (Steve Daulton. Updated 04Dec2019)
 
+installed_release=$(audacity --version 2>/dev/null | awk '{print $2}')
+
+# Latest release from html
+# latest_release=$(curl -s 'https://github.com/audacity/audacity/releases' | grep 'tag/Audacity-' | head -n 1 | sed 's|">.*||; s|.*tag/||')
+
+# Latest release from API.
+latest_release=$(curl --silent https://api.github.com/repos/audacity/audacity/releases/latest | grep tag_name | awk '{print $2}' | sed 's|"||g; s|,||')
+
+if [ "$(echo ${installed_release} | sed 's|v|Audacity-|')" == "${latest_release}" ]; then
+  echo "The installed version (${installed_release}) is the latest."
+  exit 0
+fi
+
 sudo apt install -y build-essential
 sudo apt install -y cmake
 sudo apt install -y gcc
@@ -24,8 +37,6 @@ sudo apt install -y libjack-jackd2-dev
 
 # Wxwidgets
 sudo apt install -y libwxgtk3.0
-
-latest_release=$(curl -s 'https://github.com/audacity/audacity/releases' | grep 'tag/Audacity-' | head -n 1 | sed 's|">.*||; s|.*tag/||')
 
 cd /tmp
 git clone https://github.com/audacity/audacity.git
