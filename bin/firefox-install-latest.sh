@@ -2,13 +2,7 @@
 
 # Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
 
-
 command -v wget || ( echo -e "Installing wget.\n\n" ; sudo apt install wget );
-
-current_dir=$(pwd);
-
-cd /tmp;
-
 wget -O FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US";
 
 if [ ! -d "/opt/firefox" ]; then
@@ -26,7 +20,5 @@ else
 fi
 
 sudo ln -s /opt/firefox/firefox/firefox /usr/lib/firefox-esr/firefox-esr;
+rm -rf ./FirefoxSetup.tar.bz2;
 
-rm -r ./FirefoxSetup.tar.bz2;
-
-cd $current_dir;
