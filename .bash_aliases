@@ -27,7 +27,7 @@ alias clion="$(find ${user_home}/jetbrains -type f -iname clion.sh)";
 alias phpstorm="$(find ${user_home}/jetbrains -type f -iname phpstorm.sh)";
 alias datagrip="$(find ${user_home}/jetbrains -type f -iname datagrip.sh)";
 
-alias update='echo vadead | sudo -S bash ~/bin/update.sh';
+alias update="echo ${USER} | sudo -S bash ~/bin/update.sh";
 alias karma='su va -c "npm run test:karma"';
 
 # Git stuff:
