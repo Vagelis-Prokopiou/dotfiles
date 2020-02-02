@@ -42,7 +42,8 @@ alias git-show-tracked-files='clear && git ls-tree --full-tree -r --name-only HE
 alias gstf='git-show-tracked-files';
 
 # Postgresql
-alias 'psql'='sudo -u postgres psql';
+alias psql='sudo -u postgres psql';
+alias torrents='cd /media/va/local_disk/TORRENTS';
 
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
