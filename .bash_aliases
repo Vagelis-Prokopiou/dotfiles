@@ -4,6 +4,9 @@ user_home="/home/${user}";
 export PATH=$PATH:~/bin;
 export PATH=$PATH:~/.cargo/bin;
 
+# The following is for the tesseract build from source.
+export TESSDATA_PREFIX=/usr/local/share/tessdata; 
+
 # Drupal Console
 if [[ -f ~/.console/console.rc ]]; then
     . ~/.console/console.rc 2>/dev/null;
