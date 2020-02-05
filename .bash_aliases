@@ -23,7 +23,7 @@ if [[ -f ~/.sites_aliases ]]; then
 fi
 
 # Aliases
-alias code='code --user-data-dir=/tmp';
+# alias code='code --user-data-dir=/tmp';
 
 alias rider="$(find ${user_home}/jetbrains -type f -iname rider.sh)";
 alias clion="$(find ${user_home}/jetbrains -type f -iname clion.sh)";
@@ -484,4 +484,8 @@ function drupal-module-rename() {
 
 function viber-clean() {
 	find ${user_home}/.ViberPC/ ${user_home}/Documents/ViberDownloads/ \( -iname "*jpg" -or -iname "*png*" -or -iname "*jpeg" -or -iname "*gif" -or -iname "*mp4" \) -delete;
+}
+
+function get-vscode-settings() {
+    curl -s -o "$HOME/.config/Code/User/settings.json" https://raw.githubusercontent.com/Vagelis-Prokopiou/vscode-settings/master/settings.json
 }
