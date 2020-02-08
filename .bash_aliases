@@ -193,14 +193,16 @@ function ffmpeg-video-resize() {
 function ffmpeg-video-resize-for-youtube() {
     # https://trac.ffmpeg.org/wiki/Scaling%20(resizing)%20with%20ffmpeg
     # -b:v 2M = bitrate setting
-    # -c:a copy = copy audio
+    # -c:a copy = copy audio    
 
     if [[ "$1" ]]; then
         videoFile="${1}";
-        ffmpeg -i "${videoFile}" -b:v 2M -vf scale=854:480 -c:a copy 854x480.mp4s;
+        ffmpeg -i "${videoFile}" -b:v 2M -vf scale=854:480 -c:a copy 854x480.mp4;
     else
         echo "Usage: ffmpeg-video-resize-for-youtube <videoFile>";
     fi
+
+    echo "Check https://support.google.com/youtube/answer/1722171 for details."
 }
 
 # youtube-dl wrapper
