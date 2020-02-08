@@ -15,7 +15,7 @@ if [ ! -f "$directory/$latest_appimage" ]; then
   echo "Downloading the latest Kdenlive version..."
   cd "$directory"
   rm -rf kdenlive*
-  wget "https://files.kde.org/kdenlive/release/$latest_appimage"
+  curl -sLO "https://files.kde.org/kdenlive/release/$latest_appimage"
   chmod +x "$latest_appimage"
 
   # Delete all old config files.
