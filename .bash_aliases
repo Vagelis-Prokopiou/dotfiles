@@ -411,16 +411,14 @@ function get-gpu-info()
     lspci -v | grep -A19 'VGA compatible controller';
 }
 
-function get-release-info()
-{
-    reset;
-    lsb_release -a 2>/dev/null | grep Description;
+function get-database-server-info() {
     mysql --version | awk '{print $5}' | sed 's/,//g';
 }
 
-function get-database-server-info()
-{
-    mysql --version | awk '{print $5}' | sed 's/,//g';
+function get-release-info() {
+    lsb_release -a 2>/dev/null | grep Description;
+    echo "Database server: $(get-database-server-info)";
+    echo "Kernel release: $(uname -r)";
 }
 
 function perl-example()
