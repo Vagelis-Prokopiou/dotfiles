@@ -491,3 +491,8 @@ function viber-clean() {
 function get-vscode-settings() {
     curl -s -o "$HOME/.config/Code/User/settings.json" https://raw.githubusercontent.com/Vagelis-Prokopiou/vscode-settings/master/settings.json
 }
+
+function hostdog-reset-remote-files() {
+     # clean the hostdog invoice module and the client template
+    ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/modules/addons/hostdog_invoice && git checkout client/templates/simplicity';
+}
