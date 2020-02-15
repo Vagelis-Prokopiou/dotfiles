@@ -35,11 +35,11 @@ alias karma='su va -c "npm run test:karma"';
 
 # Git stuff:
 alias gc='git commit --signoff -m ';
-alias gl='clear && git log --oneline';
-alias gcf='git checkout -- ';
 alias gs='clear && git status';
-alias gba='clear && git branch --all';
 alias grh='clear && git reset --hard';
+alias gl='clear && git log --oneline';
+alias gba='clear && git branch --all';
+alias gcf='git checkout -- ';
 alias ga='git add ';
 alias git-show-tracked-files='clear && git ls-tree --full-tree -r --name-only HEAD';
 alias gstf='git-show-tracked-files';
