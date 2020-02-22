@@ -15,3 +15,8 @@ done;
 
 ffmpeg -f concat -safe 0 -i "${files_list}" -codec copy "${output_file}";
 rm -rf "${files_list}";
+
+# For mpeg files.
+# ffmpeg -i "concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB" -f mpeg -c copy output.mpeg
+# or
+# cat VTS_01_*.vob > output.cat.mpeg
