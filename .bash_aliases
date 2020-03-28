@@ -494,5 +494,6 @@ function get-vscode-settings() {
 
 function hostdog-reset-remote-files() {
      # clean the hostdog invoice module and the client template
-    ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/modules/addons/hostdog_invoice && git checkout client/templates/simplicity';
+    ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/modules/addons/hostdog_invoice';
+    # ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/templates/simplicity';
 }
