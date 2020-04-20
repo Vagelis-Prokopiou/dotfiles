@@ -12,11 +12,12 @@ echo "latest_release $latest_release"
 
 if [ "ffmpeg-${installed_release}.tar.bz2" == "${latest_release}" ]; then
   echo "The installed version (${installed_release}) is the latest."
-  exit 0
+  # exit 0
 fi
 
 # This is needed for building ffmpeg from source
 sudo apt install nasm
+sudo apt-get install libx264-dev
 
 folder_name=latest.ffmpeg
 archive_name="${folder_name}.tar.bz2"
@@ -26,7 +27,7 @@ wget -O "${archive_name}" "https://ffmpeg.org/releases/${latest_release}"
 tar xjf "${archive_name}" --directory "${folder_name}"
 cd "${folder_name}" && cd ffmpeg*
 
-./configure
+./configure --enable-gpl --enable-libx264
 make -j8
 sudo make install
 
