@@ -222,6 +222,9 @@ fi
 
 # Remove all the caches.
 function clear-caches() {
+	echo
+	echo "clear-caches started"
+	sudo rm -rf ${user_home}/java_error*;
 	sudo rm -rf ${user_home}/drush-backups/*;
 	sudo rm -rf /root/drush-backups/*;
 	sudo find /var/www -iname "*.gz" | grep -v "*.sql.gz" | xargs sudo rm -r;
@@ -231,9 +234,11 @@ function clear-caches() {
 	sudo find /root /home /var/www "$dir" -ipath "*/cache/*" -type f -delete;
 	sudo find /root /home /var/www "$dir" -ipath "*/tmp/*" -type f -delete;
 	sudo find /var/www/ -path "*/devel_themer/*" -delete;
-	sudo find /root /home -name "*.log"  -delete;
+	sudo find /root /home -name "*.log" -delete;
+	echo "clear-caches ended"
+	echo
 }
-# clear-caches;
+clear-caches;
 
 
 # http://ubuntuhandbook.org/index.php/2016/05/remove-old-kernels-ubuntu-16-04/
