@@ -238,14 +238,24 @@ function clear-caches() {
 
 # http://ubuntuhandbook.org/index.php/2016/05/remove-old-kernels-ubuntu-16-04/
 # List all kernels excluding the current booted:
-old_kernels=$(dpkg -l | tail -n +6 | grep -E 'linux-image-[0-9]+' | grep -Fv $(uname -r));
+old_kernels=$(dpkg --list | grep -E 'linux-image-[0-9]+' | grep -Fv $(uname -r) | awk '{ print $2 }');
 if [[ $old_kernels == '' ]]; then
 	echo -e "\nThere are no old/unused kernels.\n";
 else
-	echo -e "\nThere are old kernels that need to be taken care of!!!\n";
+	# Delete the old kernels.
+	echo
+	echo "The old_kernels = ${old_kernels}"
+	# while read kernel; do
+		# echo
+		# echo "Deleting kernel ${kernel}";
+		# echo
+		# sudo apt --purge remove "${kernel}";
+	# done
+	# sudo update-grub2;	
 fi
 
 # Manipulate services.
 sudo service bluetooth stop;
 
-rustup update;
+# Run as the non-root user.
+runuser -l ${user} -c 'rustup update';
