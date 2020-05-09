@@ -5,7 +5,7 @@ export PATH=$PATH:~/bin;
 export PATH=$PATH:~/.cargo/bin;
 
 # The following is for the tesseract build from source.
-export TESSDATA_PREFIX=/usr/local/share/tessdata; 
+export TESSDATA_PREFIX=/usr/local/share/tessdata;
 
 # Drupal Console
 if [[ -f ~/.console/console.rc ]]; then
@@ -124,7 +124,7 @@ function ffmpeg-subtitles-add-hard()
     fi
 }
 
-function ffmpeg-subtitles-extract-from-mkv() 
+function ffmpeg-subtitles-extract-from-mkv()
 {
     if [[ $1 ]]; then
         videoFile=$1;
@@ -140,7 +140,7 @@ function ffmpeg-subtitles-extract-from-mkv()
     fi
 }
 
-function ffmpeg-video-audio-from-multiple-streams() 
+function ffmpeg-video-audio-from-multiple-streams()
 {
     if [[ "$1" && "$2" && "$3" ]]; then
         videoFile=${1};
@@ -165,8 +165,8 @@ function ffmpeg-video-extract-from-dvd()
 function ffmpeg-dvd-create()
 {
     sudo apt install dvdauthor;
-    sudo apt install ffmpeg;
-    
+    ffmpeg-install.sh;
+
     if [[ "$1" ]]; then
         videoFile=$1;
         ffmpeg -i "${videoFile}" -target pal-dvd dvd-video.mpg;
@@ -193,7 +193,7 @@ function ffmpeg-video-resize() {
 function ffmpeg-video-resize-for-youtube() {
     # https://trac.ffmpeg.org/wiki/Scaling%20(resizing)%20with%20ffmpeg
     # -b:v 2M = bitrate setting
-    # -c:a copy = copy audio    
+    # -c:a copy = copy audio
 
     if [[ "$1" ]]; then
         videoFile="${1}";
@@ -399,7 +399,7 @@ function motogp-download-race()
         fi
     done < "$1";
 
-	ffmpeg-concat-files ./motogpFiles.txt race.mp4;
+	ffmpeg-concat-files.sh ./motogpFiles.txt race.mp4;
     else
         echo 'Usage: motogp-download-race <file.m3u8>'
     fi
@@ -456,7 +456,7 @@ function string-to-hex()
 
 function drupal-module-rename() {
     if [ -z "$2" ]; then
-        echo "Usage: module-rename <old-module-name> <new-module-name>";        
+        echo "Usage: module-rename <old-module-name> <new-module-name>";
     else
         old_name="$1";
         path=$(find . -type d -name ${old_name});
@@ -466,7 +466,7 @@ function drupal-module-rename() {
         new_name_upper_first_char="$(tr '[:lower:]' '[:upper:]' <<< ${new_name:0:1})${new_name:1}";
         old_name_upper=$(echo "$old_name" | awk '{ print toupper($0) }');
         new_name_upper=$(echo "$new_name" | awk '{ print toupper($0) }');
-        
+
         # Move the lowercase files.
         find "$path" -name "*$old_name*" -print0 | sort -rz |  while read -d $'\0' f;
             do mv "$f" "$(dirname "$f")/$(basename "${f//$old_name/$new_name}")";
@@ -480,7 +480,7 @@ function drupal-module-rename() {
         # Replace the old strings.
         find "$new_path" -type f -exec sed -i "s/$old_name/$new_name/g; \
         s/$old_name_upper_first_char/$new_name_upper_first_char/g; \
-        s/$old_name_upper/$new_name_upper/g" "{}" \;    
+        s/$old_name_upper/$new_name_upper/g" "{}" \;
     fi;
 }
 
