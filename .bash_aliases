@@ -497,3 +497,20 @@ function hostdog-reset-remote-files() {
     ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/modules/addons/hostdog_invoice';
     # ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/templates/simplicity';
 }
+
+function netcat-helper {
+    echo "
+-n (numeric-only IP addresses)
+-v (verbose [use twice to be more verbose])
+-l (listen mode, for inbound connects)
+-p (port)
+-e (program to exec after connect [dangerous!!])
+
+nc -n -v -l -p 5555 -e /bin/bash
+    "
+}
+
+function ascii2binary() {
+    echo -n "$1" | xxd -b | awk '{print $2}';
+}
+
