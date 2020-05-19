@@ -492,13 +492,13 @@ function get-vscode-settings() {
     curl -s -o "$HOME/.config/Code/User/settings.json" https://raw.githubusercontent.com/Vagelis-Prokopiou/vscode-settings/master/settings.json
 }
 
-function hostdog-reset-remote-files() {
+function hostdogResetRemoteFiles() {
      # clean the hostdog invoice module and the client template
     ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/modules/addons/hostdog_invoice';
     # ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/templates/simplicity';
 }
 
-function netcat-helper {
+function netcatExample() {
     echo "
 -n (numeric-only IP addresses)
 -v (verbose [use twice to be more verbose])
@@ -514,3 +514,10 @@ function ascii2binary() {
     echo -n "$1" | xxd -b | awk '{print $2}';
 }
 
+function cleanFilename() {
+    echo "$1" | sed "s| |_|g; s|)||g; s|(||g; s|'||g; s|!||g; s|&||g; s|\[||g; s|\]||g; s|♫||g; s|^_||g;";
+}
+
+function getFileNameWithoutExtension() {
+    filename="$(basename "$1")" && echo "${filename%.*}";
+}
