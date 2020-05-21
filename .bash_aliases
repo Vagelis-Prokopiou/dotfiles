@@ -493,7 +493,10 @@ function get-vscode-settings() {
 }
 
 function hostdogResetRemoteFiles() {
-     # clean the hostdog invoice module and the client template
+    echo 'Sync simple: clear; rsync -rv client/modules/addons/hostdog_invoice/ dev@dev.hostdog.eu:/home/dev/public_html/client/modules/addons/hostdog_invoice/';
+    echo 'Sync with theme: clear; rsync -rv client/modules/addons/hostdog_invoice/ dev@dev.hostdog.eu:/home/dev/public_html/client/modules/addons/hostdog_invoice/ &&
+    rsync -rv client/templates/simplicity/ dev@dev.hostdog.eu:/home/dev/public_html/client/templates/simplicity/;
+     # clean the hostdog invoice module and the client template'
     ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/modules/addons/hostdog_invoice';
     # ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/templates/simplicity';
 }
@@ -506,8 +509,7 @@ function netcatExample() {
 -p (port)
 -e (program to exec after connect [dangerous!!])
 
-nc -n -v -l -p 5555 -e /bin/bash
-    "
+nc -n -v -l -p 5555 -e /bin/bash"
 }
 
 function ascii2binary() {
