@@ -2,13 +2,14 @@
 
 # Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
 
-# if [ ! -f /etc/ssl/certs/ssl-cert-snakeoil.pem ] || [ ! -f /etc/ssl/private/ssl-cert-snakeoil.key ]; then
-# 	echo -e 'Installing ssl-cert...\n';
-# 	sudo apt install ssl-cert;
-	
-# 	echo -e 'Generating certificate...\n';
-# 	sudo make-ssl-cert generate-default-snakeoil --force-overwrite;
-# fi
+if [ ! -f /etc/ssl/localcerts/apache.pem ] || [ ! -f /etc/ssl/localcerts/apache.key ]; then
+  # Check https://wiki.debian.org/Self-Signed_Certificate
+	mkdir -p /etc/ssl/localcerts;
+  openssl req -new -x509 -days 365 -nodes -out /etc/ssl/localcerts/apache.pem -keyout /etc/ssl/localcerts/apache.key;
+  chmod 600 /etc/ssl/localcerts/apache*;
+  sudo a2enmod ssl;
+  sudo systemctl restart apache2;
+fi
 
 # Check for a provided hostname argument.
 if [[ ! "$1" ]]; then
@@ -33,23 +34,23 @@ sudo mkdir -p "${logsdir}";
 echo "<h1>${domain}.local has been created successfully.</h1>" | sudo tee "${docroot}/index.html";
 
 # Create the Apache config files.
-echo "<VirtualHost *:80>
-# SSLEngine On
-# SSLCertificateFile  /etc/ssl/certs/ssl-cert-snakeoil.pem
-# SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+echo "<VirtualHost *:443>
+  SSLEngine On
+  SSLCertificateFile /etc/ssl/localcerts/apache.pem
+  SSLCertificateKeyFile /etc/ssl/localcerts/apache.key
 
-ServerName ${domain}.local
-ServerAlias www.${domain}.local
-ServerAdmin ${domain}@localhost
-DocumentRoot ${docroot}
-<Directory ${docroot}/>
-Options Indexes FollowSymLinks
-AllowOverride All
-Require all granted
-</Directory>
-LogLevel info warn
-ErrorLog ${logsdir}/error.log
-CustomLog ${logsdir}/access.log combined
+  ServerName ${domain}.local
+  DocumentRoot ${docroot}
+
+  <Directory ${docroot}/>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+
+  LogLevel info warn
+  ErrorLog ${logsdir}/error.log
+  CustomLog ${logsdir}/access.log combined
 </VirtualHost>" | sudo tee "/etc/apache2/sites-available/${domain}.local.conf";
 
 # Enable the site.
@@ -61,5 +62,5 @@ echo "127.0.0.1 ${domain}.local" | sudo tee --append /etc/hosts;
 sudo chown -R va:www-data "${base_path}/${domain}";
 
 # Restart Apache.
-sudo systemctl restart apache2;    
-echo "You can access the site at http://${domain}.local/";
+sudo systemctl restart apache2;
+echo "You can access the site at https://${domain}.local/";
