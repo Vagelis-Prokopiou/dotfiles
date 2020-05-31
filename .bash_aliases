@@ -501,7 +501,7 @@ function hostdogResetRemoteFiles() {
     # ssh dev@dev.hostdog.eu 'cd public_html && git checkout client/templates/simplicity';
 }
 
-function netcatExample() {
+function netcat-example() {
     echo "
 -n (numeric-only IP addresses)
 -v (verbose [use twice to be more verbose])
