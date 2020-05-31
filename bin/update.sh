@@ -87,7 +87,6 @@ deb-src http://ftp.debian.org/debian buster-backports main
 						p7zip-rar \
 						unrar \
 						keepass2 \
-						qalculate \
 						qbittorrent \
 						apt-transport-https \
 						vim \
@@ -104,16 +103,16 @@ deb-src http://ftp.debian.org/debian buster-backports main
 					  gnome-documents;
 
 	# Google Chrome
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
-	sudo dpkg -i --force-depends ./google-chrome-stable_current_amd64.deb;
-	sudo apt install -y -f;
-	sudo rm ./google-chrome-stable_current_amd64.deb;
+	# wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+	# sudo dpkg -i --force-depends ./google-chrome-stable_current_amd64.deb;
+	# sudo apt install -y -f;
+	# sudo rm ./google-chrome-stable_current_amd64.deb;
 
 	# Dropbox
-	wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
-	sudo sudo dpkg -i --force-depends ./*dropbox*.deb;\
-	sudo apt install -y -f;\
-	sudo rm ./*dropbox*.deb;
+	# wget 'https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb';
+	# sudo sudo dpkg -i --force-depends ./*dropbox*.deb;\
+	# sudo apt install -y -f;\
+	# sudo rm ./*dropbox*.deb;
 
 	# Youtube-dl.
 	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl;
@@ -126,7 +125,7 @@ deb-src http://ftp.debian.org/debian buster-backports main
 	# sudo apt install -y nautilus-open-terminal;
 
 	# This is needed for Dropbox.
-	sudo apt install -y python-gpgme;
+	# sudo apt install -y python-gpgme;
 
 	# This fixes the error when using Sublime for git commits && needed for PhpStorm.
 	sudo apt install -y libcanberra-gtk-module;
@@ -147,21 +146,20 @@ deb-src http://ftp.debian.org/debian buster-backports main
 	# ----- LAMP on Debian.
 	##############################################
 	sudo apt -y install apache2;
-	sudo apt install -y mariadb-server phpmyadmin;
-	sudo apt -y install php7.0-xdebug;
+	sudo apt install -y mariadb-server;
+	sudo apt install -y phpmyadmin;
+	sudo apt -y install php-xdebug;
 	sudo apt -y install php-dom; # This fixes the error "Class 'DOMDocument' not found", during Drupal tests execution.
 	sudo a2enmod rewrite;
-	sudo service apache2 restart;
+	sudo systemctl restart apache2;
 	sudo apt --fix-broken install;
 	# Fix the upload file size.
 	find /etc -name php.ini -exec sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/g' "{}" \;
 
 	# Grant all privileges to root user.
 	# How to reset the password: https://robbinespu.github.io/eng/2018/03/29/Reset_mariadb_root_password.html
-	mysql -u root -proot -e "use mysql; update user set password='root' where User='root'; GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; FLUSH PRIVILEGES;";	
-
-	# sudo apt remove --purge -y mariadb* php* && sudo apt autoremove -y && sudo apt install -y mariadb-server phpmyadmin;
-
+	mysql -u root -proot -e "use mysql; update user set password='root' where User='root'; GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; FLUSH PRIVILEGES;";
+	
 	if [ ! -f /etc/apache2/apache2.conf.bak ]; then
     	sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak;
 		sudo sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf;
