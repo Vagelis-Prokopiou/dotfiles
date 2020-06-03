@@ -2,13 +2,17 @@
 
 # Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
 
+# Make sure these modules are enabled.
+# I have spend too much time debugging, to find that the rewrite module was not enabled :-)
+# apache2ctl -M (to check the enabled modules)
+sudo a2enmod rewrite;
+sudo a2enmod ssl;
+
 if [ ! -f /etc/ssl/localcerts/apache.pem ] || [ ! -f /etc/ssl/localcerts/apache.key ]; then
   # Check https://wiki.debian.org/Self-Signed_Certificate
 	mkdir -p /etc/ssl/localcerts;
-  openssl req -new -x509 -days 365 -nodes -out /etc/ssl/localcerts/apache.pem -keyout /etc/ssl/localcerts/apache.key;
+  openssl req -new -x509 -days 1000 -nodes -out /etc/ssl/localcerts/apache.pem -keyout /etc/ssl/localcerts/apache.key;
   chmod 600 /etc/ssl/localcerts/apache*;
-  sudo a2enmod ssl;
-  sudo systemctl restart apache2;
 fi
 
 # Check for a provided hostname argument.
@@ -33,34 +37,58 @@ sudo mkdir -p "${logsdir}";
 # Create an index file.
 echo "<h1>${domain}.local has been created successfully.</h1>" | sudo tee "${docroot}/index.html";
 
+domainSuffix="local.com";
+
+
+# Testing
+# echo "<VirtualHost *:80>
+#   ServerName \"${domain}.${domainSuffix}\"
+#   DocumentRoot \"${docroot}\"
+#   ErrorLog /var/log/apache2/error.log
+#   CustomLog /var/log/apache2/access.log combined
+# </VirtualHost>
+
+# <VirtualHost *:443>
+#   ServerName \"${domain}.${domainSuffix}\"
+
+#   DocumentRoot \"${docroot}\"
+#   ErrorLog /var/log/apache2/error.log
+#   CustomLog /var/log/apache2/access.log combined
+
+#   SSLEngine on
+#   SSLCertificateFile    /etc/ssl/localcerts/apache.pem
+#   SSLCertificateKeyFile /etc/ssl/localcerts/apache.key
+# </VirtualHost>" | sudo tee "/etc/apache2/sites-available/${domain}.${domainSuffix}.conf";
+
 # Create the Apache config files.
 echo "<VirtualHost *:443>
-  SSLEngine On
-  SSLCertificateFile /etc/ssl/localcerts/apache.pem
-  SSLCertificateKeyFile /etc/ssl/localcerts/apache.key
+  ServerName \"${domain}.${domainSuffix}\"
 
-  ServerName ${domain}.local
-  DocumentRoot ${docroot}
+  DocumentRoot \"${docroot}\"
 
-  <Directory ${docroot}/>
+  LogLevel info warn
+  ErrorLog ${logsdir}/error.log
+  CustomLog ${logsdir}/access.log combined
+
+  <Directory ${docroot}>
     Options Indexes FollowSymLinks
     AllowOverride All
     Require all granted
   </Directory>
 
-  LogLevel info warn
-  ErrorLog ${logsdir}/error.log
-  CustomLog ${logsdir}/access.log combined
-</VirtualHost>" | sudo tee "/etc/apache2/sites-available/${domain}.local.conf";
+  SSLEngine on
+  SSLCertificateFile    /etc/ssl/localcerts/apache.pem
+  SSLCertificateKeyFile /etc/ssl/localcerts/apache.key
+</VirtualHost>" | sudo tee "/etc/apache2/sites-available/${domain}.${domainSuffix}.conf";
 
 # Enable the site.
-sudo a2ensite "${domain}.local";
+sudo a2ensite "${domain}.${domainSuffix}";
 
 # Add the vhost to the vhosts file.
-echo "127.0.0.1 ${domain}.local" | sudo tee --append /etc/hosts;
+echo "127.0.0.1 ${domain}.${domainSuffix}" | sudo tee --append /etc/hosts;
 
-sudo chown -R va:www-data "${base_path}/${domain}";
+sudo chown -R va:www-data "${docroot}";
 
 # Restart Apache.
 sudo systemctl restart apache2;
-echo "You can access the site at https://${domain}.local/";
+echo "You can access the site at https://${domain}.${domainSuffix}";
