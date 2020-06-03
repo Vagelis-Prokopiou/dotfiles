@@ -25,7 +25,12 @@ function installPHPUnit()
 function installViber()
 {
 	# See http://drupaland.eu/article/installing-viber-debian-9
-	sudo apt install -y libqt5gui5;\
+	# Get multiarch-support https://packages.debian.org/buster/amd64/multiarch-support/download
+	wget https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb; \
+	wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u12_amd64.deb; \
+	sudo dpkg -i ./libssl1.0.0_1.0.1t-1+deb8u12_amd64.deb; \
+	sudo apt install -y libqt5gui5; \
+	# sudo apt install -y multiarch-support; \ # Does not exist for Kali Linux
 	sudo dpkg -i ./viber.deb;\
 	sudo apt --fix-broken install -y;\
 	sudo rm ./viber.deb;
@@ -159,7 +164,7 @@ deb-src http://ftp.debian.org/debian buster-backports main
 	# Grant all privileges to root user.
 	# How to reset the password: https://robbinespu.github.io/eng/2018/03/29/Reset_mariadb_root_password.html
 	mysql -u root -proot -e "use mysql; update user set password='root' where User='root'; GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; FLUSH PRIVILEGES;";
-	
+
 	if [ ! -f /etc/apache2/apache2.conf.bak ]; then
     	sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak;
 		sudo sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf;
@@ -254,7 +259,7 @@ else
 		# echo
 		# sudo apt --purge remove "${kernel}";
 	# done
-	# sudo update-grub2;	
+	# sudo update-grub2;
 fi
 
 # Manipulate services.
