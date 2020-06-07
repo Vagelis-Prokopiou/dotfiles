@@ -87,7 +87,7 @@ sudo a2ensite "${domain}.${domainSuffix}";
 # Add the vhost to the vhosts file.
 echo "127.0.0.1 ${domain}.${domainSuffix}" | sudo tee --append /etc/hosts;
 
-sudo chown -R va:www-data "${docroot}";
+sudo chown -R va:www-data "${base_path}/${domain}";
 
 # Restart Apache.
 sudo systemctl restart apache2;
