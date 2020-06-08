@@ -34,9 +34,18 @@ sudo apt install -y libmp3lame0
 sudo apt install -y libavformat-dev
 sudo apt install -y jackd2
 sudo apt install -y libjack-jackd2-dev
+sudo apt install libgtk-3-dev
 
 # Wxwidgets
-sudo apt install -y libwxgtk3.0
+lsb_release --description | grep -i Debian;
+status=$?
+if test $status -eq 0
+then
+	sudo apt install -y libwxgtk3.0 # Debian version
+else
+	sudo apt install -y libwxgtk3.0* # Kali version
+fi
+
 
 cd /tmp
 git clone https://github.com/audacity/audacity.git
