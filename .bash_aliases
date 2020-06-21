@@ -3,6 +3,7 @@ user_home="/home/${user}";
 
 export PATH=$PATH:~/bin;
 export PATH=$PATH:~/.cargo/bin;
+export PATH="$PATH:$HOME/.config/composer/vendor/bin";
 
 # The following is for the tesseract build from source.
 export TESSDATA_PREFIX=/usr/local/share/tessdata;
