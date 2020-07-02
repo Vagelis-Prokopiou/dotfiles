@@ -38,12 +38,7 @@ function installViber()
 
 function installComposer() { install-composer.sh; }
 
-function installDrupalConsole()
-{
-	curl https://drupalconsole.com/installer -L -o drupal.phar;
-	mv drupal.phar /usr/local/bin/drupal;
-	chmod +x /usr/local/bin/drupal;
-}
+function installDrupalConsole() { install-drupal-console.sh; }
 
 function installNodeJS()
 {
