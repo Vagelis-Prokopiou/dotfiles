@@ -49,6 +49,9 @@ alias gstf='git-show-tracked-files';
 alias psql='sudo -u postgres psql';
 alias torrents='cd /media/va/local_disk/TORRENTS';
 
+# Executables switches overrides
+alias rg='rg --no-heading';
+
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
 function git-diff-master() {
