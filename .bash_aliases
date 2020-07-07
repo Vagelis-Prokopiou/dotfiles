@@ -527,3 +527,7 @@ function cleanFilename() {
 function getFileNameWithoutExtension() {
     filename="$(basename "$1")" && echo "${filename%.*}";
 }
+
+function php-change-version() {
+	update-alternatives --config php;
+}
