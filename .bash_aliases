@@ -529,5 +529,5 @@ function getFileNameWithoutExtension() {
 }
 
 function php-change-version() {
-	update-alternatives --config php;
+	sudo update-alternatives --config php;
 }
