@@ -8,16 +8,8 @@ db_user_pass="root";
 if [ ! "$1" == 'lando' ]; then
   # Check for composer.
   command -v composer > /dev/null 2>&1 || install-composer.sh;
-
-  # Check for PHP.
-  # Todo: Extract PHP dependencies to a respective script.
-  sudo apt install -y php-mysql && sudo systemctl restart apache2;
-  sudo apt install -y php-xml;
-  sudo apt install -y php-imagick;
-  sudo apt install -y php-json;
-  sudo apt install -y php-curl;
-  sudo apt install -y php-mbstring;
-  sudo apt install -y php-gd;
+  
+  drupal-install-dependencies.sh 7.4;
 
   # Define variables.
   database=$(pwd | sed 's|.*www/||; s|/public_html||; s|\.|_|');
