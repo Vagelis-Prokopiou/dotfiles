@@ -28,8 +28,9 @@ fi
 
 alias rider="$(find ${user_home}/jetbrains -type f -iname rider.sh)";
 alias clion="$(find ${user_home}/jetbrains -type f -iname clion.sh)";
-alias phpstorm="$(find ${user_home}/jetbrains -type f -iname phpstorm.sh)";
+alias pstorm="$(find ${user_home}/jetbrains -type f -iname phpstorm.sh)";
 alias datagrip="$(find ${user_home}/jetbrains -type f -iname datagrip.sh)";
+alias astudio="$(find ${user_home}/jetbrains -type f -iname studio.sh)";
 
 alias update="echo ${USER} | sudo -S bash ~/bin/update.sh";
 alias karma='su va -c "npm run test:karma"';

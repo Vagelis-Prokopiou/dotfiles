@@ -139,3 +139,7 @@ www/
 .idea
 .texlive2018
 .hashcat
+.AndroidStudio4.0
+.emulator_console_auth_token
+Android
+.gradle
