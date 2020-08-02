@@ -53,7 +53,7 @@ alias torrents='cd /media/va/local_disk/TORRENTS';
 # Executables switches overrides
 alias rg='rg --no-heading';
 
-alias dotnet='~/dotnet-*/dotnet';
+alias dotnet="${user_home}/dotnet*/dotnet";
 
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
