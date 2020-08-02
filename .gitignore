@@ -143,3 +143,4 @@ www/
 .emulator_console_auth_token
 Android
 .gradle
+dotnet
