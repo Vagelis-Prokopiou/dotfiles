@@ -5,9 +5,6 @@ export PATH=$PATH:~/bin;
 export PATH=$PATH:~/.cargo/bin;
 export PATH="$PATH:$HOME/.config/composer/vendor/bin";
 
-# The following is for the tesseract build from source.
-export TESSDATA_PREFIX=/usr/local/share/tessdata;
-
 # Drupal Console
 if [[ -f ~/.console/console.rc ]]; then
     . ~/.console/console.rc 2>/dev/null;
@@ -53,7 +50,8 @@ alias torrents='cd /media/va/local_disk/TORRENTS';
 # Executables switches overrides
 alias rg='rg --no-heading';
 
-alias dotnet="${user_home}/dotnet*/dotnet";
+alias dotnet="~/dotnet/dotnet";
+alias dotnet5="~/dotnet5/dotnet";
 
 # Create a patch (diff) file, for only the tracked files of the repository.
 # Useful when the master branch tracks for files than the current branch.
@@ -533,4 +531,11 @@ function getFileNameWithoutExtension() {
 
 function php-change-version() {
 	sudo update-alternatives --config php;
+}
+
+function tesseract-help() {
+    echo "1. sudo apt install tesseract-ocr";
+    echo "2. Find the tessdata dir: find /usr -type d -name tessdata";
+    echo "3. Download in the tessdata dir the traineddata data for the languages you want (ell, heb) from here: https://github.com/tesseract-ocr/tessdata";
+    echo "4. Usage: tesseract image file -l ell;"
 }
