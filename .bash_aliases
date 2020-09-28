@@ -5,6 +5,9 @@ export PATH=$PATH:~/bin;
 export PATH=$PATH:~/.cargo/bin;
 export PATH="$PATH:$HOME/.config/composer/vendor/bin";
 
+# Set the tessdata dir, for tesseract.
+export TESSDATA_PREFIX=$(find /usr/share -type d -name tessdata);
+
 # Drupal Console
 if [[ -f ~/.console/console.rc ]]; then
     . ~/.console/console.rc 2>/dev/null;
@@ -27,6 +30,7 @@ alias rider="$(find ${user_home}/jetbrains -type f -iname rider.sh)";
 alias clion="$(find ${user_home}/jetbrains -type f -iname clion.sh)";
 alias pstorm="$(find ${user_home}/jetbrains -type f -iname phpstorm.sh)";
 alias datagrip="$(find ${user_home}/jetbrains -type f -iname datagrip.sh)";
+alias pycharm="$(find ${user_home}/jetbrains -type f -iname pycharm.sh)";
 alias astudio="$(find ${user_home}/jetbrains -type f -iname studio.sh)";
 
 alias update="echo ${USER} | sudo -S bash ~/bin/update.sh";
@@ -539,3 +543,4 @@ function tesseract-help() {
     echo "3. Download in the tessdata dir the traineddata data for the languages you want (ell, heb) from here: https://github.com/tesseract-ocr/tessdata";
     echo "4. Usage: tesseract image file -l ell;"
 }
+
