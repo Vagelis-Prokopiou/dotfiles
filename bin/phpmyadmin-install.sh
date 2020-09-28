@@ -2,7 +2,7 @@
 
 # Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
 
-latest=$(curl https://www.phpmyadmin.net/ | grep href | grep files | head -n 1 | sed 's/.*href=//g; s/"//g' |  awk '{ print $1 }');
+latest=$(curl --silent https://www.phpmyadmin.net/ | grep href | grep files | head -n 1 | sed 's/.*href=//g; s/"//g' |  awk '{ print $1 }');
 wget $latest;
 unzip phpMyAdmin*;
 rm -rf phpMyAdmin*.zip;
