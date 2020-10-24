@@ -361,6 +361,10 @@ function drush-install-latest()
     fi
 }
 
+function drupal-set-site-uuid() {
+    drush config-set -y "system.site" uuid $(cat config/sync/system.site.yml | grep uuid | awk '{print $2}');
+}
+
 function drupal-rename-module()
 {
 	if [[ "$3" ]]; then
