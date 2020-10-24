@@ -361,6 +361,20 @@ function drush-install-latest()
     fi
 }
 
+function drupal-reinstall() {
+    dbUser=drupal8; \
+    dbPass=drupal8; \
+    dbHost=database; \
+    dbName=patra; \
+    siteName=patra; \
+    drush site-install -y standard --db-url=mysql://${dbUser}:${dbPass}@${dbHost}/${dbName} --site-name="${siteName}" --account-name=admin --account-pass=admin \
+    && drush ev '\Drupal::entityManager()->getStorage("shortcut_set")->load("default")->delete();' \
+    && drush config-set -y "system.site" uuid $(cat config/sync/system.site.yml | grep uuid | awk '{print $2}') \
+    && drush cim -y \
+    && drush cr \
+    && drush updb -y
+}
+
 function drupal-set-site-uuid() {
     drush config-set -y "system.site" uuid $(cat config/sync/system.site.yml | grep uuid | awk '{print $2}');
 }
