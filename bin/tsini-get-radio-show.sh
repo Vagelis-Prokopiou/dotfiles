@@ -31,7 +31,6 @@ numberOfSegments="$1"
 url="$2"
 
 echo -e "\n Getting the initial segment"
-#curl -o 0.m4a https://audio6.mixcloud.com/secure/dash2/b/9/d/e/77f2-f2ef-4a64-a9cf-2e2f7b5e405a.m4a/init-a1-x3.mp4
 curl -o 0.m4a "$url"
 
 echo -e "\n Getting the following segments"
@@ -46,5 +45,7 @@ echo -e "\n Creating the output.m4a"
 cat $(ls -1 | sort -g | xargs) >output.m4a
 
 vlc ./output.m4a
+
+# Todo: Provide some images and create a video with ffmpeg.
 
 
