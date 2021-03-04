@@ -50,7 +50,7 @@ Alias /phpmyadmin /usr/share/phpmyadmin
 
         php_value include_path .
         php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
-        php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+        php_admin_value open_basedir /usr/share/phpmyadmin/:dmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
         php_admin_value mbstring.func_overload 0
     </IfModule>
 
@@ -72,3 +72,5 @@ sudo mkdir -p /var/lib/phpmyadmin/tmp;
 sudo chown www-data:www-data /var/lib/phpmyadmin/tmp;
 
 sudo a2enconf phpmyadmin.conf && sudo systemctl reload apache2;
+
+apt ins
