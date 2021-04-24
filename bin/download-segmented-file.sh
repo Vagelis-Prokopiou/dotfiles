@@ -16,6 +16,12 @@ if [ ! "$1" ]; then
   exit 1
 fi
 
+if ! command -v youtube-dl &> /dev/null
+then
+    echo -e "\nyoutube-dl not found. Please install.\n"
+    exit 1
+fi
+
 # Create a temp dir
 tmpDir=/tmp/movie
 echo "Creating tmp dir: $tmpDir"
