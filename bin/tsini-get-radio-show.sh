@@ -31,21 +31,17 @@ numberOfSegments="$1"
 url="$2"
 
 echo -e "\n Getting the initial segment"
-curl -o 0.m4a "$url"
+curl -o 0.mp4 "$url"
 
 echo -e "\n Getting the following segments"
 seq "$numberOfSegments" | while read -r n; do
   # Replacing init with the fragment-number, and the extension.
   tmpUrl=$(echo "$url" | sed "s|init|fragment-${n}|g; s|mp4|m4s|")
   echo "tmpUrl: $tmpUrl"
-  curl -s -o "${n}.m4a" "${tmpUrl}"
+  curl -s -o "${n}.mp4" "${tmpUrl}"
 done
 
 echo -e "\n Creating the output.m4a"
-cat $(ls -1 | sort -g | xargs) >output.m4a
+cat $(ls -1 | grep mp4 | sort -g | xargs) >output.mp4
 
-vlc ./output.m4a
-
-# Todo: Provide some images and create a video with ffmpeg.
-
-
+vlc ./output.mp4
