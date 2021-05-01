@@ -29,19 +29,20 @@ rm -rf ./*
 # Set the variables.
 numberOfSegments="$1"
 url="$2"
+extension=mp4
 
 echo -e "\n Getting the initial segment"
-curl -o 0.mp4 "$url"
+curl -o 0.${extension} "$url"
 
 echo -e "\n Getting the following segments"
 seq "$numberOfSegments" | while read -r n; do
   # Replacing init with the fragment-number, and the extension.
-  tmpUrl=$(echo "$url" | sed "s|init|fragment-${n}|g; s|mp4|m4s|")
+  tmpUrl=$(echo "$url" | sed "s|init|fragment-${n}|g; s|${extension}|m4s|")
   echo "tmpUrl: $tmpUrl"
-  curl -s -o "${n}.mp4" "${tmpUrl}"
+  curl -s -o "${n}.${extension}" "${tmpUrl}"
 done
 
 echo -e "\n Creating the output.m4a"
-cat $(ls -1 | grep mp4 | sort -g | xargs) >output.mp4
+cat $(ls -1 | grep ${extension} | sort -g | xargs) >output.${extension}
 
-vlc ./output.mp4
+vlc ./output.${extension}
