@@ -37,7 +37,7 @@ alias update="echo ${USER} | sudo -S bash ~/bin/update.sh";
 alias karma='su va -c "npm run test:karma"';
 
 # Git stuff:
-alias gc='git commit --signoff -m ';
+alias gc='git commit -m';
 alias gs='clear && git status';
 alias grh='clear && git reset --hard';
 alias gl='clear && git log --oneline';
