@@ -2,6 +2,9 @@
 
 # Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
 
+# Dependencies for building from source
+sudo apt install asciidoc libleptonica-dev
+
 installed_release=$(tesseract --version 2>/dev/null | head -n 1 | awk '{print $2}')
 
 # Latest release from API.
@@ -12,9 +15,6 @@ if [ ${installed_release} == ${latest_release} ]; then
   echo "The installed version (${installed_release}) is the latest."
   exit 0
 fi
-
-# This is needed for building tesseract from source
-sudo apt install libleptonica-dev asciidoc
 
 # Define variables
 folder_name="tesseract"
@@ -40,7 +40,8 @@ rm -rf "${archive_name}" "${folder_name}"
 cd
 
 # Get languages.
-cd /usr/local/share/tessdata
+tessdata_dir=/usr/local/share/tessdata/
+cd $tessdata_dir
 for language in eng heb ell; do
   sudo curl --silent -LO https://github.com/tesseract-ocr/tessdata/raw/master/${language}.traineddata
 done
