@@ -6,7 +6,7 @@ export PATH=$PATH:~/.cargo/bin;
 export PATH="$PATH:$HOME/.config/composer/vendor/bin";
 
 # Set the tessdata dir, for tesseract.
-export TESSDATA_PREFIX=$(find /usr/share -type d -name tessdata);
+export TESSDATA_PREFIX=/usr/local/share/tessdata
 
 # Drupal Console
 if [[ -f ~/.console/console.rc ]]; then
@@ -555,10 +555,22 @@ function php-change-version() {
 	sudo update-alternatives --config php;
 }
 
-function tesseract-help() {
-    echo "1. sudo apt install tesseract-ocr";
-    echo "2. Find the tessdata dir: find /usr -type d -name tessdata";
-    echo "3. Download in the tessdata dir the traineddata data for the languages you want (ell, heb) from here: https://github.com/tesseract-ocr/tessdata";
-    echo "4. Usage: tesseract image file -l ell;"
+function ocr() {
+    command -v tesseract > /dev/null || (echo "tesseract is not installed. Run tesseract-install.sh" && kill -INT $$)
+
+    function help() {
+        labguages=$(ls -1  $TESSDATA_PREFIX | grep traineddata | sed 's|.traineddata||' | xargs | sed 's| |\||g')
+        echo "Usage: ocr <$labguages> <input_image> <output_file>"
+        echo "Example: ocr ell input.jpg output"
+    }
+
+    if [ "$3" ]; then
+        language=$1
+        input=$2
+        output=$3
+        tesseract -l $language $input $output;
+    else
+        help
+    fi
 }
 
