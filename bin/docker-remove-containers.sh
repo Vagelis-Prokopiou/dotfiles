@@ -2,5 +2,5 @@
 
 # Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
 
-docker-stop-containers;
+docker-stop-containers.sh;
 docker rm -f $(docker ps -a -q);

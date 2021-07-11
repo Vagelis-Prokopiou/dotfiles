@@ -2,5 +2,5 @@
 
 # Author: Vagelis Prokopiou <vagelis.prokopiou@gmail.com>
 
-docker-remove-containers;
+docker-remove-containers.sh;
 docker rmi -f $(docker images --quiet); # -q, --quiet Only show numeric ID
