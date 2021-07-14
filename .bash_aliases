@@ -28,7 +28,8 @@ fi
 
 alias rider="$(find ${user_home}/jetbrains -type f -iname rider.sh)";
 alias clion="$(find ${user_home}/jetbrains -type f -iname clion.sh)";
-alias pstorm="$(find ${user_home}/jetbrains -type f -iname phpstorm.sh)";
+alias pstorm="$(find ${user_home}/jetbrains/PhpStorm* -type f -iname phpstorm.sh)";
+alias wstorm="$(find ${user_home}/jetbrains/WebStorm* -type f -iname webstorm.sh)";
 alias datagrip="$(find ${user_home}/jetbrains -type f -iname datagrip.sh)";
 alias pycharm="$(find ${user_home}/jetbrains -type f -iname pycharm.sh)";
 alias astudio="$(find ${user_home}/jetbrains -type f -iname studio.sh)";
@@ -574,3 +575,8 @@ function ocr() {
     fi
 }
 
+function lando-set-aliases() {
+    alias drush='lando drush';
+    alias drupal='lando drupal';
+    alias composer='lando composer';
+}
