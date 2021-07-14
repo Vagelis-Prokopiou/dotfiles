@@ -91,7 +91,8 @@ deb-src http://ftp.debian.org/debian buster-backports main
 						apt-transport-https \
 						vim \
 						git \
-						smplayer;
+						smplayer \
+						byobu; # This is for old kernels removal. See: # https://www.tecmint.com/remove-old-kernel-in-debian-and-ubuntu/
 
 	sudo apt purge -y gnome-games \
 					  inkscape \
@@ -145,6 +146,15 @@ deb-src http://ftp.debian.org/debian buster-backports main
 	##############################################
 	# ----- LAMP on Debian.
 	##############################################
+	# Define dynamicaly the current php version.
+	# sudo apt-get install --reinstall apache2 php7.3 libapache2-mod-php7.3 php-gd php-mysql;
+	# echo '<?php phpinfo(); ?>' | sudo tee /var/www/html/index.php;
+	# sudo chown www-data:www-data /var/www/html/index.php;
+	# sudo rm /var/www/html/index.html;
+	# sudo systemctl restart apache2;
+
+
+
 	sudo apt -y install apache2;
 	sudo apt install -y mariadb-server;
 	sudo apt install -y phpmyadmin;
@@ -238,24 +248,8 @@ function clear-caches() {
 }
 clear-caches;
 
-
-# http://ubuntuhandbook.org/index.php/2016/05/remove-old-kernels-ubuntu-16-04/
-# List all kernels excluding the current booted:
-old_kernels=$(dpkg --list | grep -E 'linux-image-[0-9]+' | grep -Fv $(uname -r) | awk '{ print $2 }');
-if [[ $old_kernels == '' ]]; then
-	echo -e "\nThere are no old/unused kernels.\n";
-else
-	# Delete the old kernels.
-	echo
-	echo "The old_kernels = ${old_kernels}"
-	# while read kernel; do
-		# echo
-		# echo "Deleting kernel ${kernel}";
-		# echo
-		# sudo apt --purge remove "${kernel}";
-	# done
-	# sudo update-grub2;
-fi
+# Remove old kernes
+sudo purge-old-kernels --keep 2
 
 # Manipulate services.
 sudo service bluetooth stop;
