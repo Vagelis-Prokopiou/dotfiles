@@ -209,7 +209,6 @@ else
 	sudo apt -y upgrade;
 	# sudo apt -y dist-upgrade;
 	sudo apt -y autoremove;
-	sudo apt -y check;
 	sudo apt -y clean;
 	sudo apt -y autoclean;
 	sudo apt install -y -f;
