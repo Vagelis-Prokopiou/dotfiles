@@ -580,3 +580,16 @@ function lando-set-aliases() {
     alias drupal='lando drupal';
     alias composer='lando composer';
 }
+
+function skroutz-prices-sorted() {
+    echo "
+var euroPerKg = ' €/κιλό';
+Array.from(document.getElementsByClassName('unit-price'))
+    .map(i => { return i.innerText.replace(euroPerKg, '') })
+    .map(i => { return i.replace(',', '.') })
+    .map(i => { return parseFloat(i) })
+    .sort((a, b) => { return a - b; })
+    .map(i => { return parseFloat(i).toFixed(2) + euroPerKg })
+    .map(i => { return i.replace('.', ',') })
+"
+}
