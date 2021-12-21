@@ -237,6 +237,8 @@ function clear-caches() {
 	sudo find /root /home -ipath "*/.cache/*" -type f -delete;
 	sudo find /root /home -ipath "*/tmp/*" -type f -delete;
 	sudo find /root /home -name "*.log" -delete;
+	# Remove all the build artifacts of the Rust projects.
+	find ${user_home}/projects/rust/ -type d -name target | while read dir; do rm -rf "$dir"; done;
 	echo "clear-caches ended"
 	echo
 }
