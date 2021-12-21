@@ -1,9 +1,10 @@
 user="va";
 user_home="/home/${user}";
 
-export PATH=$PATH:~/bin;
-export PATH=$PATH:~/.cargo/bin;
-export PATH="$PATH:$HOME/.config/composer/vendor/bin";
+export PATH=$PATH:${HOME}/bin;
+export PATH=$PATH:${HOME}/.cargo/bin;
+export PATH="$PATH:${HOME}/.config/composer/vendor/bin";
+export PATH="$PATH:${HOME}/bin/go/bin";
 
 # Set the tessdata dir, for tesseract.
 export TESSDATA_PREFIX=/usr/local/share/tessdata
