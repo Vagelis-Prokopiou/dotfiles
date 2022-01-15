@@ -27,6 +27,7 @@ fi
 # Aliases
 # alias code='code --user-data-dir=/tmp';
 
+alias idea="$(find ${user_home}/jetbrains -type f -iname idea.sh)";
 alias rider="$(find ${user_home}/jetbrains -type f -iname rider.sh)";
 alias clion="$(find ${user_home}/jetbrains -type f -iname clion.sh)";
 alias pstorm="$(find ${user_home}/jetbrains/PhpStorm* -type f -iname phpstorm.sh)";
