@@ -595,3 +595,8 @@ Array.from(document.getElementsByClassName('unit-price'))
     .map(i => { return i.replace('.', ',') })
 "
 }
+
+function mouse-fix-mapping() {
+    # See https://misha.brukman.net/blog/2019/08/configuring-evoluent-verticalmouse-4-on-linux
+    xinput set-button-map "Kingsis Peripherals Evoluent VerticalMouse 4" 1 3 3 4 5 6 7 3 9;
+}
