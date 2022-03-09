@@ -596,6 +596,17 @@ Array.from(document.getElementsByClassName('unit-price'))
 "
 }
 
+function eurobank-manipulator() {
+    echo 'setInterval(() => {
+    try {
+        // Update the total value
+        document.getElementsByClassName("value xlarge number")[0].innerText = document.getElementsByClassName("value xlarge number")[2].innerText;
+        // Hide row 2
+        document.getElementsByClassName("listviewRow")[1].style.display = "none";
+    } catch (error) {}
+}, 500)'
+}
+
 function mouse-fix-mapping() {
     # See https://misha.brukman.net/blog/2019/08/configuring-evoluent-verticalmouse-4-on-linux
     xinput set-button-map "Kingsis Peripherals Evoluent VerticalMouse 4" 1 3 3 4 5 6 7 3 9;
