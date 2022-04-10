@@ -309,39 +309,7 @@ function convert-to-unix-line-endings()
 	fi
 }
 
-function teamviewer-start()
-{
-    service teamviewerd restart;
-}
-
-function ripgrep-install-latest()
-{
-    system="$(uname)";
-    ripGrepUrl="https://github.com/BurntSushi/ripgrep/releases";
-    latestVersion=$(curl ${ripGrepUrl} 2> /dev/null | grep '<a href="/BurntSushi/ripgrep/tree/' | head -1 | sed 's/" class="css-truncate">//ig;s/<a href="\/BurntSushi\/ripgrep\/tree\///ig;s/ \+//g');
-    installedVersion=$(rg --version | awk '{print $2}' | head -n1);
-    windowsDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-pc-windows-gnu.zip";
-    linuxDownloadUrl="https://github.com/BurntSushi/ripgrep/releases/download/${latestVersion}/ripgrep-${latestVersion}-x86_64-unknown-linux-musl.tar.gz";
-
-    if [[ "${latestVersion}" != "${installedVersion}" ]]; then
-        echo -e "\nDownloading the latest version...\n";
-
-        if [[ ${system} == MINGW* ]]; then
-            curl -L -o latestRipGrep.zip "${windowsDownloadUrl}";
-            unzip latestRipGrep.zip -d latestRipGrep;
-            cp latestRipGrep/rg.exe /C/Users/Vangelisp/bin;
-        else
-            curl -L -o latestRipGrep.zip.gz "${linuxDownloadUrl}";
-            tar xvzf latestRipGrep.zip.gz;
-            cp ripgrep-*/rg /usr/local/bin;
-            cp ripgrep-*/complete/rg.bash /etc/bash_completion.d;
-        fi
-
-        rm -rf latestRipGrep* ripgrep-*;
-    else
-        echo -e "\nYou are using the latest version (${latestVersion}).\n";
-    fi
-}
+function teamviewer-start() { systemctl restart teamviewerd.service }
 
 function drush-install-latest()
 {
