@@ -165,8 +165,7 @@ function ffmpeg-video-audio-from-multiple-streams()
     fi
 }
 
-function ffmpeg-video-extract-from-dvd()
-{
+function ffmpeg-video-extract-from-dvd() {
     echo '1. Find out which VOB files contain the movie.';
     echo '2. Find out which streams are the video and audio (with ffprobe. E.g.: ffprobe VTS_01_1.VOB |& grep Stream).';
     echo '3. Run the resulting command. E.g.: ffmpeg -i "concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB" -map 0:1 -map 0:4 -f mpeg -c copy concatenated.mpeg'
@@ -174,8 +173,7 @@ function ffmpeg-video-extract-from-dvd()
     echo 'For more info checkout https://newspaint.wordpress.com/2016/07/27/ripping-a-video-from-dvd-using-ffmpeg/';
 }
 
-function ffmpeg-dvd-create()
-{
+function ffmpeg-dvd-create() {
     sudo apt install dvdauthor;
     ffmpeg-install.sh;
 
@@ -247,8 +245,7 @@ function youtube-dl-best-quality-audio() {
 	fi
 }
 
-function drush-siteInstall()
-{
+function drush-siteInstall() {
 	# See: https://drushcommands.com/drush-8x/core/site-install/
 	if [[ "$1" ]]; then
 		drush si standard --site-name="$1" --account-pass=admin  --db-url=mysql://root:root@localhost:3306/"$1";
@@ -268,8 +265,7 @@ function setPermissions-ForFilesFolders() {
 }
 
 # Test it
-function string-substitute()
-{
+function string-substitute() {
     if [[ -n "${3}" ]]; then
         find . -type f -name "${1}" -exec sed -i "s/${2}/${3}/g" "{}" \;;
     else
@@ -279,15 +275,13 @@ function string-substitute()
 }
 
 # DotNet
-function fix-corrupted-new-dotnet-command()
-{
+function fix-corrupted-new-dotnet-command() {
     dotnet new --debug:reinit;
     echo -e '\nTry the fix: "dotnet new console -lang c# appName"';
 }
 
 # apt
-function apt-fix()
-{
+function apt-fix() {
 	sudo apt --fix-broken install -y;
 }
 
@@ -309,10 +303,9 @@ function convert-to-unix-line-endings()
 	fi
 }
 
-function teamviewer-start() { systemctl restart teamviewerd.service }
+function teamviewer-start() { sudo systemctl restart teamviewerd.service; }
 
-function drush-install-latest()
-{
+function drush-install-latest() {
     application="Drush";
     githubUrl="https://github.com/drush-ops/drush/releases";
     latestVersion=$(curl ${githubUrl} | grep '<a href="/drush-ops/drush/releases/download/' | head -1 | sed 's/<a href="\/drush-ops\/drush\/releases\/download\///g; s/\/drush.phar" rel="nofollow">//g; s/ \+//g');
@@ -578,4 +571,13 @@ function eurobank-manipulator() {
 function mouse-fix-mapping() {
     # See https://misha.brukman.net/blog/2019/08/configuring-evoluent-verticalmouse-4-on-linux
     xinput set-button-map "Kingsis Peripherals Evoluent VerticalMouse 4" 1 3 3 4 5 6 7 3 9;
+}
+
+function clippy-lints() {
+    echo '
+// Place the following at the top of lib.rs (or main.rs) for global effect.
+#![allow(clippy::needless_return)]
+#![deny(clippy::implicit_return)]
+#![allow(non_snake_case)]
+'
 }
