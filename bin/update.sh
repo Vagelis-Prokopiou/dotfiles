@@ -14,6 +14,16 @@ user_home="/home/${user}";
 is_initial_install=false;
 # is_initial_install=true;
 
+# Cargo stuff
+cargo install cargo-edit \
+&& cargo install cargo-audit \
+&& cargo install cargo-expand \
+&& cargo install cargo-watch \
+&& echo "cargo operations done";
+
+# Fix the Evoluent mouse
+source "$HOME/.bashrc" && mouse-fix-mapping;
+
 function installPHPUnit()
 {
 	wget https://phar.phpunit.de/phpunit.phar;
@@ -263,3 +273,5 @@ sudo service bluetooth stop;
 
 # Run as the non-root user.
 runuser -l ${user} -c 'rustup update';
+
+docker system prune --all --volumes -f;
