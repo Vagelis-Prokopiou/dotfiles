@@ -8,6 +8,9 @@
 # https://www.dropbox.com/install-linux
 # https://www.google.com/chrome/browser/desktop/
 
+rm -rf ~/.local/share/Trash/*
+
+
 # Variables:
 user='va';
 user_home="/home/${user}";
@@ -22,18 +25,43 @@ cargo install cargo-edit \
 && echo "cargo operations done";
 
 # Fix the Evoluent mouse
-source "$HOME/.bashrc" && mouse-fix-mapping;
+# source "$HOME/.bashrc" && mouse-fix-mapping;
 
-function installPHPUnit()
-{
+# Remove all the caches.
+function clearCaches() {
+	echo
+	echo "clear-caches started"
+	sudo rm -rf ${user_home}/java_error*;
+	sudo rm -rf ${user_home}/drush-backups/*;
+	sudo rm -rf /root/drush-backups/*;
+	sudo find /root /home -ipath "*/.cache/*" -type f -delete;
+	sudo find /root /home -ipath "*/tmp/*" -type f -delete;
+	sudo find /root /home -name "*.log" -delete;
+	
+	# Remove all the build artifacts of the Rust projects.
+	find ${user_home}/projects/rust/ -type d -name target | while read dir; do rm -rf "$dir"; done;
+
+	# Clear Brave caches.
+	rm -rf ${user_home}/.config/BraveSoftware/Brave-Browser/Default/Service\ Worker/CacheStorage/*;
+	rm -rf ${user_home}/.config/BraveSoftware/Brave-Browser/Greaselion/Temp/*;
+
+	# Code related stuff
+	rm -rf ${user_home}/.config/Code/.org.chromium.Chromium.*;
+	rm -rf ${user_home}/.config/Code/Cache/*;
+	rm -rf ${user_home}/.config/Code/Cached*/*;
+	
+	echo "clear-caches ended"
+	echo
+}
+
+function installPHPUnit() {
 	wget https://phar.phpunit.de/phpunit.phar;
 	chmod +x phpunit.phar;
 	sudo mv phpunit.phar /usr/local/bin/phpunit;
 	echo "PHPUNit installed.";
 }
 
-function installViber()
-{
+function installViber() {
 	# See http://drupaland.eu/article/installing-viber-debian-9
 	# Get multiarch-support https://packages.debian.org/buster/amd64/multiarch-support/download
 	wget https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb; \
@@ -50,8 +78,7 @@ function installComposer() { install-composer.sh; }
 
 function installDrupalConsole() { install-drupal-console.sh; }
 
-function installNodeJS()
-{
+function installNodeJS() {
 	curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -;
 	sudo apt install -y nodejs;
 }
@@ -102,7 +129,9 @@ deb-src http://ftp.debian.org/debian buster-backports main
 						vim \
 						git \
 						smplayer \
+						xclip \
 						byobu; # This is for old kernels removal. See: # https://www.tecmint.com/remove-old-kernel-in-debian-and-ubuntu/
+	# xclip is used for redirecting to clip board: echo "foo" | clip (clip is an alias)
 
 	sudo apt purge -y gnome-games \
 					  inkscape \
@@ -237,34 +266,6 @@ else
 	rm ${user_home}/Downloads/*.torrent 2> /dev/null;
 fi
 
-# Remove all the caches.
-function clear-caches() {
-	echo
-	echo "clear-caches started"
-	sudo rm -rf ${user_home}/java_error*;
-	sudo rm -rf ${user_home}/drush-backups/*;
-	sudo rm -rf /root/drush-backups/*;
-	sudo find /root /home -ipath "*/.cache/*" -type f -delete;
-	sudo find /root /home -ipath "*/tmp/*" -type f -delete;
-	sudo find /root /home -name "*.log" -delete;
-	
-	# Remove all the build artifacts of the Rust projects.
-	find ${user_home}/projects/rust/ -type d -name target | while read dir; do rm -rf "$dir"; done;
-
-	# Clear Brave caches.
-	rm -rf ${user_home}/.config/BraveSoftware/Brave-Browser/Default/Service\ Worker/CacheStorage/*;
-	rm -rf ${user_home}/.config/BraveSoftware/Brave-Browser/Greaselion/Temp/*;
-
-	# Code related stuff
-	rm -rf ${user_home}/.config/Code/.org.chromium.Chromium.*;
-	rm -rf ${user_home}/.config/Code/Cache/*;
-	rm -rf ${user_home}/.config/Code/Cached*/*;
-	
-	echo "clear-caches ended"
-	echo
-}
-clear-caches;
-
 # Remove old kernes
 sudo purge-old-kernels --keep 2
 
@@ -274,4 +275,7 @@ sudo service bluetooth stop;
 # Run as the non-root user.
 runuser -l ${user} -c 'rustup update';
 
-docker system prune --all --volumes -f;
+# docker system prune --all -f;
+# docker system prune --all --volumes -f;
+
+clearCaches;

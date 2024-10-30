@@ -25,6 +25,8 @@ if [[ -f ~/.sites_aliases ]]; then
 fi
 
 # Aliases
+alias youtube-dl=~/Downloads/yt-dlp_linux/yt-dlp_linux
+
 # alias code='code --user-data-dir=/tmp';
 
 alias idea="$(find ${user_home}/jetbrains -type f -iname idea.sh)";
@@ -38,6 +40,9 @@ alias astudio="$(find ${user_home}/jetbrains -type f -iname studio.sh)";
 
 alias update="echo ${USER} | sudo -S bash ~/bin/update.sh";
 alias karma='su va -c "npm run test:karma"';
+
+# Using sed in the alias, to remove newlines
+alias clip="tr -d '\n' | xclip -selection clipboard";
 
 # Git stuff:
 alias gc='git commit -m';
@@ -58,6 +63,7 @@ alias torrents='cd /media/va/local_disk/TORRENTS';
 alias rg='rg --no-heading';
 
 alias dotnet="~/dotnet/dotnet";
+alias dotnet6="~/dotnet6/dotnet";
 alias dotnet5="~/dotnet5/dotnet";
 
 # Create a patch (diff) file, for only the tracked files of the repository.
@@ -239,7 +245,8 @@ function youtube-dl-best-quality-for-sony-usb() {
 
 function youtube-dl-best-quality-audio() {
 	if [[ "${1}" ]]; then
-		youtube-dl -f 251 "${1}";
+		# youtube-dl -f 251 "${1}";
+        youtube-dl -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 "${1}";
 	else
 		echo "Usage: youtube-dl-best-quality-audio <URL>";
 	fi
