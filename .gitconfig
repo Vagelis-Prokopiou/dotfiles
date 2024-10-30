@@ -8,3 +8,5 @@
     eol = lf
     autocrlf = false
     whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
+[init]
+	defaultBranch = master
