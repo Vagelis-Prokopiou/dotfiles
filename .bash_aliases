@@ -41,8 +41,8 @@ alias astudio="$(find ${user_home}/jetbrains -type f -iname studio.sh)";
 alias update="echo ${USER} | sudo -S bash ~/bin/update.sh";
 alias karma='su va -c "npm run test:karma"';
 
-# Using sed in the alias, to remove newlines
-alias clip="tr -d '\n' | xclip -selection clipboard";
+# Using sed in the alias, to remove trailing newline
+alias clip="sed 's/\n$//' | xclip -selection clipboard"
 
 # Git stuff:
 alias gc='git commit -m';
