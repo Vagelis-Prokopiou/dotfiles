@@ -37,7 +37,7 @@ function clearCaches() {
 	sudo find /root /home -ipath "*/.cache/*" -type f -delete;
 	sudo find /root /home -ipath "*/tmp/*" -type f -delete;
 	sudo find /root /home -name "*.log" -delete;
-	
+
 	# Remove all the build artifacts of the Rust projects.
 	find ${user_home}/projects/rust/ -type d -name target | while read dir; do rm -rf "$dir"; done;
 
@@ -49,7 +49,7 @@ function clearCaches() {
 	rm -rf ${user_home}/.config/Code/.org.chromium.Chromium.*;
 	rm -rf ${user_home}/.config/Code/Cache/*;
 	rm -rf ${user_home}/.config/Code/Cached*/*;
-	
+
 	echo "clear-caches ended"
 	echo
 }
@@ -130,6 +130,7 @@ deb-src http://ftp.debian.org/debian buster-backports main
 						git \
 						smplayer \
 						xclip \
+						flameshot \
 						byobu; # This is for old kernels removal. See: # https://www.tecmint.com/remove-old-kernel-in-debian-and-ubuntu/
 	# xclip is used for redirecting to clip board: echo "foo" | clip (clip is an alias)
 
