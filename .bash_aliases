@@ -587,3 +587,14 @@ function clippy-lints() {
 #![allow(non_snake_case)]
 '
 }
+
+function stocks() {
+    cd ~/projects/rust/fin/fin-core-rs/ && git pull \
+    && cd ~/projects/rust/fin/idc/ && git pull \
+    && rm -rf dist/* \
+    && cargo run \
+    && rm -rf /home/va/Documents/*security_analysis.xlsx \
+    && rm -rf /home/va/Documents/security_analysis*.xlsx \
+    && cp dist/* /home/va/Documents/;
+    open /home/va/Documents/;
+}
