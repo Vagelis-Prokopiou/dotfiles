@@ -123,3 +123,4 @@ if [ -f "/home/va/.drush/drush.prompt.sh" ] ; then
   source /home/va/.drush/drush.prompt.sh
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
